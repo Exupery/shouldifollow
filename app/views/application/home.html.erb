@@ -1,17 +1,6 @@
 <div id="page">
 
-  <div id="sidebar">
-    <ul id="sidebar-items">
-      <li>
-        <h3>About</h3>
-        <ul class="links">
-          <li>Created by <a href="http://www.matthewfrost.com/">Matthew Frost</a></li>
-          <li>Follow me <a href="https://twitter.com/frostmatthew">@frostmatthew</a></li>
-          <li>Fork this on <a href="https://github.com/Exupery/shouldifollow">GitHub</a></li>
-        </ul>
-      </li>
-    </ul>
-  </div>
+  <%= render 'layouts/sidebar' %>
 
   <div id="content">
     <div id="header">
@@ -27,5 +16,5 @@
     </div>
   </div>
 
-  <div id="footer"></div>
+  <%= render 'layouts/footer' %>
 </div>
