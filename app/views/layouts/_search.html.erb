@@ -4,7 +4,8 @@
     <h1>Should I follow</h1>
     <%= form_tag("/", :method=>"get") do %>
       <%= label_tag(:username, "@") %>
-      <%= text_field_tag(:username, "username", :maxlength => 20) %>
+      <%= text_field_tag(:username, "username", :maxlength=>20) %>
+      <%= submit_tag("?", "id"=>"submit") %>
     <% end %>
   </div>
 

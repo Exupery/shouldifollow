@@ -37,6 +37,7 @@ a:hover {
   border-top: none;
   padding: 25px;
   width: 500px;
+  min-height: 175px;
 }
 
 #sidebar {
@@ -49,6 +50,7 @@ a:hover {
 }
 
 #header {
+  margin-top: 10px;
   padding-left: 75px;
   padding-right: 30px;
 }
@@ -80,6 +82,10 @@ a:hover {
   font-size: 1.75em;
   font-style: italic;
   color: #959595;
+}
+
+#header #submit {
+  font-size: 1.75em;
 }
 
 #sidebar ul {
