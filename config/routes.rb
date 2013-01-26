@@ -1,5 +1,6 @@
 Shouldifollow::Application.routes.draw do
 	root :to => "application#home"
-	match "/search" => "application#search"
-	match "/:uname" => "application#uname"
+	#using should-i-follow, Twitter doesn't allow usernames with hyphens so using something that won't interfere with any potential searches
+	match "/should-i-follow" => "application#search"
+	match "/:uname" => "application#home"
 end
