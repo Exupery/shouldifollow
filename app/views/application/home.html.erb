@@ -1,20 +1,20 @@
-<div id="page">
+<%= render 'layouts/sidebar' %>
 
-  <%= render 'layouts/sidebar' %>
-
-  <div id="content">
-    <div id="header">
-      <h1>Should I follow</h1>
-    </div>
-
-    <div id="stats">
-      <h3>stats</h3>
-    </div>
-
-    <div id="timeline">
-      <h1>embedded timeline</h1>
-    </div>
+<div id="content">
+  
+  <div id="header">
+    <h1>Should I follow</h1>
+    <h3>text</h3>
   </div>
 
-  <%= render 'layouts/footer' %>
+  <div id="stats">
+    <h3>stats</h3>
+  </div>
+
+  <div id="timeline">
+    <h3>embedded timeline</h3>
+  </div>
+
 </div>
+
+<%= render 'layouts/footer' %>
