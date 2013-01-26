@@ -4,8 +4,10 @@
   
   <div id="header">
     <h1>Should I follow</h1>
-    <label for="username">@</label>
-    <input type="text" id="username" value="username" />
+    <%= form_tag("/", :method => "get") do %>
+      <%= label_tag(:username, "@") %>
+      <%= text_field_tag(:username, "username", :maxlength => 20) %>
+    <% end %>
   </div>
 
   <div id="stats">

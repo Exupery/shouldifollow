@@ -30,13 +30,3 @@ $(document).ready(function() {
 	});
 
 });
-
-function noSelection() {
-	if (window.getSelection && window.getSelection().type=='Range') {
-		return false;
-	}
-	if (document.selection && document.selection.createRange()) {
-		return false;
-	}
-	return true;
-}
