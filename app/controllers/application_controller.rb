@@ -3,5 +3,9 @@ class ApplicationController < ActionController::Base
   def home
 		@title = "Should I Follow?"
 		@description = "Displays average tweets per day for a Twitter user"
-	end
+  end
+
+  def user
+	@title = "FOOBARShould I Follow?"
+  end
 end

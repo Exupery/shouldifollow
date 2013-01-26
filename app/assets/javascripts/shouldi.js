@@ -1,10 +1,4 @@
 $(document).ready(function() {
-	/*$('#username').keyup(function(event) {
-		if (event.keyCode == '13') { 
-			console.log('bar');
-		}
-	});*/
-
 	$('#username').focus(function(event) {
 		$('#username').css({
 			'color': '#000000', 
