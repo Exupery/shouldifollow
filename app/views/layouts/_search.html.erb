@@ -15,9 +15,9 @@
     <div id="stats" class="green-bottom">
       <h2>Average recent activity for <%= link_to("@#{uname}", "https://twitter.com/#{uname}", "class"=>"uname_link") %>:</h2>
       <% stats = get_stats(uname) %>
-      <h3><span class="metric"><%= stats["a"] %></span> tweets per day</h3>
-      <h3><span class="metric"><%= stats["a"] %></span> retweets per day</h3>
-      <h3><span class="metric"><%= stats["a"] %></span> total per day</h3>
+      <h3><span class="metric"><%= stats["tpd"] %></span> tweets per day</h3>
+      <h3><span class="metric"><%= stats["rpd"] %></span> retweets per day</h3>
+      <h3><span class="metric"><%= stats["ttlpd"] %></span> total per day</h3>
     </div>
 
     <div id="timeline">

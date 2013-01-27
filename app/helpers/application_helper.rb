@@ -1,7 +1,11 @@
 module ApplicationHelper
 
 	def get_stats user
-		h1 = { "a" => 1, "c" => 2 }
+		stats = Hash.new(0.0)
+		stats["tpd"] = 1
+		stats["rpd"] = 2
+		stats["ttlpd"] = stats["tpd"] + stats["rpd"]
+		return stats
 	end
 
 	def toggle_expl
