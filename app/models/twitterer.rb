@@ -12,7 +12,15 @@ class Twitterer
 		@rtpd = 0
 		@allpd = 0
 		fetch_id_and_allpd
-		puts "get tweets for #{@id}" if @id	#TODO
+		fetch_t_rt_pd if @id
+	end
+
+	def fetch_t_rt_pd
+		begin
+			json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
+		rescue
+			@error = generate_error nil
+		end
 	end
 
 	def fetch_id_and_allpd

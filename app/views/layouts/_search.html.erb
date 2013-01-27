@@ -19,10 +19,10 @@
         <h2 class="error"><%= tw.error %> Please check back later! In the meantime learn about nanoseconds from Grace Hopper!</h2>
         <span class="youtube"><iframe width="560" height="315" src="http://www.youtube.com/embed/JEpsKnWZrJ8" frameborder="0" allowfullscreen></iframe>
       <% else %></span>
-        <h3><span class="metric"><%= tw.tweets_per_day %></span> tweets per day <span class="parens">(last two weeks)</span></h3>
-        <h3><span class="metric"><%= tw.retweets_per_day %></span> retweets per day <span class="parens">(last two weeks)</span></h3>
-        <h3><span class="metric"><%= tw.tweets_per_day + tw.retweets_per_day %></span> tweets+retweets per day <span class="parens">(last two weeks)</span></h3>
-        <h3><span class="metric"><%= tw.all_per_day %></span> total per day <span class="parens">(since creation, includes replies)</span></h3>
+        <h3><span class="metric"><%= tw.tweets_per_day %></span> tweets per day <span class="parens">(last seven days)</span></h3>
+        <h3><span class="metric"><%= tw.retweets_per_day %></span> retweets per day <span class="parens">(last seven days)</span></h3>
+        <h3><span class="metric"><%= tw.tweets_per_day + tw.retweets_per_day %></span> tweets+retweets per day <span class="parens">(last seven days)</span></h3>
+        <h3><span class="metric"><%= tw.all_per_day %></span> total per day <span class="parens">(since joining Twitter, includes replies)</span></h3>
       </div>
 
       <div id="timeline">
