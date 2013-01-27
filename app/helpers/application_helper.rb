@@ -1,7 +1,7 @@
 module ApplicationHelper
 
 	def get_stats user
-		logger.debug "get stats for #{user}"
+		h1 = { "a" => 1, "c" => 2 }
 	end
 
 	def toggle_expl

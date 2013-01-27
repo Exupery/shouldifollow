@@ -92,7 +92,6 @@ a:hover {
 }
 
 .uname_link {
-  color: #00A0D1;
   text-decoration: none;
 }
 
@@ -100,6 +99,13 @@ a:hover {
   color: #004053;
   background-color: #FFFFFF;
   text-decoration: none;
+}
+
+.metric {
+  color: #00D199;
+  font-weight: bold;
+  margin-left: 0.5em;
+  margin-right: 0.25em;
 }
 
 #expl {

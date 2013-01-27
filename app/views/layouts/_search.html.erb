@@ -12,9 +12,12 @@
   
   <% uname = params[:uname] %>
   <% if uname %>
-    <% get_stats(uname) %>
     <div id="stats">
-      <h2>Rate of activity for <%= link_to("@#{uname}", "https://twitter.com/#{uname}", "class"=>"uname_link") %>:</h2>
+      <h2>Average recent activity for <%= link_to("@#{uname}", "https://twitter.com/#{uname}", "class"=>"uname_link") %>:</h2>
+      <% stats = get_stats(uname) %>
+      <h3><span class="metric"><%= stats["a"] %></span> tweets per day</h3>
+      <h3><span class="metric"><%= stats["a"] %></span> retweets per day</h3>
+      <h3><span class="metric"><%= stats["a"] %></span> combined per day</h3>
     </div>
 
     <div id="timeline">
