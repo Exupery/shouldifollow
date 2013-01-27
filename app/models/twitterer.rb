@@ -12,6 +12,7 @@ class Twitterer
 		@tpd = 0
 		@rtpd = 0
 		@allpd = 0
+		@combpd = 0
 		@tweet_ids = Array.new
 		fetch_id_and_allpd
 		fetch_t_rt_pd if @id
@@ -19,8 +20,8 @@ class Twitterer
 
 	def fetch_t_rt_pd
 		begin
-			#json = JSON.parse(open(@@tweet_url+@uname).read)	#REVERT
-			json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
+			json = JSON.parse(open(@@tweet_url+@uname).read)	#REVERT
+			#json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
 		rescue
 			@error = generate_error nil
 		end
@@ -56,19 +57,17 @@ class Twitterer
 			@tweet_ids.push(t["id_str"]) if t["id_str"]
 		end
 
-		days = (newest > oldest) ? newest - oldest : 1
+		days = (newest - oldest >= 1) ? newest - oldest : 1
 		@tpd = (tweet_cnt / days).to_f.round(1)
 		@rtpd = (retweet_cnt / days).to_f.round(1)
-		puts @tpd
-		puts @rtpd
+		@combpd = (@tpd + @rtpd).to_f.round(1)
 		@tweet_ids.sort! {|a,b| b <=> a}
 	end
 
 	def fetch_id_and_allpd
 		begin
-			#json = JSON.parse(open(@@user_url+@uname).read)	#REVERT
-			json = JSON.parse(open("http://127.0.0.1/user.json").read)
-			#json = JSON.parse(open("https://api.twitter.com/1/users/show.json?screen_name=frostmatthew").read)
+			json = JSON.parse(open(@@user_url+@uname).read)	#REVERT
+			#json = JSON.parse(open("http://127.0.0.1/user.json").read)
 		rescue
 			@error = generate_error nil
 		end
@@ -115,6 +114,10 @@ class Twitterer
 
 	def retweets_per_day
 		@rtpd
+	end
+
+	def combined_per_day
+		@combpd
 	end
 
 	def all_per_day
