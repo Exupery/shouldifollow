@@ -114,7 +114,9 @@ a:hover {
 }
 
 .parens {
-
+  font-size: 0.75em;
+  font-style: italic;
+  color: #959595;
 }
 
 .error {

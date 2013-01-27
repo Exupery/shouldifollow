@@ -7,7 +7,7 @@ module ApplicationHelper
 		stats["rtpd"] = 8
 		stats["trtpd"] = stats["tpd"] + stats["rtpd"]
 		stats["totalpd"] = 20
-		stats["error"] = "Whoa! shouldifollow seems to have hit the Twitter API hourly rate limit."
+		#stats["error"] = "Whoa! shouldifollow seems to have hit the Twitter API hourly rate limit."
 		return stats
 	end
 
