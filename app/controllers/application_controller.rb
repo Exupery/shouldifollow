@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
 
   def home
 	uname = params[:uname];
-	@title = (uname) ? "Should I Follow #{uname}?" : "Should I Follow?"
+  uname.gsub!(/@/, '') if uname
+	@title = (uname) ? "Should I Follow @#{uname}?" : "Should I Follow?"
 	@description = "Displays average tweets per day for a Twitter user"
   end
 
