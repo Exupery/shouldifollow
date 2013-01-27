@@ -9,13 +9,19 @@
       <%= submit_tag("?", "id"=>"submit") %>
     <% end %>
   </div>
+  
+  <% uname = params[:uname] %>
+  <% if uname %>
+    <% get_stats(uname) %>
+    <div id="stats">
+      <h3>stats</h3>
+    </div>
 
-  <div id="stats">
-    <h3>stats</h3>
-  </div>
-
-  <div id="timeline">
-    <h3>embedded timeline</h3>
-  </div>
+    <div id="timeline">
+      <h3>embedded timeline</h3>
+    </div>
+  <% else %>
+    <%= render 'layouts/expl' %>
+  <% end %>
 
 </div>

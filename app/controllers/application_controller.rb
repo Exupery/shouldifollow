@@ -6,11 +6,6 @@ class ApplicationController < ActionController::Base
 	uname = params[:uname];
 	@title = (uname) ? "Should I Follow #{uname}?" : "Should I Follow?"
 	@description = "Displays average tweets per day for a Twitter user"
-	if uname
-		get_stats(uname)
-	else
-		toggle_expl
-	end
   end
 
   def search

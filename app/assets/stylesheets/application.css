@@ -90,6 +90,13 @@ a:hover {
   font-size: 1.8em;
 }
 
+#expl {
+  width: 65%;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #sidebar ul {
   margin-left: 0;
   padding-left: 0;
