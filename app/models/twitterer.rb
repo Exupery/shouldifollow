@@ -7,18 +7,23 @@ class Twitterer
 
 	def initialize uname
 		@uname = uname
-		@id = 0
+		@id = nil
 		@tpd = 0
 		@rtpd = 0
 		@allpd = 0
-		update_stats
+		fetch_id_and_allpd
+		puts "get tweets for #{@id}" if @id	#TODO
 	end
 
-	def update_stats
-		#json = JSON.parse(open(@@user_url+@uname).read)	#REVERT
-		#json = JSON.parse(open("http://127.0.0.1/user.json").read)
-		#json = JSON.parse(open("https://api.twitter.com/1/users/show.json?screen_name=zzzfrostmatthew").read)
-		json = JSON.parse(open("http://127.0.0.1/error.json").read)
+	def fetch_id_and_allpd
+		begin
+			#json = JSON.parse(open(@@user_url+@uname).read)	#REVERT
+			json = JSON.parse(open("http://127.0.0.1/user.json").read)
+			#json = JSON.parse(open("https://api.twitter.com/1/users/show.json?screen_name=frostmatthew").read)
+		rescue
+			@error = generate_error nil
+		end
+
 		if !json || json["errors"]
 			@error = generate_error json
 		else
@@ -34,8 +39,8 @@ class Twitterer
 	end
 
 	def generate_error errors
-		err = errors["errors"][0] if errors["errors"][0]
-		if err
+		if errors && errors["errors"] && errors["errors"][0]
+			err = errors["errors"][0]
 			code = err["code"] if err["code"]
 			if code && (code==88 || code==420)
 				"Whoa! shouldifollow seems to have hit the Twitter API hourly rate limit."
