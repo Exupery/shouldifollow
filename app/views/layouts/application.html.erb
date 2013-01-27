@@ -12,9 +12,6 @@
 		<%= yield %>
 		<%= render 'layouts/footer' %>
 	</div>
-	
-	<% if Rails.env.production? %>
-		<%= render 'layouts/analytics' %>
-	<% end %>
+	<%= render 'layouts/analytics' %>
 </body>
 </html>

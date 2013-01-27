@@ -1,3 +1,4 @@
+<% if Rails.env.production? %>
 <span id="adsense">
 <script><!--
 google_ad_client = "ca-pub-1368333894050507";
@@ -11,3 +12,4 @@ google_ad_height = 60;
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 </span>
+<% end %>
