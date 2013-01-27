@@ -1,7 +1,5 @@
 $(document).ready(function() {
-	if ($('#expl').length) {
-		$('#username').val('username');
-	}
+	$('#username').val('username');
 
 	$('#username').focus(function(event) {
 		$('#username').css({
