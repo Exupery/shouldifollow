@@ -101,7 +101,8 @@ a:hover {
   text-decoration: none;
 }
 
-#stats {
+#stats,
+#profile {
   width: 90%;
 }
 
@@ -110,6 +111,10 @@ a:hover {
   font-weight: bold;
   margin-left: 0.5em;
   margin-right: 0.25em;
+}
+
+.parens {
+
 }
 
 #expl {
