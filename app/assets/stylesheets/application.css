@@ -117,6 +117,15 @@ a:hover {
 
 }
 
+.error {
+  color: #FF0000;
+}
+
+.youtube {
+  position: relative;
+  left: -40px;
+}
+
 #expl {
   width: 65%;
   margin-left: auto;
