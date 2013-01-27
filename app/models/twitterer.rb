@@ -4,6 +4,7 @@ require "date"
 
 class Twitterer
 	@@user_url = "https://api.twitter.com/1/users/show.json?screen_name="
+	@@tweet_url = "https://search.twitter.com/search.json?rpp=100&from="
 
 	def initialize uname
 		@uname = uname
@@ -11,16 +12,32 @@ class Twitterer
 		@tpd = 0
 		@rtpd = 0
 		@allpd = 0
+		@tweet_ids = Array.new
 		fetch_id_and_allpd
 		fetch_t_rt_pd if @id
 	end
 
 	def fetch_t_rt_pd
 		begin
+			#json = JSON.parse(open(@@tweet_url+@uname).read)	#REVERT
 			json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
 		rescue
 			@error = generate_error nil
 		end
+
+		if !json || json["errors"]
+			@error = generate_error json
+		else
+			parse_results json["results"] if json["results"] && json["results"].length > 0
+		end
+	end
+
+	def parse_results tweets
+		tweets.each do |t|
+			puts t["created_at"]
+			@tweet_ids.push(t["id_str"])
+		end
+		@tweet_ids.sort! {|a,b| b <=> a}
 	end
 
 	def fetch_id_and_allpd
