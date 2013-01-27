@@ -51,10 +51,6 @@ a:hover {
   width: 175px;
 }
 
-#footer {
-  clear: both;
-}
-
 #search_area {
   margin-top: 10px;
   padding-left: 75px;
@@ -161,7 +157,11 @@ a:hover {
   margin-bottom: 5px;
 }
 
-#adsense {
+#footer {
+  clear: both;
   margin-top: 20px;
+}
+
+#adsense {
   margin-left: 70px;
 }

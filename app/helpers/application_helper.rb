@@ -1,6 +1,8 @@
 module ApplicationHelper
 
-	def get_stats user
+	def get_stats uname
+		tw = Twitterer.new(uname)
+		logger.debug tw.uname
 		stats = Hash.new(0.0)
 		stats["error"] = nil
 		stats["tpd"] = 1.4
@@ -11,7 +13,7 @@ module ApplicationHelper
 		return stats
 	end
 
-	def toggle_expl
-		logger.debug "not getting stats"
+	def get_user
+		url = "https://api.twitter.com/1/users/lookup.json?screen_name=frostmatthew&include_entities=true"
 	end
 end
