@@ -1,6 +1,7 @@
 require 'net/http'
 require 'open-uri'
 require 'json'
+require 'date'
 
 class Twitterer
 	@@user_url = "https://api.twitter.com/1/users/show.json?screen_name="
@@ -27,7 +28,10 @@ class Twitterer
 	def calc_allpd count, since
 		puts count
 		puts since
-		18
+		puts "*************"	#DELME
+		puts Date.parse(since)
+		puts Date.today
+		return (count / (Date.today-Date.parse(since))).to_f.round(1)
 	end
 
 	def error
