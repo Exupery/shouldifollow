@@ -14,7 +14,7 @@
   <% if uname %>
     <div id="stats" class="green-bottom">
       <h2>Average activity for <%= link_to("@#{uname}", "https://twitter.com/#{uname}", "class"=>"uname_link") %>:</h2>
-      <% tw = get_stats(uname) %>
+      <% tw = Twitterer.new(uname) %>
       <% if tw.error %>
         <h2 class="error"><%= tw.error %> Please check back later! In the meantime learn about nanoseconds from Grace Hopper!</h2>
         <span class="youtube"><iframe width="560" height="315" src="http://www.youtube.com/embed/JEpsKnWZrJ8" frameborder="0" allowfullscreen></iframe>
