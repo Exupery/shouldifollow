@@ -2,15 +2,14 @@ module ApplicationHelper
 
 	def get_stats uname
 		tw = Twitterer.new(uname)
-		logger.debug tw.uname
+		logger.debug tw.error
 		stats = Hash.new(0.0)
-		stats["error"] = nil
+		stats["error"] = tw.error
 		stats["tpd"] = 1.4
 		stats["rtpd"] = 8
 		stats["trtpd"] = stats["tpd"] + stats["rtpd"]
 		stats["totalpd"] = 20
-		#stats["error"] = "Whoa! shouldifollow seems to have hit the Twitter API hourly rate limit."
-		return stats
+		return tw
 	end
 
 	def get_user

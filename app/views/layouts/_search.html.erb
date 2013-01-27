@@ -14,15 +14,15 @@
   <% if uname %>
     <div id="stats" class="green-bottom">
       <h2>Average activity for <%= link_to("@#{uname}", "https://twitter.com/#{uname}", "class"=>"uname_link") %>:</h2>
-      <% stats = get_stats(uname) %>
-      <% if stats["error"] %>
-        <h2 class="error"><%= stats["error"] %> Please check back later! In the meantime learn about nanoseconds from Grace Hopper!</h2>
+      <% tw = get_stats(uname) %>
+      <% if tw.error %>
+        <h2 class="error"><%= tw.error %> Please check back later! In the meantime learn about nanoseconds from Grace Hopper!</h2>
         <span class="youtube"><iframe width="560" height="315" src="http://www.youtube.com/embed/JEpsKnWZrJ8" frameborder="0" allowfullscreen></iframe>
       <% else %></span>
-        <h3><span class="metric"><%= stats["tpd"] %></span> tweets per day <span class="parens">(last two weeks)</span></h3>
-        <h3><span class="metric"><%= stats["rtpd"] %></span> retweets per day <span class="parens">(last two weeks)</span></h3>
-        <h3><span class="metric"><%= stats["trtpd"] %></span> tweets+retweets per day <span class="parens">(last two weeks)</span></h3>
-        <h3><span class="metric"><%= stats["totalpd"] %></span> total per day <span class="parens">(since creation, includes replies)</span></h3>
+        <h3><span class="metric"><%= tw.tweets_per_day %></span> tweets per day <span class="parens">(last two weeks)</span></h3>
+        <h3><span class="metric"><%= tw.retweets_per_day %></span> retweets per day <span class="parens">(last two weeks)</span></h3>
+        <h3><span class="metric"><%= tw.tweets_per_day + tw.retweets_per_day %></span> tweets+retweets per day <span class="parens">(last two weeks)</span></h3>
+        <h3><span class="metric"><%= tw.all_per_day %></span> total per day <span class="parens">(since creation, includes replies)</span></h3>
       </div>
 
       <div id="profile" class="green-bottom">
