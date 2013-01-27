@@ -19,7 +19,7 @@ a  {
 
 a:hover {
   background-color: #00A0D1;
-  color: white;
+  color: #FFFFFF;
   text-decoration: none;
 }
 
@@ -61,6 +61,7 @@ a:hover {
   background-image: url("bird_blue_48.png");
   background-repeat: no-repeat;
   background-position: top left;
+  margin-bottom: 20px;
 }
 
 #search_area h1 {
@@ -90,9 +91,19 @@ a:hover {
   font-size: 1.8em;
 }
 
+.uname_link {
+  color: #00A0D1;
+  text-decoration: none;
+}
+
+.uname_link:hover {
+  color: #004053;
+  background-color: #FFFFFF;
+  text-decoration: none;
+}
+
 #expl {
   width: 65%;
-  margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
 }
