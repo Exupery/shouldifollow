@@ -33,10 +33,34 @@ class Twitterer
 	end
 
 	def parse_results tweets
+		oldest = Date.today
+		newest = Date.new(1970,1,1)
+		tweet_cnt = 0;
+		retweet_cnt = 0;
+
 		tweets.each do |t|
-			puts t["created_at"]
-			@tweet_ids.push(t["id_str"])
+			if t["created_at"]
+				created = Date.parse(t["created_at"])
+				newest = created if created > newest
+				oldest = created if created < oldest
+			end
+
+			if t["text"]
+				if t["text"].start_with?("RT")
+					retweet_cnt += 1
+				elsif t["to_user_id"] && t["to_user_id"].to_i == 0
+					tweet_cnt += 1
+				end
+			end
+
+			@tweet_ids.push(t["id_str"]) if t["id_str"]
 		end
+
+		days = (newest > oldest) ? newest - oldest : 1
+		@tpd = (tweet_cnt / days).to_f.round(1)
+		@rtpd = (retweet_cnt / days).to_f.round(1)
+		puts @tpd
+		puts @rtpd
 		@tweet_ids.sort! {|a,b| b <=> a}
 	end
 
