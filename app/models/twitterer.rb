@@ -111,17 +111,18 @@ class Twitterer
 	end
 
 	def get_recent_tweet_html
-		if @latest_tweet_id 
-			begin
-				json = JSON.parse(open(@@oembed_url+@latest_tweet_id).read)	#REVERT
-				#json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
-			rescue OpenURI::HTTPError => ex
-				return "<h3 class=\"error\">Unable to retrieve latest tweet - better luck next time!</h3>"
-			end
-			json["html"] if json && json["html"]
-		else
-			nil
-		end
+		# if @latest_tweet_id 
+		# 	begin
+		# 		json = JSON.parse(open(@@oembed_url+@latest_tweet_id).read)	#REVERT
+		# 		#json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
+		# 	rescue OpenURI::HTTPError => ex
+		# 		return "<h3 class=\"error\">Unable to retrieve latest tweet - better luck next time!</h3>"
+		# 	end
+		# 	json["html"] if json && json["html"]
+		# else
+		# 	nil
+		# end
+		nil		#embedded tweets are SLOWWWWWWW and eat up an api request :-(
 	end
 
 	def error
