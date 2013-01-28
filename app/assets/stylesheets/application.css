@@ -160,9 +160,12 @@ a:hover {
 
 #footer {
   clear: both;
+  padding: 25px;
+  padding-left: 60px;
+  width: 515px;
   padding-top: 20px;
 }
 
 #adsense {
-  margin-left: 70px;
+  background-color: #000000;
 }
