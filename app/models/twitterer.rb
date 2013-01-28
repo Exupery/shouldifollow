@@ -24,8 +24,7 @@ class Twitterer
 
 	def fetch_id_and_allpd
 		begin
-			uri = open(@@user_url+@uname)
-			#json = JSON.parse(uri.read)	#REVERT
+			#json = JSON.parse(open(@@user_url+@uname).read)	#REVERT
 			json = JSON.parse(open("http://127.0.0.1/user.json").read)
 		rescue OpenURI::HTTPError => ex
 			if ex.to_s.start_with?("404")
