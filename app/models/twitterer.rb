@@ -111,6 +111,10 @@ class Twitterer
 		end
 	end
 
+	def get_recent_tweet_html
+		foo = "\u003Cblockquote class=\"twitter-tweet\" width=\"515\"\u003E\u003Cp\u003EHead of \u003Ca href=\"https:\/\/twitter.com\/search\/%23Java\"\u003E#Java\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/search\/%23security\"\u003E#security\u003C\/a\u003E at Oracle: We'll fix Java and communicate better \u003Ca href=\"http:\/\/t.co\/QbpGgZgI\" title=\"http:\/\/www.computerworld.com\/s\/article\/9236230\/Oracle_s_Java_security_head_We_will_fix_Java_communicate_better?taxonomyId=17\"\u003Ecomputerworld.com\/s\/article\/9236\u2026\u003C\/a\u003E\u003C\/p\u003E&mdash; StopBadware (@stopbadware) \u003Ca href=\"https:\/\/twitter.com\/stopbadware\/status\/294928868689719299\"\u003EJanuary 25, 2013\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E"
+	end
+
 	def error
 		@error
 	end

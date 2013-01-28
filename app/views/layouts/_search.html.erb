@@ -12,7 +12,7 @@
   
   <% uname = params[:uname] %>
   <% if uname %>
-    <div id="stats" class="green-bottom">
+    <div id="stats">
       <h2>Average activity for <%= link_to("@#{uname}", "https://twitter.com/#{uname}", "class"=>"uname_link") %>:</h2>
       <% tw = Twitterer.new(uname) %>
       <% if tw.error %>
@@ -20,15 +20,18 @@
           <h2 class="error"><%= tw.error %> <span class="parens">(you probably typed it wrong or it's a lousy name nobody would want)</span></h2>
         <% else %>
           <h2 class="error"><%= tw.error %> Please check back later! In the meantime learn about nanoseconds from Grace Hopper!</h2>
-          <span class="youtube"><iframe width="560" height="315" src="http://www.youtube.com/embed/JEpsKnWZrJ8" frameborder="0" allowfullscreen></iframe>
+          <span class="youtube">
+            <iframe width="560" height="315" src="http://www.youtube.com/embed/JEpsKnWZrJ8" frameborder="0" allowfullscreen></iframe>
+          </span>
         <% end %>
-      <% else %></span>
+      <% else %>
         <h3><span class="metric"><%= tw.tweets_per_day %></span> tweets per day <span class="parens">(last seven days)</span></h3>
         <h3><span class="metric"><%= tw.retweets_per_day %></span> retweets per day <span class="parens">(last seven days)</span></h3>
         <h3><span class="metric"><%= tw.combined_per_day %></span> tweets+retweets per day <span class="parens">(last seven days)</span></h3>
         <h3><span class="metric"><%= tw.all_per_day %></span> total per day <span class="parens">(since joining Twitter, includes replies)</span></h3>
         <div id="timeline">
-          <h3>recent tweets</h3>
+          <h3>Latest Tweet:</h3>
+          <%= raw(tw.get_recent_tweet_html) %>
         </div>
       <% end %>
     </div>
