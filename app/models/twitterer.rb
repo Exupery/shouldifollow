@@ -25,8 +25,8 @@ class Twitterer
 	def fetch_id_and_allpd
 		begin
 			uri = open(@@user_url+@uname)
-			json = JSON.parse(uri.read)	#REVERT
-			#json = JSON.parse(open("http://127.0.0.1/zuser.json").read)
+			#json = JSON.parse(uri.read)	#REVERT
+			json = JSON.parse(open("http://127.0.0.1/user.json").read)
 		rescue OpenURI::HTTPError => ex
 			if ex.to_s.start_with?("404")
 				@error = @@no_user_err 
@@ -48,15 +48,15 @@ class Twitterer
 
 	def fetch_t_rt_pd
 		begin
-			json = JSON.parse(open(@@tweet_url+@uname).read)	#REVERT
-			#json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
+			#json = JSON.parse(open(@@tweet_url+@uname).read)	#REVERT
+			json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
 		rescue OpenURI::HTTPError => ex
-			@error = (ex.to_s.start_with?("420")) ? @@rate_limit_err : generate_error(nil)
+			@error = (ex.to_s.start_with?("420")) ? @@rate_limit_err : @@gen_err
 		end
 
-		if !json || json["errors"]
+		if json && json["errors"]
 			@error = generate_error json
-		else
+		elsif json
 			parse_results json["results"] if json["results"] && json["results"].length > 0
 		end
 	end
