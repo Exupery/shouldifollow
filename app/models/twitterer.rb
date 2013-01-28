@@ -17,7 +17,7 @@ class Twitterer
 		@rtpd = 0
 		@allpd = 0
 		@combpd = 0
-		@tweet_ids = Array.new
+		@latest_tweet_id = nil
 		fetch_id_and_allpd
 		fetch_t_rt_pd if @id
 	end
@@ -67,28 +67,25 @@ class Twitterer
 		retweet_cnt = 0;
 
 		tweets.each do |t|
-			if t["created_at"]
+			if t["created_at"] && t["text"]
 				created = Date.parse(t["created_at"])
 				newest = created if created > newest
 				oldest = created if created < oldest
-			end
 
-			if t["text"]
 				if t["text"].start_with?("RT")
 					retweet_cnt += 1
 				elsif t["to_user_id"] && t["to_user_id"].to_i == 0
 					tweet_cnt += 1
+					@latest_tweet_id = t["id_str"] if t["id_str"] && created >= newest
 				end
 			end
 
-			@tweet_ids.push(t["id_str"]) if t["id_str"]
 		end
 
 		days = (newest - oldest >= 1) ? newest - oldest : 1
 		@tpd = (tweet_cnt / days).to_f.round(1)
 		@rtpd = (retweet_cnt / days).to_f.round(1)
 		@combpd = (@tpd + @rtpd).to_f.round(1)
-		@tweet_ids.sort! {|a,b| b <=> a}
 	end
 
 	def calc_allpd count, since
@@ -112,7 +109,9 @@ class Twitterer
 	end
 
 	def get_recent_tweet_html
-		foo = "\u003Cblockquote class=\"twitter-tweet\" width=\"515\"\u003E\u003Cp\u003EHead of \u003Ca href=\"https:\/\/twitter.com\/search\/%23Java\"\u003E#Java\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/search\/%23security\"\u003E#security\u003C\/a\u003E at Oracle: We'll fix Java and communicate better \u003Ca href=\"http:\/\/t.co\/QbpGgZgI\" title=\"http:\/\/www.computerworld.com\/s\/article\/9236230\/Oracle_s_Java_security_head_We_will_fix_Java_communicate_better?taxonomyId=17\"\u003Ecomputerworld.com\/s\/article\/9236\u2026\u003C\/a\u003E\u003C\/p\u003E&mdash; StopBadware (@stopbadware) \u003Ca href=\"https:\/\/twitter.com\/stopbadware\/status\/294928868689719299\"\u003EJanuary 25, 2013\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E"
+		puts @latest_tweet_id
+		#foo = "\u003Cblockquote class=\"twitter-tweet\" width=\"515\"\u003E\u003Cp\u003EHead of \u003Ca href=\"https:\/\/twitter.com\/search\/%23Java\"\u003E#Java\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/search\/%23security\"\u003E#security\u003C\/a\u003E at Oracle: We'll fix Java and communicate better \u003Ca href=\"http:\/\/t.co\/QbpGgZgI\" title=\"http:\/\/www.computerworld.com\/s\/article\/9236230\/Oracle_s_Java_security_head_We_will_fix_Java_communicate_better?taxonomyId=17\"\u003Ecomputerworld.com\/s\/article\/9236\u2026\u003C\/a\u003E\u003C\/p\u003E&mdash; StopBadware (@stopbadware) \u003Ca href=\"https:\/\/twitter.com\/stopbadware\/status\/294928868689719299\"\u003EJanuary 25, 2013\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E"
+		"\u003Cblockquote class=\"twitter-tweet\" width=\"515\"\u003E\u003Cp\u003EU.S. Senate will \"prioritize\" passage of cybersecurity bill that seeks to increase public-private information sharing \u003Ca href=\"http:\/\/t.co\/L3jY5c7s\" title=\"http:\/\/threatpost.com\/en_us\/blogs\/senate-introduces-cybersecurity-bill-prioritizes-info-sharing-012413\"\u003Ethreatpost.com\/en_us\/blogs\/se\u2026\u003C\/a\u003E\u003C\/p\u003E&mdash; StopBadware (@stopbadware) \u003Ca href=\"https:\/\/twitter.com\/stopbadware\/status\/294840670571593728\"\u003EJanuary 25, 2013\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E"
 	end
 
 	def error
