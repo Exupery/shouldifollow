@@ -17,7 +17,7 @@ h1 {
   color: #000000;
 }
 
-a  {
+a {
   color: #00A0D1;
 }
 
@@ -89,6 +89,10 @@ a:hover {
 
 #search_area #submit {
   font-size: 1.8em;
+}
+
+#search_area #submit:hover {
+  color: #00A0D1;
 }
 
 .uname_link {

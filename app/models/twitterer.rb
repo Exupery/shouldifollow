@@ -5,6 +5,8 @@ require "date"
 class Twitterer
 	@@user_url = "https://api.twitter.com/1/users/show.json?screen_name="
 	@@tweet_url = "https://search.twitter.com/search.json?rpp=100&from="
+	@@oembed_url = "https://api.twitter.com/1/statuses/oembed.json?maxwidth=500&id="
+
 	@@rate_limit_err = "Whoa! shouldifollow seems to have hit the Twitter API hourly rate limit."
 	@@no_user_err = "Username not found"
 	@@gen_err = "Whoops, something went wrong :-("
@@ -24,8 +26,8 @@ class Twitterer
 
 	def fetch_id_and_allpd
 		begin
-			#json = JSON.parse(open(@@user_url+@uname).read)	#REVERT
-			json = JSON.parse(open("http://127.0.0.1/user.json").read)
+			json = JSON.parse(open(@@user_url+@uname).read)	#REVERT
+			#json = JSON.parse(open("http://127.0.0.1/user.json").read)
 		rescue OpenURI::HTTPError => ex
 			if ex.to_s.start_with?("404")
 				@error = @@no_user_err 
@@ -47,8 +49,8 @@ class Twitterer
 
 	def fetch_t_rt_pd
 		begin
-			#json = JSON.parse(open(@@tweet_url+@uname).read)	#REVERT
-			json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
+			json = JSON.parse(open(@@tweet_url+@uname).read)	#REVERT
+			#json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
 		rescue OpenURI::HTTPError => ex
 			@error = (ex.to_s.start_with?("420")) ? @@rate_limit_err : @@gen_err
 		end
@@ -109,9 +111,17 @@ class Twitterer
 	end
 
 	def get_recent_tweet_html
-		puts @latest_tweet_id
-		#foo = "\u003Cblockquote class=\"twitter-tweet\" width=\"515\"\u003E\u003Cp\u003EHead of \u003Ca href=\"https:\/\/twitter.com\/search\/%23Java\"\u003E#Java\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/search\/%23security\"\u003E#security\u003C\/a\u003E at Oracle: We'll fix Java and communicate better \u003Ca href=\"http:\/\/t.co\/QbpGgZgI\" title=\"http:\/\/www.computerworld.com\/s\/article\/9236230\/Oracle_s_Java_security_head_We_will_fix_Java_communicate_better?taxonomyId=17\"\u003Ecomputerworld.com\/s\/article\/9236\u2026\u003C\/a\u003E\u003C\/p\u003E&mdash; StopBadware (@stopbadware) \u003Ca href=\"https:\/\/twitter.com\/stopbadware\/status\/294928868689719299\"\u003EJanuary 25, 2013\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E"
-		"\u003Cblockquote class=\"twitter-tweet\" width=\"515\"\u003E\u003Cp\u003EU.S. Senate will \"prioritize\" passage of cybersecurity bill that seeks to increase public-private information sharing \u003Ca href=\"http:\/\/t.co\/L3jY5c7s\" title=\"http:\/\/threatpost.com\/en_us\/blogs\/senate-introduces-cybersecurity-bill-prioritizes-info-sharing-012413\"\u003Ethreatpost.com\/en_us\/blogs\/se\u2026\u003C\/a\u003E\u003C\/p\u003E&mdash; StopBadware (@stopbadware) \u003Ca href=\"https:\/\/twitter.com\/stopbadware\/status\/294840670571593728\"\u003EJanuary 25, 2013\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E"
+		if @latest_tweet_id 
+			begin
+				json = JSON.parse(open(@@oembed_url+@latest_tweet_id).read)	#REVERT
+				#json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
+			rescue OpenURI::HTTPError => ex
+				return "<h3 class=\"error\">Unable to retrieve latest tweet - better luck next time!</h3>"
+			end
+			json["html"] if json && json["html"]
+		else
+			nil
+		end
 	end
 
 	def error
