@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-
+  caches_page :home
+  
   def home
   	uname = params[:uname];
     if uname
