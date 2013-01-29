@@ -78,7 +78,7 @@ class Twitterer
 					retweet_cnt += 1
 				elsif t["to_user_id"] && t["to_user_id"].to_i == 0
 					tweet_cnt += 1
-					@latest_tweet_id = t["id_str"] if t["id_str"] && created >= newest
+					@latest_tweet_id = t["id_str"] if t["id_str"] && (!@latest_tweet_id || t["id_str"] > @latest_tweet_id)
 				end
 			end
 
