@@ -3,9 +3,9 @@ class ApplicationController < ActionController::Base
   #caches_page :home #TODO partial caching
 
   def home
-  	uname = params[:uname];
-    if uname
-      uname.gsub!(/[@<>]/, '')
+    if params[:uname]
+      uname = clean params[:uname]
+      puts uname
       @title = "Should I Follow @#{uname}?"
       @description = "Displays average tweets per day for @#{uname}"
     else
@@ -15,7 +15,13 @@ class ApplicationController < ActionController::Base
   end
 
   def search
-  	redirect_to "/#{params[:uname]}"
+    uname = clean params[:uname]
+    puts uname
+  	redirect_to "/#{uname}"
+  end
+
+  def clean input
+    return input.gsub!(/[@<>%'";]/, '') if input
   end
 
 end
