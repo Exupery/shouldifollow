@@ -21,11 +21,11 @@ class ApplicationController < ActionController::Base
   end
 
   def clean input
-    return input.gsub!(/[@<>%'";]/, '') if input
+    input.gsub!(/[@<>%'";]/, '') if input
+    return input
   end
 
   def notfound
-    puts "not found"
     raise ActionController::RoutingError.new('Not Found')
   end
 
