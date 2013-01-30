@@ -24,4 +24,9 @@ class ApplicationController < ActionController::Base
     return input.gsub!(/[@<>%'";]/, '') if input
   end
 
+  def notfound
+    puts "not found"
+    raise ActionController::RoutingError.new('Not Found')
+  end
+
 end
