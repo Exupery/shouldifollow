@@ -29,7 +29,7 @@ class Twitterer
 			json = JSON.parse(open(@@user_url+@uname).read)	#REVERT
 			#json = JSON.parse(open("http://127.0.0.1/user.json").read)
 		rescue OpenURI::HTTPError => ex
-			Rails.logger.error "#{ex.to_s}=>#{@@user_url+@uname}"
+			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@user_url+@uname}"
 			if ex.to_s.start_with?("404")
 				@error = @@no_user_err 
 			elsif ex.to_s.start_with?("420")
@@ -45,7 +45,7 @@ class Twitterer
 			@id = json["id_str"]
 			@allpd = calc_allpd json["statuses_count"], json["created_at"]
 		end
-		Rails.logger.error @error if @error
+		Rails.logger.error "ERROR=>#{@error}" if @error
 	end
 
 	def fetch_t_rt_pd
@@ -53,7 +53,7 @@ class Twitterer
 			json = JSON.parse(open(@@tweet_url+@uname).read)	#REVERT
 			#json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
 		rescue OpenURI::HTTPError => ex
-			Rails.logger.error "#{ex.to_s}=>#{@@tweet_url+@uname}"
+			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@tweet_url+@uname}"
 			@error = (ex.to_s.start_with?("420")) ? @@rate_limit_err : @@gen_err
 		end
 
@@ -62,7 +62,7 @@ class Twitterer
 		elsif json
 			parse_results json["results"] if json["results"] && json["results"].length > 0
 		end
-		Rails.logger.error @error if @error
+		Rails.logger.error "ERROR=>#{@error}" if @error
 	end
 
 	def parse_results tweets
@@ -120,7 +120,7 @@ class Twitterer
 				#json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
 				json["html"]
 			rescue
-				Rails.logger.error "ERR=>#{@@user_url+@uname}"
+				Rails.logger.error "ERROR=>#{@@user_url+@uname}"
 				return "<h3 class=\"error\">Unable to retrieve latest tweet - better luck next time!</h3>"
 			end
 		else
