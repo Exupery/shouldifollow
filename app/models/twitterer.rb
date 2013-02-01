@@ -1,6 +1,7 @@
 require "open-uri"
 require "json"
 require "date"
+require "timeout"
 
 class Twitterer
 	@@user_url = "https://api.twitter.com/1/users/show.json?screen_name="
@@ -10,6 +11,7 @@ class Twitterer
 	@@rate_limit_err = "Whoa! shouldifollow seems to have hit the Twitter API hourly rate limit."
 	@@no_user_err = "Username not found"
 	@@gen_err = "Whoops, something went wrong :-("
+	@@timeout_err = "OH NOES - looks likes there was some trouble accessing the Twitter API :-("
 
 	def initialize uname
 		@uname = uname
@@ -20,13 +22,20 @@ class Twitterer
 		@allpd = 0
 		@combpd = 0
 		@latest_tweet_id = nil
-		fetch_id_and_allpd
-		fetch_t_rt_pd if @id
+		begin
+			fetch = Timeout::timeout(8) {
+			fetch_id_and_allpd
+			fetch_t_rt_pd if @id
+		}
+		rescue Timeout::Error => ex
+			Rails.logger.error "TIMEOUT=>#{ex}"
+			@error = @@timeout_err
+		end
 	end
 
 	def fetch_id_and_allpd
 		begin
-			json = JSON.parse(open(@@user_url+@uname).read)	#REVERT
+			json = JSON.parse(open(@@user_url+@uname).read)
 			#json = JSON.parse(open("http://127.0.0.1/user.json").read)
 		rescue OpenURI::HTTPError => ex
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@user_url+@uname}"
@@ -37,6 +46,9 @@ class Twitterer
 			else
 				@error = @@gen_err
 			end
+		rescue => ex
+			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@user_url+@uname}"
+			@error = @@gen_err
 		end
 
 		if json && json["errors"]
@@ -50,7 +62,7 @@ class Twitterer
 
 	def fetch_t_rt_pd
 		begin
-			json = JSON.parse(open(@@tweet_url+@uname).read)	#REVERT
+			json = JSON.parse(open(@@tweet_url+@uname).read)
 			#json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
 		rescue OpenURI::HTTPError => ex
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@tweet_url+@uname}"
@@ -116,7 +128,7 @@ class Twitterer
 	def get_recent_tweet_html
 		if @latest_tweet_id 
 			begin
-				json = JSON.parse(open(@@oembed_url+@latest_tweet_id).read)	#REVERT
+				json = JSON.parse(open(@@oembed_url+@latest_tweet_id).read)
 				#json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
 				json["html"]
 			rescue
