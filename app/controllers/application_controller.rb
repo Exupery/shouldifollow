@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   def home
     if params[:uname]
       uname = clean params[:uname]
-      puts uname
+      Rails.logger.info "SEARCH=>#{uname}"
       @title = "Should I Follow @#{uname}?"
       @description = "Displays average tweets per day for @#{uname}"
     else
@@ -15,7 +15,6 @@ class ApplicationController < ActionController::Base
 
   def search
     uname = clean params[:uname]
-    puts uname
   	redirect_to "/#{uname}"
   end
 
