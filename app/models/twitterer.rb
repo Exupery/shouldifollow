@@ -23,16 +23,14 @@ class Twitterer
 		@combpd = 0
 		@latest_tweet_id = nil
 
-		if false
-			begin
-				fetch = Timeout::timeout(8) {
-				fetch_id_and_allpd
-				fetch_t_rt_pd if @id
-			}
-			rescue Timeout::Error => ex
-				Rails.logger.error "TIMEOUT=>#{ex}"
-				@error = @@timeout_err
-			end
+		begin
+			fetch = Timeout::timeout(8) {
+			fetch_id_and_allpd
+			fetch_t_rt_pd if @id
+		}
+		rescue Timeout::Error => ex
+			Rails.logger.error "TIMEOUT=>#{ex}"
+			@error = @@timeout_err
 		end
 	end
 
