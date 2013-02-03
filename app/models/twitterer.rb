@@ -22,15 +22,32 @@ class Twitterer
 		@allpd = 0
 		@combpd = 0
 		@latest_tweet_id = nil
-		begin
-			fetch = Timeout::timeout(8) {
-			fetch_id_and_allpd
-			fetch_t_rt_pd if @id
-		}
-		rescue Timeout::Error => ex
-			Rails.logger.error "TIMEOUT=>#{ex}"
-			@error = @@timeout_err
+
+		if auth
+			begin
+				fetch = Timeout::timeout(8) {
+				fetch_id_and_allpd
+				fetch_t_rt_pd if @id
+			}
+			rescue Timeout::Error => ex
+				Rails.logger.error "TIMEOUT=>#{ex}"
+				@error = @@timeout_err
+			end
 		end
+	end
+
+	def auth
+		
+
+		begin
+			puts Twitter.user_timeline("frostmatthew").first.text
+		rescue Twitter::Error => ex
+			puts "TWITTER ERROR=>#{ex.to_s}"	#TODO
+		rescue => ex
+			puts "ERROR=>#{ex.to_s}"			#TODO
+		end
+
+		return false
 	end
 
 	def fetch_id_and_allpd
