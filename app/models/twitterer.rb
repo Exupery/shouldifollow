@@ -23,7 +23,11 @@ class Twitterer
 		@combpd = 0
 		@latest_tweet_id = nil
 
-		if auth
+		foo = User.new
+		@twitter = foo.client
+		puts @twitter.user_timeline(@uname).first.text
+		
+		if false
 			begin
 				fetch = Timeout::timeout(8) {
 				fetch_id_and_allpd
@@ -34,20 +38,6 @@ class Twitterer
 				@error = @@timeout_err
 			end
 		end
-	end
-
-	def auth
-		
-
-		begin
-			puts Twitter.user_timeline("frostmatthew").first.text
-		rescue Twitter::Error => ex
-			puts "TWITTER ERROR=>#{ex.to_s}"	#TODO
-		rescue => ex
-			puts "ERROR=>#{ex.to_s}"			#TODO
-		end
-
-		return false
 	end
 
 	def fetch_id_and_allpd
