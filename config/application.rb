@@ -59,7 +59,7 @@ module Shouldifollow
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    ENV["TWITTER_CONSUMER_KEY"] = "84c6nPwHWTqFw4n15n58TQ"
-    ENV["TWITTER_CONSUMER_SECRET"] = "qoYaVZAoYq4MgUcFFfAEwFDHYnpoZtYdcJrVjR7BIVg"
+    ENV["TWITTER_CONSUMER_KEY"] = "YOUR_CONSUMER_KEY"
+    ENV["TWITTER_CONSUMER_SECRET"] = "YOUR_CONSUMER_SECRET"
   end
 end
