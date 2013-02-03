@@ -8,12 +8,12 @@ class User
 	end
 
 	def auth?
-		@twitter = Twitter::Client.new(
-			:consumer_key => ENV["TWITTER_CONSUMER_KEY"],
-			:consumer_secret => ENV["TWITTER_CONSUMER_SECRET"]
+		#@twitter = Twitter::Client.new(
+		#	:consumer_key => ENV["TWITTER_CONSUMER_KEY"],
+		#	:consumer_secret => ENV["TWITTER_CONSUMER_SECRET"]
 		#	:oauth_token => "",
 		#	:oauth_token_secret => ""
-		)
+		#)
 
 		begin
 			#puts @twitter.user_timeline("frostmatthew").first.text
@@ -26,6 +26,10 @@ class User
 
 		return false
 	end
+
+	#def get_auth_token	#TODO
+	#	json = JSON.parse(open("https://api.twitter.com/oauth/request_token").read)
+	#end
 
 	def client
 		@twitter

@@ -23,10 +23,6 @@ class Twitterer
 		@combpd = 0
 		@latest_tweet_id = nil
 
-		foo = User.new
-		@twitter = foo.client
-		puts @twitter.user_timeline(@uname).first.text
-		
 		if false
 			begin
 				fetch = Timeout::timeout(8) {
