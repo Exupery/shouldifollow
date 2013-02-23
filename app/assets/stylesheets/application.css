@@ -19,12 +19,13 @@ h1 {
 
 a {
   color: #00A0D1;
+  text-decoration: none;
 }
 
 a:hover {
   background-color: #00A0D1;
   color: #FFFFFF;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 #page {
@@ -93,6 +94,7 @@ a:hover {
 
 #search_area #submit:hover {
   color: #00A0D1;
+  cursor: pointer;
 }
 
 .uname_link {
