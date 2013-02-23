@@ -22,6 +22,7 @@ class Twitterer
 		@allpd = 0
 		@combpd = 0
 		@latest_tweet_id = nil
+
 		begin
 			fetch = Timeout::timeout(8) {
 			fetch_id_and_allpd
