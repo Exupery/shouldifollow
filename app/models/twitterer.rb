@@ -3,10 +3,10 @@ require "json"
 require "date"
 require "timeout"
 
-class Twitterer
-	@@user_url = "https://api.twitter.com/1/users/show.json?screen_name="
-	@@tweet_url = "https://search.twitter.com/search.json?rpp=100&from="
-	@@oembed_url = "https://api.twitter.com/1/statuses/oembed.json?maxwidth=500&id="
+class Twitterer 
+	@@user_url = "https://api.twitter.com/1.1/users/show.json?screen_name="
+	@@tweet_url = "https://api.twitter.com/1.1/search/tweets.json?rpp=100&from="
+	@@oembed_url = "https://api.twitter.com/1.1/statuses/oembed.json?maxwidth=500&id="
 
 	@@rate_limit_err = "Whoa! shouldifollow seems to have hit the Twitter API hourly rate limit."
 	@@no_user_err = "Username not found"
@@ -39,7 +39,6 @@ class Twitterer
 	def fetch_id_and_allpd
 		begin
 			response = @twitter.request(:get, @@user_url+@uname)
-			puts response.read_body
 			json = JSON.parse(response.body)
 			#json = JSON.parse(open("http://127.0.0.1/user.json").read)
 		rescue OpenURI::HTTPError => ex
@@ -73,12 +72,15 @@ class Twitterer
 		rescue OpenURI::HTTPError => ex
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@tweet_url+@uname}"
 			@error = (ex.to_s.start_with?("420")) ? @@rate_limit_err : @@gen_err
+		rescue => ex
+			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@tweet_url+@uname}"
+			@error = @@gen_err
 		end
 
 		if json && json["errors"]
 			@error = generate_error json
 		elsif json
-			parse_results json["results"] if json["results"] && json["results"].length > 0
+			parse_results json["statuses"] if json["statuses"] && json["statuses"].length > 0
 		end
 		Rails.logger.error "ERROR=>#{@error}" if @error
 	end
@@ -95,9 +97,9 @@ class Twitterer
 				newest = created if created > newest
 				oldest = created if created < oldest
 
-				if t["text"].start_with?("RT")
+				if t["retweeted_status"] || t["text"].start_with?("RT")
 					retweet_cnt += 1
-				elsif t["to_user_id"] && t["to_user_id"].to_i == 0
+				elsif t["in_reply_to_user_id"].nil?
 					tweet_cnt += 1
 					@latest_tweet_id = t["id_str"] if t["id_str"] && (!@latest_tweet_id || t["id_str"] > @latest_tweet_id)
 				end
@@ -123,6 +125,8 @@ class Twitterer
 			code = err["code"] if err["code"]
 			if code && (code==88 || code==420)
 				@@rate_limit_err
+			elsif code==34
+				@@no_user_err
 			elsif err["message"] 
 				err["message"] 
 			end
