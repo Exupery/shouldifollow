@@ -93,6 +93,7 @@ a:hover {
 
 #search_area #submit:hover {
   color: #00A0D1;
+  cursor: pointer;
 }
 
 .uname_link {
