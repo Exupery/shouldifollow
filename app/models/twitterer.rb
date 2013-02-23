@@ -25,9 +25,14 @@ class Twitterer
 
 		begin
 			fetch = Timeout::timeout(8) {
-			fetch_id_and_allpd
-			fetch_t_rt_pd if @id
-		}
+				#fetch_id_and_allpd
+				fetch_t_rt_pd if @id
+			}
+			#DELME
+			user = User.new
+			response = user.client.request(:get, "https://api.twitter.com/1.1/statuses/home_timeline.json")
+			puts response
+			#DELME					
 		rescue Timeout::Error => ex
 			Rails.logger.error "TIMEOUT=>#{ex}"
 			@error = @@timeout_err

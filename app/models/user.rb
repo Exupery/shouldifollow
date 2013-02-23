@@ -1,10 +1,27 @@
 class User
 
+	@@key = ENV["TWITTER_CONSUMER_KEY"]
+	@@secret = ENV["TWITTER_CONSUMER_SECRET"]
+
 	def initialize
 		puts "new user created"	#DELME
 		@twitter = nil
 		@auth_success = auth?
+		@access_token = create_access_token("abcdefg", "hijklmnop")
 		puts @auth_success		#DELME
+	end
+
+	def create_access_token oauth_token, oauth_token_secret
+		consumer = OAuth::Consumer.new(@@key, @@secret, {
+				:site => "https://api.twitter.com",
+				:scheme => :header
+			})
+		token_hash = {
+			:oauth_token => oauth_token,
+			:oauth_token_secret => oauth_token_secret
+		}
+		access_token = OAuth::AccessToken.from_hash(consumer, token_hash)
+		return access_token
 	end
 
 	def auth?
@@ -32,6 +49,6 @@ class User
 	#end
 
 	def client
-		@twitter
+		@access_token
 	end
 end
