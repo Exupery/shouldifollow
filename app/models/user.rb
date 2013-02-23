@@ -19,8 +19,6 @@ class User
 			:oauth_token_secret => oauth_token_secret
 		}
 		access_token = OAuth::AccessToken.from_hash(consumer, token_hash)
-		response = access_token.request(:get, "https://api.twitter.com/1/statuses/home_timeline.json")	#DELME
-		puts response	#DELME
 		return access_token
 	end
 

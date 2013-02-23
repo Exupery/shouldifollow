@@ -22,17 +22,14 @@ class Twitterer
 		@allpd = 0
 		@combpd = 0
 		@latest_tweet_id = nil
+		user = User.new
+		@twitter = user.client if user
 
 		begin
 			fetch = Timeout::timeout(8) {
-				#fetch_id_and_allpd
+				fetch_id_and_allpd
 				fetch_t_rt_pd if @id
 			}
-			#DELME
-			user = User.new
-			#response = user.client.request(:get, "https://api.twitter.com/1/statuses/home_timeline.json")
-			#puts response
-			#DELME					
 		rescue Timeout::Error => ex
 			Rails.logger.error "TIMEOUT=>#{ex}"
 			@error = @@timeout_err
@@ -41,7 +38,9 @@ class Twitterer
 
 	def fetch_id_and_allpd
 		begin
-			json = JSON.parse(open(@@user_url+@uname).read)
+			response = @twitter.request(:get, @@user_url+@uname)
+			puts response.read_body
+			json = JSON.parse(response.body)
 			#json = JSON.parse(open("http://127.0.0.1/user.json").read)
 		rescue OpenURI::HTTPError => ex
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@user_url+@uname}"
@@ -68,7 +67,8 @@ class Twitterer
 
 	def fetch_t_rt_pd
 		begin
-			json = JSON.parse(open(@@tweet_url+@uname).read)
+			response = @twitter.request(:get, @@tweet_url+@uname)
+			json = JSON.parse(response.body)
 			#json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
 		rescue OpenURI::HTTPError => ex
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@tweet_url+@uname}"
@@ -134,7 +134,8 @@ class Twitterer
 	def get_recent_tweet_html
 		if @latest_tweet_id 
 			begin
-				json = JSON.parse(open(@@oembed_url+@latest_tweet_id).read)
+				response = @twitter.request(:get, @@oembed_url+@latest_tweet_id)
+				json = JSON.parse(response.body)
 				#json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
 				json["html"]
 			rescue
