@@ -30,8 +30,8 @@ class Twitterer
 			}
 			#DELME
 			user = User.new
-			response = user.client.request(:get, "https://api.twitter.com/1.1/statuses/home_timeline.json")
-			puts response
+			#response = user.client.request(:get, "https://api.twitter.com/1/statuses/home_timeline.json")
+			#puts response
 			#DELME					
 		rescue Timeout::Error => ex
 			Rails.logger.error "TIMEOUT=>#{ex}"
