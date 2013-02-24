@@ -6,10 +6,10 @@ class ApplicationController < ActionController::Base
       uname = clean params[:uname]
       Rails.logger.info "SEARCH=>#{uname}"
       @title = "Should I Follow @#{uname}?"
-      @description = "Displays average tweets per day for @#{uname}"
+      @description = "Average tweets per day for @#{uname}"
     else
       @title = "Should I Follow?"
-      @description = "Displays average tweets per day for a Twitter user"
+      @description = "Find average tweet per day metrics for any Twitter user"
     end
   end
 

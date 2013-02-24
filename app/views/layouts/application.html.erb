@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title><%= @title %></title>
-<meta name="description" content="<%= @description %>"/>
 <meta name="author" content="Matthew Frost"/>
+<meta name="description" content="<%= @description %>"/>
 <meta name="keywords" content="twitter, should i follow, 47"/>
 <%= render 'layouts/ogtags' %>
+<link rel="author" href="https://plus.google.com/100792150980679428272?rel=author"/>
+<link rel="publisher" href="https://plus.google.com/100792150980679428272"/>
 <%= stylesheet_link_tag "application", :media => "all" %>
 <%= javascript_include_tag "application" %>
 <%= csrf_meta_tags %>
