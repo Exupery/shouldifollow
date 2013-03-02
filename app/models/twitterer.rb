@@ -5,7 +5,7 @@ require "timeout"
 
 class Twitterer 
 	@@user_url = "https://api.twitter.com/1.1/users/show.json?screen_name="
-	@@tweet_url = "https://api.twitter.com/1.1/search/tweets.json?rpp=100&from="
+	@@tweet_url = "https://api.twitter.com/1.1/statuses/user_timeline.json?count=200&include_rts=1&screen_name="
 	@@oembed_url = "https://api.twitter.com/1.1/statuses/oembed.json?maxwidth=500&id="
 
 	@@rate_limit_err = "Whoa! shouldifollow seems to have hit the Twitter API hourly rate limit."
@@ -40,7 +40,6 @@ class Twitterer
 		begin
 			response = @twitter.request(:get, @@user_url+@uname)
 			json = JSON.parse(response.body)
-			#json = JSON.parse(open("http://127.0.0.1/user.json").read)
 		rescue OpenURI::HTTPError => ex
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@user_url+@uname}"
 			if ex.to_s.start_with?("404")
@@ -68,7 +67,6 @@ class Twitterer
 		begin
 			response = @twitter.request(:get, @@tweet_url+@uname)
 			json = JSON.parse(response.body)
-			#json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
 		rescue OpenURI::HTTPError => ex
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@tweet_url+@uname}"
 			@error = (ex.to_s.start_with?("420")) ? @@rate_limit_err : @@gen_err
@@ -76,11 +74,11 @@ class Twitterer
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@tweet_url+@uname}"
 			@error = @@gen_err
 		end
-
-		if json && json["errors"]
+		
+		if json.kind_of?(Array)
+			parse_results json
+		else
 			@error = generate_error json
-		elsif json
-			parse_results json["statuses"] if json["statuses"] && json["statuses"].length > 0
 		end
 		Rails.logger.error "ERROR=>#{@error}" if @error
 	end
@@ -108,6 +106,7 @@ class Twitterer
 		end
 
 		days = (newest - oldest >= 1) ? newest - oldest : 1
+		puts "days: #{days}"	#DELME
 		@tpd = (tweet_cnt / days).to_f.round(1)
 		@rtpd = (retweet_cnt / days).to_f.round(1)
 		@combpd = (@tpd + @rtpd).to_f.round(1)
@@ -140,7 +139,6 @@ class Twitterer
 			begin
 				response = @twitter.request(:get, @@oembed_url+@latest_tweet_id)
 				json = JSON.parse(response.body)
-				#json = JSON.parse(open("http://127.0.0.1/tweets.json").read)
 				json["html"]
 			rescue
 				Rails.logger.error "ERROR=>#{@@user_url+@uname}"
