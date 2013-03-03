@@ -94,7 +94,7 @@ class Twitterer
 				created = Date.parse(t["created_at"])
 				newest = created if created > newest
 				oldest = created if created < oldest
-
+				#TODO get counts for 7 and 30 days
 				if t["retweeted_status"] || t["text"].start_with?("RT")
 					retweet_cnt += 1
 				elsif t["in_reply_to_user_id"].nil?
@@ -106,7 +106,7 @@ class Twitterer
 		end
 
 		days = (newest - oldest >= 1) ? newest - oldest : 1
-		puts "days: #{days}"	#DELME
+		#puts "days: #{days}"	#DELME
 		@tpd = (tweet_cnt / days).to_f.round(1)
 		@rtpd = (retweet_cnt / days).to_f.round(1)
 		@combpd = (@tpd + @rtpd).to_f.round(1)
