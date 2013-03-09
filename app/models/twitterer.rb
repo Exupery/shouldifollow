@@ -17,8 +17,10 @@ class Twitterer
 		@uname = uname
 		@id = nil
 		@error = nil
-		@tpd = 0
-		@rtpd = 0
+		@tpd = Hash.new
+		@rtpd = Hash.new
+		@tpdOLD = 0		#REMOVE
+		@rtpdOLD = 0	#REMOVE
 		@allpd = 0
 		@combpd = 0
 		@latest_tweet_id = nil
@@ -83,7 +85,7 @@ class Twitterer
 		Rails.logger.error "ERROR=>#{@error}" if @error
 	end
 
-	def parse_results tweets
+	def OLDparse_results tweets
 		oldest = Date.today
 		newest = Date.new(1970,1,1)
 		tweet_cnt = 0;
@@ -107,9 +109,43 @@ class Twitterer
 
 		days = (newest - oldest >= 1) ? newest - oldest : 1
 		#puts "days: #{days}"	#DELME
-		@tpd = (tweet_cnt / days).to_f.round(1)
-		@rtpd = (retweet_cnt / days).to_f.round(1)
-		@combpd = (@tpd + @rtpd).to_f.round(1)
+		@tpdOLD = (tweet_cnt / days).to_f.round(1)
+		@rtpdOLD = (retweet_cnt / days).to_f.round(1)
+		@combpd = (@tpdOLD + @rtpdOLD).to_f.round(1)
+	end
+
+	def parse_results tweets
+		week_tweet_cnt = 0;
+		week_retweet_cnt = 0;
+		week_ago = 7.days.ago
+		
+		month_tweet_cnt = 0;
+		month_retweet_cnt = 0;
+		month_ago = 30.days.ago
+
+		tweets.each do |t|
+			if t["created_at"] && t["text"]
+				created = Time.parse(t["created_at"])
+				puts "#{created} - #{created >= week_ago} - #{created >= month_ago}" 	#DELME
+				if t["retweeted_status"] || t["text"].start_with?("RT")
+					week_retweet_cnt += 1 if created >= week_ago
+					month_retweet_cnt += 1 if created >= month_ago
+				elsif t["in_reply_to_user_id"].nil?
+					week_tweet_cnt += 1 if created >= week_ago
+					month_tweet_cnt += 1 if created >= month_ago
+					@latest_tweet_id = t["id_str"] if t["id_str"] && (!@latest_tweet_id || t["id_str"] > @latest_tweet_id)
+				end
+			end
+
+		end
+
+		@tpd["week"] = (week_tweet_cnt / 7).to_f.round(1)
+		@tpd["month"] = (month_tweet_cnt / 30).to_f.round(1)
+		@rtpd["week"] = (week_retweet_cnt / 7).to_f.round(1)
+		@rtpd["month"] = (month_retweet_cnt / 30).to_f.round(1)
+		puts @tpd #DELME
+		puts @rtpd #DELME
+		#@combpd = (@tpdOLD + @rtpdOLD).to_f.round(1)
 	end
 
 	def calc_allpd count, since
@@ -158,11 +194,11 @@ class Twitterer
 	end
 
 	def tweets_per_day
-		@tpd
+		@tpdOLD
 	end
 
 	def retweets_per_day
-		@rtpd
+		@rtpdOLD
 	end
 
 	def combined_per_day
