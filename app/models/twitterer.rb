@@ -19,10 +19,7 @@ class Twitterer
 		@error = nil
 		@tpd = Hash.new
 		@rtpd = Hash.new
-		@tpdOLD = 0		#REMOVE
-		@rtpdOLD = 0	#REMOVE
 		@allpd = 0
-		@combpd = 0
 		@latest_tweet_id = nil
 		user = User.new
 		@twitter = user.client if user

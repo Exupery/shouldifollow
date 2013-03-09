@@ -16,7 +16,7 @@
       <% tw = Twitterer.new(uname) %>
       <% if tw.error %>
         <% if tw.is_user_not_found? %>
-        <h2>Average activity for @<%= uname %>:</h2>
+        <h2 class="avg_act_header">Average activity for @<%= uname %>:</h2>
           <h2 class="error"><%= tw.error %> <span class="parens">(you probably typed it wrong or it's a lousy name nobody would want)</span></h2>
         <% else %>
           <h2 class="error"><%= tw.error %> Please check back later! In the meantime learn about nanoseconds from Grace Hopper!</h2>
@@ -25,7 +25,7 @@
           </span>
         <% end %>
       <% else %>
-        <h2>Average activity for <%= link_to("@#{uname}", "https://twitter.com/intent/user?screen_name=#{uname}", "class"=>"uname_link") %>:</h2>
+        <h2 class="avg_act_header">Average activity for <%= link_to("@#{uname}", "https://twitter.com/intent/user?screen_name=#{uname}", "class"=>"uname_link") %>:</h2>
         <%= render 'layouts/metrics', :tw => tw %>
       <% end %>
     </div>

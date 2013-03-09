@@ -112,6 +112,10 @@ a:hover {
   width: 90%;
 }
 
+.avg_act_header {
+  padding-left: 0.75em;
+}
+
 .metric {
   color: #00D199;
   font-weight: bold;
@@ -123,6 +127,31 @@ a:hover {
   font-size: 0.75em;
   font-style: italic;
   color: #959595;
+}
+
+.metrics_table {
+  font-size: 1.1em;
+  margin-left: 1.5em;
+}
+
+.metrics_table td {
+  text-align: right;
+  font-size: 1.17em;
+  font-weight: bold;
+}
+
+.metrics_table .metric {
+  padding: 0.25em;
+  padding-left: 3.5em;
+}
+
+.metrics_table th {
+  padding-left: 1em;
+  text-align: center;
+}
+
+.left {
+  text-align: left !important;
 }
 
 .error {
