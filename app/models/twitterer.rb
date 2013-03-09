@@ -85,64 +85,57 @@ class Twitterer
 		Rails.logger.error "ERROR=>#{@error}" if @error
 	end
 
-	def OLDparse_results tweets
-		oldest = Date.today
-		newest = Date.new(1970,1,1)
-		tweet_cnt = 0;
-		retweet_cnt = 0;
-
-		tweets.each do |t|
-			if t["created_at"] && t["text"]
-				created = Date.parse(t["created_at"])
-				newest = created if created > newest
-				oldest = created if created < oldest
-				#TODO get counts for 7 and 30 days
-				if t["retweeted_status"] || t["text"].start_with?("RT")
-					retweet_cnt += 1
-				elsif t["in_reply_to_user_id"].nil?
-					tweet_cnt += 1
-					@latest_tweet_id = t["id_str"] if t["id_str"] && (!@latest_tweet_id || t["id_str"] > @latest_tweet_id)
-				end
-			end
-
-		end
-
-		days = (newest - oldest >= 1) ? newest - oldest : 1
-		#puts "days: #{days}"	#DELME
-		@tpdOLD = (tweet_cnt / days).to_f.round(1)
-		@rtpdOLD = (retweet_cnt / days).to_f.round(1)
-		@combpd = (@tpdOLD + @rtpdOLD).to_f.round(1)
-	end
-
 	def parse_results tweets
+		now = Time.now
+
 		week_tweet_cnt = 0;
 		week_retweet_cnt = 0;
 		week_ago = 7.days.ago
+		week_oldest = now
 		
 		month_tweet_cnt = 0;
 		month_retweet_cnt = 0;
 		month_ago = 30.days.ago
+		month_oldest = now
 
 		tweets.each do |t|
 			if t["created_at"] && t["text"]
 				created = Time.parse(t["created_at"])
-				puts "#{created} - #{created >= week_ago} - #{created >= month_ago}" 	#DELME
 				if t["retweeted_status"] || t["text"].start_with?("RT")
-					week_retweet_cnt += 1 if created >= week_ago
-					month_retweet_cnt += 1 if created >= month_ago
+					if created >= week_ago
+						week_retweet_cnt += 1
+						week_oldest = created if created < week_oldest
+					end
+					if created >= month_ago
+						month_retweet_cnt += 1
+						month_oldest = created if created < month_oldest
+					end
 				elsif t["in_reply_to_user_id"].nil?
-					week_tweet_cnt += 1 if created >= week_ago
-					month_tweet_cnt += 1 if created >= month_ago
+					if created >= week_ago
+						week_tweet_cnt += 1
+						week_oldest = created if created < week_oldest
+					end
+					if created >= month_ago
+						month_tweet_cnt += 1
+						month_oldest = created if created < month_oldest
+					end
 					@latest_tweet_id = t["id_str"] if t["id_str"] && (!@latest_tweet_id || t["id_str"] > @latest_tweet_id)
 				end
 			end
-
 		end
 
-		@tpd["week"] = (week_tweet_cnt / 7).to_f.round(1)
-		@tpd["month"] = (month_tweet_cnt / 30).to_f.round(1)
-		@rtpd["week"] = (week_retweet_cnt / 7).to_f.round(1)
-		@rtpd["month"] = (month_retweet_cnt / 30).to_f.round(1)
+		week_day_cnt = (now - week_oldest) / 60 / 60 / 24
+		week_day_cnt = 1 if week_day_cnt < 1
+		month_day_cnt = (now - month_oldest) / 60 / 60 / 24
+		month_day_cnt = 1 if month_day_cnt < 1
+		@tpd["week"] = (week_tweet_cnt / week_day_cnt).to_f.round(1)
+		@tpd["month"] = (month_tweet_cnt / month_day_cnt).to_f.round(1)
+		@rtpd["week"] = (week_retweet_cnt / week_day_cnt).to_f.round(1)
+		@rtpd["month"] = (month_retweet_cnt / month_day_cnt).to_f.round(1)
+		puts week_oldest	#DELME
+		puts month_oldest	#DELME
+		puts now-week_oldest	#DELME
+		puts now-month_oldest	#DELME
 		puts @tpd #DELME
 		puts @rtpd #DELME
 		#@combpd = (@tpdOLD + @rtpdOLD).to_f.round(1)
