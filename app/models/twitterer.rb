@@ -128,17 +128,11 @@ class Twitterer
 		week_day_cnt = 1 if week_day_cnt < 1
 		month_day_cnt = (now - month_oldest) / 60 / 60 / 24
 		month_day_cnt = 1 if month_day_cnt < 1
+
 		@tpd["week"] = (week_tweet_cnt / week_day_cnt).to_f.round(1)
 		@tpd["month"] = (month_tweet_cnt / month_day_cnt).to_f.round(1)
 		@rtpd["week"] = (week_retweet_cnt / week_day_cnt).to_f.round(1)
 		@rtpd["month"] = (month_retweet_cnt / month_day_cnt).to_f.round(1)
-		puts week_oldest	#DELME
-		puts month_oldest	#DELME
-		puts now-week_oldest	#DELME
-		puts now-month_oldest	#DELME
-		puts @tpd #DELME
-		puts @rtpd #DELME
-		#@combpd = (@tpdOLD + @rtpdOLD).to_f.round(1)
 	end
 
 	def calc_allpd count, since
@@ -186,16 +180,28 @@ class Twitterer
 		@uname
 	end
 
-	def tweets_per_day
-		@tpdOLD
+	def tweets_per_day period
+		if @tpd.has_key?(period)
+			@tpd[period]
+		else
+			0
+		end
 	end
 
-	def retweets_per_day
-		@rtpdOLD
+	def retweets_per_day period
+		if @rtpd.has_key?(period)
+			@rtpd[period]
+		else
+			0
+		end
 	end
 
-	def combined_per_day
-		@combpd
+	def combined_per_day period
+		if @tpd.has_key?(period) && @rtpd.has_key?(period)
+			(@tpd[period] + @rtpd[period]).to_f.round(1)
+		else
+			0
+		end
 	end
 
 	def all_per_day
