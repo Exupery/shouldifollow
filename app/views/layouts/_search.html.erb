@@ -26,16 +26,7 @@
         <% end %>
       <% else %>
         <h2>Average activity for <%= link_to("@#{uname}", "https://twitter.com/intent/user?screen_name=#{uname}", "class"=>"uname_link") %>:</h2>
-        <h3><span class="metric"><%= tw.tweets_per_day %></span> tweets per day <span class="parens">(last seven days)</span></h3>
-        <h3><span class="metric"><%= tw.retweets_per_day %></span> retweets per day <span class="parens">(last seven days)</span></h3>
-        <h3><span class="metric"><%= tw.combined_per_day %></span> tweets+retweets per day <span class="parens">(last seven days)</span></h3>
-        <h3><span class="metric"><%= tw.all_per_day %></span> total per day <span class="parens">(since joining Twitter, includes replies)</span></h3>
-        <% if tw.has_latest_tweet? %>
-          <div id="timeline">
-            <h3>Latest Tweet:</h3>
-            <%= raw(tw.get_recent_tweet_html) %>
-          </div>
-        <% end %>
+        <%= render 'layouts/metrics', :tw => tw %>
       <% end %>
     </div>
   <% else %>

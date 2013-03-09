@@ -1,0 +1,37 @@
+<h3><span class="metric"><%= tw.tweets_per_day %></span> tweets per day <span class="parens">(last seven days)</span></h3>
+<h3><span class="metric"><%= tw.retweets_per_day %></span> retweets per day <span class="parens">(last seven days)</span></h3>
+<h3><span class="metric"><%= tw.combined_per_day %></span> tweets+retweets per day <span class="parens">(last seven days)</span></h3>
+<h3><span class="metric"><%= tw.all_per_day %></span> total per day <span class="parens">(since joining Twitter, includes replies)</span></h3>
+
+<table class="metrics_table">
+    <tr class="heading_row">
+        <th></th>
+        <th>most recent week</th>
+        <th>most recent month</th>
+    </tr>
+    <tbody>
+        <tr>
+            <td>tweets per day</td>
+            <td><%= tw.tweets_per_day %></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>retweets per day</td>
+            <td><%= tw.retweets_per_day %></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>combined per day</td>
+            <td><%= tw.combined_per_day %></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+
+<% if tw.has_latest_tweet? %>
+    <div id="timeline">
+        <h3>Latest Tweet:</h3>
+        <%= raw(tw.get_recent_tweet_html) %>
+    </div>
+<% end %>
