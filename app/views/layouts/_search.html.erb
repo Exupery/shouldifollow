@@ -26,7 +26,15 @@
         <% end %>
       <% else %>
         <h2 class="avg_act_header">Average activity for <%= link_to("@#{uname}", "https://twitter.com/intent/user?screen_name=#{uname}", "class"=>"uname_link") %>:</h2>
-        <%= render 'layouts/metrics', :tw => tw %>
+        <% if tw.is_protected? %>
+          <div id="fail_image">
+            <h2 class="red">LOLZ, that account is protected.</h2>
+            <h3 class="red">Perhaps look up someone not trying to fail at Twitter</h3>
+            <a href="http://xkcd.com/336/"><img src="http://imgs.xkcd.com/comics/priorities.png" /></a>
+          </div>
+        <% else %>
+          <%= render 'layouts/metrics', :tw => tw %>            
+        <% end %>
       <% end %>
     </div>
   <% else %>

@@ -21,13 +21,14 @@ class Twitterer
 		@rtpd = Hash.new
 		@allpd = 0
 		@latest_tweet_id = nil
+		@protected = true	#TODO set
 		user = User.new
 		@twitter = user.client if user
 
 		begin
 			fetch = Timeout::timeout(8) {
 				fetch_id_and_allpd
-				fetch_t_rt_pd if @id
+				fetch_t_rt_pd if (@id && !@protected)
 			}
 		rescue Timeout::Error => ex
 			Rails.logger.error "TIMEOUT=>#{ex}"
@@ -206,11 +207,15 @@ class Twitterer
 	end
 
 	def has_latest_tweet?
-		return @latest_tweet_id
+		@latest_tweet_id
 	end
 
 	def is_user_not_found?
 		return @error && (@error == @@no_user_err)
+	end
+
+	def is_protected?
+		@protected
 	end
 
 end

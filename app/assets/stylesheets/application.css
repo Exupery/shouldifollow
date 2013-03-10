@@ -154,6 +154,7 @@ a:hover {
   text-align: left !important;
 }
 
+.red,
 .error {
   color: #FF0000;
 }
@@ -199,4 +200,14 @@ a:hover {
   padding-left: 60px;
   width: 515px;
   padding-top: 20px;
+}
+
+#fail_image {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#fail_image a:hover {
+  background-color: #FFFFFF !important;
 }
