@@ -21,7 +21,7 @@ class Twitterer
 		@rtpd = Hash.new
 		@allpd = 0
 		@latest_tweet_id = nil
-		@protected = true	#TODO set
+		@protected = false
 		user = User.new
 		@twitter = user.client if user
 
@@ -58,6 +58,7 @@ class Twitterer
 			@error = generate_error json
 		elsif json
 			@id = json["id_str"]
+			@protected = json["protected"]
 			@allpd = calc_allpd json["statuses_count"], json["created_at"]
 		end
 		Rails.logger.error "ERROR=>#{@error}" if @error
