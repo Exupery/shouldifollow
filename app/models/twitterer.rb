@@ -124,26 +124,20 @@ class Twitterer
 		end
 
 		week_day_cnt = (now - week_oldest) / 60 / 60 / 24
-		#week_day_cnt = 1 if week_day_cnt < 1
 		month_day_cnt = (now - month_oldest) / 60 / 60 / 24
-		#month_day_cnt = 1 if month_day_cnt < 1
-
-		#@tpd["week"] = (week_tweet_cnt / week_day_cnt).to_f.round(1)
-		#@rtpd["week"] = (week_retweet_cnt / week_day_cnt).to_f.round(1)
-		#@tpd["month"] = (month_tweet_cnt / month_day_cnt).to_f.round(1)
-		#@rtpd["month"] = (month_retweet_cnt / month_day_cnt).to_f.round(1)
-
-		@tpd["week"] = calc_pd_counts(week_tweet_cnt, week_day_cnt, 7)
-		@rtpd["week"] = calc_pd_counts(week_retweet_cnt, week_day_cnt, 7)
-		@tpd["month"] = calc_pd_counts(month_tweet_cnt, month_day_cnt, 30)
-		@rtpd["month"] = calc_pd_counts(month_retweet_cnt, month_day_cnt, 30)
+		
+		@tpd["week"] = calc_pd_counts week_tweet_cnt, week_day_cnt
+		@rtpd["week"] = calc_pd_counts week_retweet_cnt, week_day_cnt
+		@tpd["month"] = calc_pd_counts month_tweet_cnt, month_day_cnt
+		@rtpd["month"] = calc_pd_counts month_retweet_cnt, month_day_cnt
+		#For very active users (>200 tweets per week) month and week stats will be same
+		#rounding month up in those cases to reflect less precision
+		@tpd["month"] = @tpd["month"].ceil if month_day_cnt < 7
+		@rtpd["month"] = @rtpd["month"].ceil if month_day_cnt < 7
 	end
 
-	def calc_pd_counts cnt, days, period
-		puts "cnt:\t#{cnt}"	#DELME
-		puts "days:\t#{days}"	#DELME
-		puts "per:\t#{period}\n\n"	#DELME
-		return (cnt / days).to_f.round(1)
+	def calc_pd_counts cnt, days
+		return (days>0) ? (cnt / days).to_f.round(1) : 0
 	end
 
 	def calc_allpd count, since
