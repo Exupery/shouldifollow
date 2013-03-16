@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   def clean input
-    input.gsub!(/[@<>%'";\/]/, '') if input
+    input.gsub!(/[^a-zA-Z0-9_]/, '') if input
     return input
   end
 
