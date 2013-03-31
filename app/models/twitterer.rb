@@ -24,7 +24,7 @@ class Twitterer
 		@protected = false
 		user = User.new
 		@twitter = user.client if user
-
+		
 		begin
 			fetch = Timeout::timeout(8) {
 				fetch_id_and_allpd
