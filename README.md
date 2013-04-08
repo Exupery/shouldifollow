@@ -3,11 +3,11 @@
 http://www.shouldifollow.com
 
 When determining to follow someone on [Twitter](https://twitter.com/) it's often difficult to accurately assess how much 
-"noise" they generate. Looking at their recent activity on Twitter is fine in many cases, but for users
-with many replies it gets much more difficult to see how many tweets this person would add to your stream each
+they'll add to your stream. Looking at their recent activity on Twitter works in many cases, but for users
+with many replies and/or retweets it gets much more difficult to see how many tweets this person would actually add to your stream each
 day.
 
-ShouldIFollow takes the guesswork out by showing some simple metrics of their activity over the last week:
+ShouldIFollow takes the guesswork out by showing some simple metrics of their average activity over both the last week and last month:
 
 1. Tweets per day
 
