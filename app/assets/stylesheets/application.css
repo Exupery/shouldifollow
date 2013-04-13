@@ -154,6 +154,10 @@ a:hover {
   font-size: 1.4em;
 }
 
+#all_time iframe {
+  vertical-align: middle;
+}
+
 .left {
   text-align: left !important;
 }
