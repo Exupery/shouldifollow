@@ -23,8 +23,7 @@
     </tbody>
 </table>
 
-
-<h3><span class="metric"><%= tw.all_per_day %></span> total per day <span class="parens">(since joining Twitter, includes @replies)</span></h3>
+<h2><span class="metric"><%= tw.all_per_day %></span> total per day <span class="parens">(including @replies)</span> since joining Twitter on <%= tw.joined %></h2>
 
 <% if tw.has_latest_tweet? %>
     <div id="timeline">

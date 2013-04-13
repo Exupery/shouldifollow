@@ -22,6 +22,7 @@ class Twitterer
 		@allpd = 0
 		@latest_tweet_id = nil
 		@protected = false
+		@joined = nil
 		user = User.new
 		@twitter = user.client if user
 		
@@ -57,11 +58,22 @@ class Twitterer
 		if json && json["errors"]
 			@error = generate_error json
 		elsif json
+			@joined = format_join_date json["created_at"]
+			puts @joined	#DELME
 			@id = json["id_str"]
 			@protected = json["protected"]
 			@allpd = calc_allpd json["statuses_count"], json["created_at"]
 		end
 		Rails.logger.error "ERROR=>#{@error}" if @error
+	end
+
+	def format_join_date joined
+		date = nil
+		if joined
+			t = Time.parse(joined)
+			date = t.strftime("%d %B %Y") if t
+		end
+		date
 	end
 
 	def fetch_t_rt_pd
@@ -211,6 +223,10 @@ class Twitterer
 
 	def all_per_day
 		@allpd
+	end
+
+	def joined
+		@joined
 	end
 
 	def has_latest_tweet?
