@@ -59,7 +59,6 @@ class Twitterer
 			@error = generate_error json
 		elsif json
 			@joined = format_join_date json["created_at"]
-			puts @joined	#DELME
 			@id = json["id_str"]
 			@protected = json["protected"]
 			@allpd = calc_allpd json["statuses_count"], json["created_at"]
