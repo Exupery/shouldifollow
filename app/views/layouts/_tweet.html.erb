@@ -1,2 +1,8 @@
-<a href="https://twitter.com/share" id="tweet" class="twitter-share-button" data-lang="en" data-url="http://www.shouldifollow.com/" data-text="Average tweet per day metrics for anyone!" data-related="frostmatthew">Tweet</a>
+<% if tw.nil? %>
+	<a href="https://twitter.com/share" id="tweet" class="twitter-share-button" data-lang="en" data-url="http://www.shouldifollow.com/" data-text="Average tweet per day metrics for anyone!" data-related="frostmatthew">Tweet</a>
+<% else %>
+	<% tweet_text = "Since #{tw.joined} @#{tw.uname} has averaged #{tw.all_per_day} tweets per day" %>
+	<% query = {:lang=>"en", :url=>"http://www.shouldifollow.com/#{tw.uname}", :counturl=>"http://www.shouldifollow.com/",:size=>"large", :count=>"none", :text=>tweet_text }.to_query %>
+	<%= link_to "Tweet this number", "https://twitter.com/share?#{query}", :id=>"tweet-avg", :class=>"twitter-share-button" %>
+<% end %>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
