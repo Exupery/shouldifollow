@@ -70,7 +70,7 @@ class Twitterer
 		date = nil
 		if joined
 			t = Time.parse(joined)
-			date = t.strftime("%d %B %Y") if t
+			date = t.strftime("%-d %B %Y") if t
 		end
 		date
 	end
