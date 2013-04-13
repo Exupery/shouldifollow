@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
       @description = "Average tweets per day for @#{uname}"
     else
       @title = "Should I Follow?"
-      @description = "Find average tweet per day metrics for any Twitter user"
+      @description = "See average number of tweets per day for anyone on Twitter"
     end
   end
 
