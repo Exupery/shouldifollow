@@ -150,6 +150,10 @@ a:hover {
   text-align: center;
 }
 
+#all_time {
+  font-size: 1.4em;
+}
+
 .left {
   text-align: left !important;
 }

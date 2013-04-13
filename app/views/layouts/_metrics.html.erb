@@ -23,8 +23,7 @@
     </tbody>
 </table>
 
-<h2><span class="metric"><%= tw.all_per_day %></span> total per day <span class="parens">(including @replies)</span> since joining Twitter on <%= tw.joined %></h2>
-<%= render 'layouts/tweet', :tw => tw %>
+<h3 id="all_time"><span class="metric"><%= tw.all_per_day %></span> total per day <span class="parens">(includes @replies)</span> since joining Twitter (<%= tw.joined %>)<%= render 'layouts/tweet', :tw => tw %></h3>
 
 <% if tw.has_latest_tweet? %>
     <div id="timeline">
