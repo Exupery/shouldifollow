@@ -1,11 +1,10 @@
 class User
 
-	@@cons_key = ENV["TWITTER_CONSUMER_KEY"]
-	@@cons_secret = ENV["TWITTER_CONSUMER_SECRET"]
-	@@acc_key = ENV["TWITTER_ACCESS_KEY"]
-	@@acc_secret = ENV["TWITTER_ACCESS_SECRET"]
-
 	def initialize
+		@@cons_key = ENV["TWITTER_CONSUMER_KEY"]
+		@@cons_secret = ENV["TWITTER_CONSUMER_SECRET"]
+		@@acc_key = ENV["TWITTER_ACCESS_KEY"]
+		@@acc_secret = ENV["TWITTER_ACCESS_SECRET"]
 		@access_token = create_access_token(@@acc_key, @@acc_secret)
 	end
 
