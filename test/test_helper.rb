@@ -17,7 +17,7 @@ class ActiveSupport::TestCase
   	  if on_key
   	  	key = token
   	  else
-  	  	value = token.gsub("\"", "")
+  	  	value = token.gsub(/"/, "").chomp
   	  end
   	  on_key = false
   	}
