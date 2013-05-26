@@ -1,15 +1,11 @@
 class User
 
 	def initialize
-		@@cons_key = ENV["TWITTER_CONSUMER_KEY"]
-		@@cons_secret = ENV["TWITTER_CONSUMER_SECRET"]
-		@@acc_key = ENV["TWITTER_ACCESS_KEY"]
-		@@acc_secret = ENV["TWITTER_ACCESS_SECRET"]
-		@access_token = create_access_token(@@acc_key, @@acc_secret)
+		@access_token = create_access_token(ENV["TWITTER_ACCESS_KEY"], ENV["TWITTER_ACCESS_SECRET"])
 	end
 
 	def create_access_token oauth_token, oauth_token_secret
-		consumer = OAuth::Consumer.new(@@cons_key, @@cons_secret, {
+		consumer = OAuth::Consumer.new(ENV["TWITTER_CONSUMER_KEY"], ENV["TWITTER_CONSUMER_SECRET"], {
 				:site => "https://api.twitter.com",
 				:scheme => :header
 			})
