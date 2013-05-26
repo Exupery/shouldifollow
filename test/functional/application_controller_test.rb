@@ -7,6 +7,11 @@ class ApplicationControllerTest < ActionController::TestCase
   	assert_response :success
   end
 
+  test "should get ratelimit" do
+    get :ratelimit
+    assert_response :success
+  end
+
   test "search for SEARCH_FOR should redirect to /SEARCH_FOR" do
   	search_for = "foobar"
   	get :search, :uname => search_for
