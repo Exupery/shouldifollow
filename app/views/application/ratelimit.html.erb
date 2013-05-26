@@ -8,7 +8,7 @@
 		<table class="metrics_table">
 			<thead>
 				<tr class="heading_row">
-					<th></th><th>Remaining</th><th>Of</th><th>Resets in</th>
+					<th></th><th>Remaining</th><th>Limit</th><th>Resets in</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -16,25 +16,22 @@
 					<td>users</td>
 					<td><%= limits.user_lookups["remaining"] %></td>
 					<td><%= limits.user_lookups["limit"] %></td>
-					<td><%= limits.user_lookups["reset"] %></td>
+					<td><%= (mins_from_now limits.user_lookups["reset"]).ceil %>m</td>
 				</tr>
 				<tr>
 					<td>timelines</td>
 					<td><%= limits.timelines["remaining"] %></td>
 					<td><%= limits.timelines["limit"] %></td>
-					<td><%= limits.timelines["reset"] %></td>
+					<td><%= (mins_from_now limits.timelines["reset"]).ceil %>m</td>
 				</tr>
 				<tr>
 					<td>oembeds</td>
 					<td><%= limits.oembeds["remaining"] %></td>
 					<td><%= limits.oembeds["limit"] %></td>
-					<td><%= limits.oembeds["reset"] %></td>
+					<td><%= (mins_from_now limits.oembeds["reset"]).ceil %>m</td>
 				</tr>
 			</tbody>
 		</table>
-		<h2>users: <%= limits.user_lookups %></h2>
-		<h2>timelines: <%= limits.timelines %></h2>
-		<h2>oembeds: <%= limits.oembeds %></h2>
 	</div>
 	<% end %>
 </div>
