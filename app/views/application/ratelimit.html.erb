@@ -1,5 +1,12 @@
 <div id="content" class="shadow">
 	<div class="content_top">
-		<h1>rate limit</h1>
+		<h1>Twitter API Rate Limit Check <span class="parens">(dev mode only)</span></h1>
+	</div>
+
+	<div id="rate_limits">
+		<% limits = Ratelimit.new %>
+		<%= limits.user_lookups %>
+		<%= limits.timelines %>
+		<%= limits.oembeds %>
 	</div>
 </div>

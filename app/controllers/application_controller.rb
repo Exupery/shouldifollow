@@ -24,7 +24,6 @@ class ApplicationController < ActionController::Base
   end
 
   def ratelimit
-    puts "checking rate limit"
   end
 
   def notfound
