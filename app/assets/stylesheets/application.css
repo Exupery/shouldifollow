@@ -52,32 +52,32 @@ a:hover {
   width: 175px;
 }
 
-#search_area {
+.content_top {
   margin-top: 10px;
   padding-left: 75px;
   padding-right: 30px;
 }
 
-#search_area {
+.content_top {
   background-image: url("bird_blue_48.png");
   background-repeat: no-repeat;
   background-position: top left;
   margin-bottom: 20px;
 }
 
-#search_area h1 {
+.content_top h1 {
   margin: 0;
   margin-left: 1em;
   font-size: 2.25em;
 }
 
-#search_area label {
+.content_top label {
   margin: 0;
   padding: 0;
   font-size: 2.1em;
 }
 
-#search_area #username {
+.content_top #username {
   height: 29px;
   width: 227px;
   margin-left: 0;
@@ -88,11 +88,11 @@ a:hover {
   color: #959595;
 }
 
-#search_area #submit {
+.content_top #submit {
   font-size: 1.8em;
 }
 
-#search_area #submit:hover {
+.content_top #submit:hover {
   color: #00A0D1;
   cursor: pointer;
 }
