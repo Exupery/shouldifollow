@@ -1,9 +1,8 @@
-<div id="content">
+<div id="content" class="shadow">
 
   <div id="search_area">
     <h1>Should I follow</h1>
-    <%# using should-i-follow, Twitter doesn't allow usernames with hyphens so using something that won't interfere with any potential searches %>
-    <%= form_tag("/should-i-follow", :method=>"get") do %>
+    <%= form_tag("/search/should-i-follow", :method=>"get") do %>
       <%= label_tag(:username, "@") %>
       <%= text_field_tag(:uname, "username", "id"=>"username", :maxlength=>20) %>
       <%= submit_tag("?", "id"=>"submit") %>
