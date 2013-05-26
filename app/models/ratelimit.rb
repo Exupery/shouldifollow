@@ -7,6 +7,9 @@ class Ratelimit
   attr_reader :user_lookups, :timelines, :oembeds
 
   def initialize
+  	@user_lookups = Hash.new
+  	@timelines = Hash.new
+  	@oembeds = Hash.new
   	update_rate_limits	
   end
 
@@ -14,9 +17,9 @@ class Ratelimit
 		json = get_json
 		if json
 			res = json["resources"]
-			@user_lookups = res["users"]["/users/show/:id"]["remaining"]
-			@timelines = res["statuses"]["/statuses/user_timeline"]["remaining"]
-			@oembeds = res["statuses"]["/statuses/oembed"]["remaining"]
+			@user_lookups = res["users"]["/users/show/:id"]
+			@timelines = res["statuses"]["/statuses/user_timeline"]
+			@oembeds = res["statuses"]["/statuses/oembed"]
 		end
   end
 

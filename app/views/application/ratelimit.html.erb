@@ -2,11 +2,39 @@
 	<div class="content_top">
 		<h1>Twitter API Rate Limit Check <span class="parens">(dev mode only)</span></h1>
 	</div>
-
+	<% if Rails.env.development? %>
 	<div id="rate_limits">
 		<% limits = Ratelimit.new %>
-		<%= limits.user_lookups %>
-		<%= limits.timelines %>
-		<%= limits.oembeds %>
+		<table class="metrics_table">
+			<thead>
+				<tr class="heading_row">
+					<th></th><th>Remaining</th><th>Of</th><th>Resets in</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>users</td>
+					<td><%= limits.user_lookups["remaining"] %></td>
+					<td><%= limits.user_lookups["limit"] %></td>
+					<td><%= limits.user_lookups["reset"] %></td>
+				</tr>
+				<tr>
+					<td>timelines</td>
+					<td><%= limits.timelines["remaining"] %></td>
+					<td><%= limits.timelines["limit"] %></td>
+					<td><%= limits.timelines["reset"] %></td>
+				</tr>
+				<tr>
+					<td>oembeds</td>
+					<td><%= limits.oembeds["remaining"] %></td>
+					<td><%= limits.oembeds["limit"] %></td>
+					<td><%= limits.oembeds["reset"] %></td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>users: <%= limits.user_lookups %></h2>
+		<h2>timelines: <%= limits.timelines %></h2>
+		<h2>oembeds: <%= limits.oembeds %></h2>
 	</div>
+	<% end %>
 </div>
