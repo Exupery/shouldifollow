@@ -23,6 +23,10 @@ class ApplicationController < ActionController::Base
     return input
   end
 
+  def ratelimit
+    puts "checking rate limit"
+  end
+
   def notfound
     raise ActionController::RoutingError.new('Not Found')
   end
