@@ -25,8 +25,8 @@ class Twitterer
 		
 		begin
 			fetch = Timeout::timeout(8) {
-				fetch_id_and_allpd	#REVERT
-				fetch_per_day_counts if (@id && !@protected)
+				#fetch_id_and_allpd	#REVERT
+				fetch_per_day_counts #if (@id && !@protected)
 			}
 		rescue Timeout::Error => ex
 			Rails.logger.error "TIMEOUT=>#{ex}"
@@ -74,8 +74,8 @@ class Twitterer
 
 	def fetch_per_day_counts
 		begin
-			response = @twitter.request(:get, @@tweet_url+@uname)	#REVERT
-			#response = @twitter.request(:get, "http://127.0.0.1/timeline.json")
+			#response = @twitter.request(:get, @@tweet_url+@uname)	#REVERT
+			response = @twitter.request(:get, "http://127.0.0.1/timeline.json")
 			json = JSON.parse(response.body)
 		rescue OpenURI::HTTPError => ex
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@tweet_url+@uname}"
@@ -116,7 +116,7 @@ class Twitterer
 	end
 
 	def get_recent_tweet_html
-		#return nil	#DELME
+		return nil	#DELME
 		if has_latest_tweet? 
 			begin
 				response = @twitter.request(:get, @@oembed_url+@timeline.latest_tweet_id)

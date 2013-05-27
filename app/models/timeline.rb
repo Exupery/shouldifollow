@@ -6,11 +6,21 @@ class Timeline
 		@user_id = user_id
 		@tweets_per_day = Hash.new
 		@retweets_per_day = Hash.new
+		@weekday_cnt = 0
+		@weekend_cnt = 0
+		@early_am_cnt = 0
+		@day_cnt = 0
+		@evening_cnt = 0
 		parse_timeline timeline_json
+		puts "wkday: #{@weekday_cnt}"	#DELME
+		puts "wkend: #{@weekend_cnt}"	#DELME
+		puts "early_am: #{@early_am_cnt}"	#DELME
+		puts "day: #{@day_cnt}"	#DELME
+		puts "evening: #{@evening_cnt}"	#DELME
 	end
 
 	def parse_timeline tweets
-		now = Time.now
+		now = Time.now.utc
 
 		week_tweet_cnt = 0
 		week_retweet_cnt = 0
@@ -24,7 +34,9 @@ class Timeline
 
 		tweets.each do |t|
 			if t["created_at"] && t["text"]
-				created = Time.parse(t["created_at"])
+				created = Time.parse(t["created_at"]).utc
+				add_to_days created.wday
+				add_to_times created.hour
 
 				if t["retweeted_status"] || t["text"].start_with?("RT")
 					if created >= week_ago
@@ -64,5 +76,23 @@ class Timeline
 
 	def calc_per_day_counts cnt, days
 		(days>0) ? (cnt / days).to_f.round(1) : 0
+	end
+
+	def add_to_days wday
+		if wday == 0 || wday == 6
+			@weekend_cnt += 1
+		else
+			@weekday_cnt += 1
+		end
+	end
+
+	def add_to_times hour
+		if hour >= 0 && hour < 9
+			@early_am_cnt += 1
+		elsif hour >= 9 && hour < 17
+			@day_cnt += 1
+		elsif hour >= 17 
+			@evening_cnt += 1
+		end
 	end
 end
