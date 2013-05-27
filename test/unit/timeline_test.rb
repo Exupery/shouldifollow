@@ -25,18 +25,4 @@ class TimelineTest < ActiveSupport::TestCase
   	assert !tweet.nil?, "recent tweet is NIL"
   	assert !tweet.empty?, "recent tweet id is empty string"
   end
-
-  test "returns timeline start time" do
-  	start_time = @@timeline.start_time
-    assert !start_time.nil?, "timeline start time is NIL"
-    assert start_time.kind_of?(Numeric), "timeline start time is NOT a number"
-    assert start_time > 0, "timeline start time is NOT greater than zero"
-  end
-
-  test "returns timeline end time" do
-  	end_time = @@timeline.end_time
-    assert !end_time.nil?, "timeline end time is NIL"
-    assert end_time.kind_of?(Numeric), "timeline end time is NOT a number"
-    assert end_time > 0, "timeline end time is NOT greater than zero"
-  end
 end
