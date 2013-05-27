@@ -23,13 +23,14 @@ class Twitterer
 		@latest_tweet_id = nil
 		@protected = false
 		@joined = nil
+		@timeline = nil
 		user = User.new
 		@twitter = user.client if user
 		
 		begin
 			fetch = Timeout::timeout(8) {
-				fetch_id_and_allpd
-				fetch_t_rt_pd if (@id && !@protected)
+				#fetch_id_and_allpd	#REVERT
+				fetch_t_rt_pd #if (@id && !@protected)
 			}
 		rescue Timeout::Error => ex
 			Rails.logger.error "TIMEOUT=>#{ex}"
@@ -40,7 +41,7 @@ class Twitterer
 	def fetch_id_and_allpd
 		begin
 			response = @twitter.request(:get, @@user_url+@uname)
-			json = JSON.parse(response.body)
+			json = JSON.parse(response.body)			
 		rescue OpenURI::HTTPError => ex
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@user_url+@uname}"
 			if ex.to_s.start_with?("404")
@@ -58,8 +59,8 @@ class Twitterer
 		if json && json["errors"]
 			@error = generate_error json
 		elsif json
-			@joined = format_join_date json["created_at"]
 			@id = json["id_str"]
+			@joined = format_join_date json["created_at"]
 			@protected = json["protected"]
 			@allpd = calc_allpd json["statuses_count"], json["created_at"]
 		end
@@ -77,7 +78,8 @@ class Twitterer
 
 	def fetch_t_rt_pd
 		begin
-			response = @twitter.request(:get, @@tweet_url+@uname)
+			#response = @twitter.request(:get, @@tweet_url+@uname)	#REVERT
+			response = @twitter.request(:get, "http://127.0.0.1/timeline.json")
 			json = JSON.parse(response.body)
 		rescue OpenURI::HTTPError => ex
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@tweet_url+@uname}"
@@ -89,6 +91,7 @@ class Twitterer
 		
 		if json.kind_of?(Array)
 			parse_results json
+			@timeline = Timeline.new @id, json
 		else
 			@error = generate_error json
 		end
@@ -111,6 +114,7 @@ class Twitterer
 		tweets.each do |t|
 			if t["created_at"] && t["text"]
 				created = Time.parse(t["created_at"])
+
 				if t["retweeted_status"] || t["text"].start_with?("RT")
 					if created >= week_ago
 						week_retweet_cnt += 1
@@ -174,6 +178,7 @@ class Twitterer
 	end
 
 	def get_recent_tweet_html
+		return nil	#DELME
 		if @latest_tweet_id 
 			begin
 				response = @twitter.request(:get, @@oembed_url+@latest_tweet_id)
