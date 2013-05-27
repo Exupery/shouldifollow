@@ -17,8 +17,6 @@ class Twitterer
 		@uname = uname
 		@id = nil
 		@error = nil
-		@tpd = Hash.new
-		@rtpd = Hash.new
 		@allpd = 0
 		@latest_tweet_id = nil
 		@protected = false
@@ -29,8 +27,8 @@ class Twitterer
 		
 		begin
 			fetch = Timeout::timeout(8) {
-				#fetch_id_and_allpd	#REVERT
-				fetch_t_rt_pd #if (@id && !@protected)
+				fetch_id_and_allpd	#REVERT
+				fetch_per_day_counts if (@id && !@protected)
 			}
 		rescue Timeout::Error => ex
 			Rails.logger.error "TIMEOUT=>#{ex}"
@@ -76,10 +74,10 @@ class Twitterer
 		date
 	end
 
-	def fetch_t_rt_pd
+	def fetch_per_day_counts
 		begin
-			#response = @twitter.request(:get, @@tweet_url+@uname)	#REVERT
-			response = @twitter.request(:get, "http://127.0.0.1/timeline.json")
+			response = @twitter.request(:get, @@tweet_url+@uname)	#REVERT
+			#response = @twitter.request(:get, "http://127.0.0.1/timeline.json")
 			json = JSON.parse(response.body)
 		rescue OpenURI::HTTPError => ex
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@tweet_url+@uname}"
@@ -90,69 +88,11 @@ class Twitterer
 		end
 		
 		if json.kind_of?(Array)
-			parse_results json
 			@timeline = Timeline.new @id, json
 		else
 			@error = generate_error json
 		end
 		Rails.logger.error "ERROR=>#{@error}" if @error
-	end
-
-	def parse_results tweets
-		now = Time.now
-
-		week_tweet_cnt = 0;
-		week_retweet_cnt = 0;
-		week_ago = 7.days.ago
-		week_oldest = now
-		
-		month_tweet_cnt = 0;
-		month_retweet_cnt = 0;
-		month_ago = 30.days.ago
-		month_oldest = now
-
-		tweets.each do |t|
-			if t["created_at"] && t["text"]
-				created = Time.parse(t["created_at"])
-
-				if t["retweeted_status"] || t["text"].start_with?("RT")
-					if created >= week_ago
-						week_retweet_cnt += 1
-						week_oldest = created if created < week_oldest
-					end
-					if created >= month_ago
-						month_retweet_cnt += 1
-						month_oldest = created if created < month_oldest
-					end
-				elsif t["in_reply_to_user_id"].nil?
-					if created >= week_ago
-						week_tweet_cnt += 1
-						week_oldest = created if created < week_oldest
-					end
-					if created >= month_ago
-						month_tweet_cnt += 1
-						month_oldest = created if created < month_oldest
-					end
-					@latest_tweet_id = t["id_str"] if t["id_str"] && (!@latest_tweet_id || t["id_str"] > @latest_tweet_id)
-				end
-			end
-		end
-
-		week_day_cnt = (now - week_oldest) / 60 / 60 / 24
-		month_day_cnt = (now - month_oldest) / 60 / 60 / 24
-		
-		@tpd["week"] = calc_pd_counts week_tweet_cnt, week_day_cnt
-		@rtpd["week"] = calc_pd_counts week_retweet_cnt, week_day_cnt
-		@tpd["month"] = calc_pd_counts month_tweet_cnt, month_day_cnt
-		@rtpd["month"] = calc_pd_counts month_retweet_cnt, month_day_cnt
-		#For very active users (>200 tweets per week) month and week stats will be same
-		#rounding month up in those cases to reflect less precision
-		@tpd["month"] = @tpd["month"].ceil if month_day_cnt < 7
-		@rtpd["month"] = @rtpd["month"].ceil if month_day_cnt < 7
-	end
-
-	def calc_pd_counts cnt, days
-		return (days>0) ? (cnt / days).to_f.round(1) : 0
 	end
 
 	def calc_allpd count, since
@@ -178,10 +118,10 @@ class Twitterer
 	end
 
 	def get_recent_tweet_html
-		return nil	#DELME
-		if @latest_tweet_id 
+		#return nil	#DELME
+		if has_latest_tweet? 
 			begin
-				response = @twitter.request(:get, @@oembed_url+@latest_tweet_id)
+				response = @twitter.request(:get, @@oembed_url+@timeline.latest_tweet_id)
 				json = JSON.parse(response.body)
 				json["html"]
 			rescue
@@ -193,36 +133,32 @@ class Twitterer
 		end
 	end
 
-	def error
-		@error
-	end
-
-	def uname
-		@uname
-	end
-
 	def tweets_per_day period
-		if @tpd.has_key?(period)
-			@tpd[period]
+		if @timeline && @timeline.tweets_per_day.has_key?(period)
+			@timeline.tweets_per_day[period]
 		else
 			0
 		end
 	end
 
 	def retweets_per_day period
-		if @rtpd.has_key?(period)
-			@rtpd[period]
+		if @timeline && @timeline.retweets_per_day.has_key?(period)
+			@timeline.retweets_per_day[period]
 		else
 			0
 		end
 	end
 
 	def combined_per_day period
-		if @tpd.has_key?(period) && @rtpd.has_key?(period)
-			(@tpd[period] + @rtpd[period]).to_f.round(1)
-		else
-			0
-		end
+		tweets_per_day(period) + retweets_per_day(period)
+	end
+
+	def error
+		@error
+	end
+
+	def uname
+		@uname
 	end
 
 	def all_per_day
@@ -234,7 +170,7 @@ class Twitterer
 	end
 
 	def has_latest_tweet?
-		@latest_tweet_id
+		@timeline.latest_tweet_id || false
 	end
 
 	def is_user_not_found?
