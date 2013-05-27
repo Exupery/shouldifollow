@@ -1,22 +1,24 @@
 class Timeline
 
-	attr_reader :user_id, :latest_tweet_id, :tweets_per_day, :retweets_per_day
+	attr_reader :user_id, :latest_tweet_id, :tweets_per_day, :retweets_per_day, :weekday_percent, :weekend_percent
 
 	def initialize user_id, timeline_json
 		@user_id = user_id
 		@tweets_per_day = Hash.new
 		@retweets_per_day = Hash.new
-		@weekday_cnt = 0
-		@weekend_cnt = 0
-		@early_am_cnt = 0
-		@day_cnt = 0
-		@evening_cnt = 0
+		@weekday_cnt = Hash.new
+		@weekend_cnt = Hash.new
+		@weekday_percent = Hash.new
+		@weekend_percent = Hash.new
+		@timeframes = ["early_am", "day", "evening"]
+		@timeframes.each { |tf|
+			@weekday_cnt[tf] = 0.0
+			@weekday_percent[tf] = 0.0
+			@weekend_cnt[tf] = 0.0
+			@weekend_percent[tf] = 0.0
+		}
 		parse_timeline timeline_json
-		puts "wkday: #{@weekday_cnt}"	#DELME
-		puts "wkend: #{@weekend_cnt}"	#DELME
-		puts "early_am: #{@early_am_cnt}"	#DELME
-		puts "day: #{@day_cnt}"	#DELME
-		puts "evening: #{@evening_cnt}"	#DELME
+		calc_timing timeline_json.length if !timeline_json.nil?
 	end
 
 	def parse_timeline tweets
@@ -35,8 +37,7 @@ class Timeline
 		tweets.each do |t|
 			if t["created_at"] && t["text"]
 				created = Time.parse(t["created_at"]).utc
-				add_to_days created.wday
-				add_to_times created.hour
+				add_to_times created
 
 				if t["retweeted_status"] || t["text"].start_with?("RT")
 					if created >= week_ago
@@ -78,21 +79,37 @@ class Timeline
 		(days>0) ? (cnt / days).to_f.round(1) : 0
 	end
 
-	def add_to_days wday
-		if wday == 0 || wday == 6
-			@weekend_cnt += 1
-		else
-			@weekday_cnt += 1
+	def add_to_times t
+		wday = t.wday
+		hour = t.hour
+		if hour >= 0 && hour < 9
+			(wday == 0 || wday == 6) ? @weekend_cnt["early_am"] += 1 : @weekday_cnt["early_am"] += 1
+		elsif hour >= 9 && hour < 17
+			(wday == 0 || wday == 6) ? @weekend_cnt["day"] += 1 : @weekday_cnt["day"] += 1
+		elsif hour >= 17 
+			(wday == 0 || wday == 6) ? @weekend_cnt["evening"] += 1 : @weekday_cnt["evening"] += 1
 		end
 	end
 
-	def add_to_times hour
-		if hour >= 0 && hour < 9
-			@early_am_cnt += 1
-		elsif hour >= 9 && hour < 17
-			@day_cnt += 1
-		elsif hour >= 17 
-			@evening_cnt += 1
+	def calc_timing total
+		puts total	#DELME
+		puts "early_am: #{@weekend_cnt["early_am"]}"	#DELME
+		puts "day: #{@weekend_cnt["day"]}"	#DELME
+		puts "evening: #{@weekend_cnt["evening"]}"	#DELME
+		puts "early_am: #{@weekday_cnt["early_am"]}"	#DELME
+		puts "day: #{@weekday_cnt["day"]}"	#DELME
+		puts "evening: #{@weekday_cnt["evening"]}"	#DELME
+		if total > 0
+			@timeframes.each { |tf|
+				@weekday_percent[tf] = (@weekday_cnt[tf] / total * 100).to_f.round(1)
+				@weekend_percent[tf] = (@weekend_cnt[tf] / total * 100).to_f.round(1)
+			}
 		end
+		puts "early_am: #{@weekend_percent["early_am"]}"	#DELME
+		puts "day: #{@weekend_percent["day"]}"	#DELME
+		puts "evening: #{@weekend_percent["evening"]}"	#DELME
+		puts "early_am: #{@weekday_percent["early_am"]}"	#DELME
+		puts "day: #{@weekday_percent["day"]}"	#DELME
+		puts "evening: #{@weekday_percent["evening"]}"	#DELME
 	end
 end
