@@ -5,7 +5,7 @@ class Timeline
 	def initialize user_id, timeline_json
 		@user_id = user_id
 		@start_time = 0
-		@end_time = 0
+		@end_time = Time.now.to_i
 		@tweets_per_day = Hash.new
 		@retweets_per_day = Hash.new
 		parse_timeline timeline_json
@@ -14,19 +14,21 @@ class Timeline
 	def parse_timeline tweets
 		now = Time.now
 
-		week_tweet_cnt = 0;
-		week_retweet_cnt = 0;
+		week_tweet_cnt = 0
+		week_retweet_cnt = 0
 		week_ago = 7.days.ago
 		week_oldest = now
 		
-		month_tweet_cnt = 0;
-		month_retweet_cnt = 0;
+		month_tweet_cnt = 0
+		month_retweet_cnt = 0
 		month_ago = 30.days.ago
 		month_oldest = now
 
 		tweets.each do |t|
 			if t["created_at"] && t["text"]
 				created = Time.parse(t["created_at"])
+				@start_time = created.to_i if created.to_i > @start_time
+				@end_time = created.to_i if created.to_i < @end_time
 
 				if t["retweeted_status"] || t["text"].start_with?("RT")
 					if created >= week_ago
