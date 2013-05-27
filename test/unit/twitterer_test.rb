@@ -4,21 +4,21 @@ class TwittererTest < ActiveSupport::TestCase
 
   @@tw = Twitterer.new("nasa")
 
-  test "calcs tweets per day" do
+  test "returns tweets per day" do
   	tpd = @@tw.tweets_per_day "week"
     assert !tpd.nil?, "tweets per day is NIL"
     assert tpd.kind_of?(Numeric), "tweets per day is NOT a number"
     assert tpd > 0, "tweets per day is NOT greater than zero"
   end
 
-  test "calcs retweets per day" do
+  test "returns retweets per day" do
   	rtpd = @@tw.retweets_per_day "week"
     assert !rtpd.nil?, "retweets per day is NIL"
     assert rtpd.kind_of?(Numeric), "retweets per day is NOT a number"
     assert rtpd > 0, "retweets per day is NOT greater than zero"
   end
 
-  test "calcs combined per day" do
+  test "returns combined per day" do
   	cpd = @@tw.combined_per_day "week"
     assert !cpd.nil?, "combined per day is NIL"
     assert cpd.kind_of?(Numeric), "combined per day is NOT a number"

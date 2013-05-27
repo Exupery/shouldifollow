@@ -13,14 +13,12 @@ class Twitterer
 	@@gen_err = "Whoops, something went wrong :-("
 	@@timeout_err = "OH NOES - looks likes there was some trouble accessing the Twitter API :-("
 
+	attr_reader :id, :uname, :error, :latest_tweet_id, :joined, :all_per_day
+
 	def initialize uname
 		@uname = uname
-		@id = nil
-		@error = nil
-		@allpd = 0
-		@latest_tweet_id = nil
+		@all_per_day = 0
 		@protected = false
-		@joined = nil
 		@timeline = nil
 		user = User.new
 		@twitter = user.client if user
@@ -60,7 +58,7 @@ class Twitterer
 			@id = json["id_str"]
 			@joined = format_join_date json["created_at"]
 			@protected = json["protected"]
-			@allpd = calc_allpd json["statuses_count"], json["created_at"]
+			@all_per_day = calc_allpd json["statuses_count"], json["created_at"]
 		end
 		Rails.logger.error "ERROR=>#{@error}" if @error
 	end
@@ -98,7 +96,7 @@ class Twitterer
 	def calc_allpd count, since
 		count = 0 if !count
 		days = (since) ? Date.today-Date.parse(since) : 1;
-		return (count / days).to_f.round(1)
+		(count / days).to_f.round(1)
 	end
 
 	def generate_error errors
@@ -134,39 +132,15 @@ class Twitterer
 	end
 
 	def tweets_per_day period
-		if @timeline && @timeline.tweets_per_day.has_key?(period)
-			@timeline.tweets_per_day[period]
-		else
-			0
-		end
+		(@timeline && @timeline.tweets_per_day.has_key?(period)) ? @timeline.tweets_per_day[period] : 0
 	end
 
 	def retweets_per_day period
-		if @timeline && @timeline.retweets_per_day.has_key?(period)
-			@timeline.retweets_per_day[period]
-		else
-			0
-		end
+		(@timeline && @timeline.retweets_per_day.has_key?(period)) ? @timeline.retweets_per_day[period] : 0
 	end
 
 	def combined_per_day period
 		tweets_per_day(period) + retweets_per_day(period)
-	end
-
-	def error
-		@error
-	end
-
-	def uname
-		@uname
-	end
-
-	def all_per_day
-		@allpd
-	end
-
-	def joined
-		@joined
 	end
 
 	def has_latest_tweet?
@@ -174,7 +148,7 @@ class Twitterer
 	end
 
 	def is_user_not_found?
-		return @error && (@error == @@no_user_err)
+		@error && (@error == @@no_user_err)
 	end
 
 	def is_protected?
