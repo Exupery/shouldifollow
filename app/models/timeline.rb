@@ -1,6 +1,6 @@
 class Timeline
 
-	attr_reader :user_id, :latest_tweet_id, :tweets_per_day, :retweets_per_day, :weekday_percent, :weekend_percent
+	attr_reader :user_id, :latest_tweet_id, :tweets_per_day, :retweets_per_day, :timeframes, :weekday_percent, :weekend_percent
 
 	def initialize user_id, timeline_json
 		@user_id = user_id
@@ -10,7 +10,7 @@ class Timeline
 		@weekend_cnt = Hash.new
 		@weekday_percent = Hash.new
 		@weekend_percent = Hash.new
-		@timeframes = ["early_am", "day", "evening"]
+		@timeframes = ["midnight - 9am", "9am - 5pm", "5pm - midnight"]
 		@timeframes.each { |tf|
 			@weekday_cnt[tf] = 0.0
 			@weekday_percent[tf] = 0.0
@@ -83,33 +83,20 @@ class Timeline
 		wday = t.wday
 		hour = t.hour
 		if hour >= 0 && hour < 9
-			(wday == 0 || wday == 6) ? @weekend_cnt["early_am"] += 1 : @weekday_cnt["early_am"] += 1
+			(wday == 0 || wday == 6) ? @weekend_cnt[@timeframes[0]] += 1 : @weekday_cnt[@timeframes[0]] += 1
 		elsif hour >= 9 && hour < 17
-			(wday == 0 || wday == 6) ? @weekend_cnt["day"] += 1 : @weekday_cnt["day"] += 1
+			(wday == 0 || wday == 6) ? @weekend_cnt[@timeframes[1]] += 1 : @weekday_cnt[@timeframes[1]] += 1
 		elsif hour >= 17 
-			(wday == 0 || wday == 6) ? @weekend_cnt["evening"] += 1 : @weekday_cnt["evening"] += 1
+			(wday == 0 || wday == 6) ? @weekend_cnt[@timeframes[2]] += 1 : @weekday_cnt[@timeframes[2]] += 1
 		end
 	end
 
 	def calc_timing total
-		puts total	#DELME
-		puts "early_am: #{@weekend_cnt["early_am"]}"	#DELME
-		puts "day: #{@weekend_cnt["day"]}"	#DELME
-		puts "evening: #{@weekend_cnt["evening"]}"	#DELME
-		puts "early_am: #{@weekday_cnt["early_am"]}"	#DELME
-		puts "day: #{@weekday_cnt["day"]}"	#DELME
-		puts "evening: #{@weekday_cnt["evening"]}"	#DELME
 		if total > 0
 			@timeframes.each { |tf|
 				@weekday_percent[tf] = (@weekday_cnt[tf] / total * 100).to_f.round(1)
 				@weekend_percent[tf] = (@weekend_cnt[tf] / total * 100).to_f.round(1)
 			}
 		end
-		puts "early_am: #{@weekend_percent["early_am"]}"	#DELME
-		puts "day: #{@weekend_percent["day"]}"	#DELME
-		puts "evening: #{@weekend_percent["evening"]}"	#DELME
-		puts "early_am: #{@weekday_percent["early_am"]}"	#DELME
-		puts "day: #{@weekday_percent["day"]}"	#DELME
-		puts "evening: #{@weekday_percent["evening"]}"	#DELME
 	end
 end

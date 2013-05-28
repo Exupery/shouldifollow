@@ -13,13 +13,12 @@ class Twitterer
 	@@gen_err = "Whoops, something went wrong :-("
 	@@timeout_err = "OH NOES - looks likes there was some trouble accessing the Twitter API :-("
 
-	attr_reader :id, :uname, :error, :latest_tweet_id, :joined, :all_per_day
+	attr_reader :id, :uname, :error, :latest_tweet_id, :joined, :all_per_day, :timeline
 
 	def initialize uname
 		@uname = uname
 		@all_per_day = 0
 		@protected = false
-		@timeline = nil
 		user = User.new
 		@twitter = user.client if user
 		
