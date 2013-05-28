@@ -25,4 +25,15 @@ class TimelineTest < ActiveSupport::TestCase
   	assert !tweet.nil?, "recent tweet is NIL"
   	assert !tweet.empty?, "recent tweet id is empty string"
   end
+
+  test "returns hash of timing activity" do
+  	timeframes = @@timeline.timeframes
+  	assert !timeframes.nil?, "timeframes is NIL"
+  	assert timeframes.kind_of?(Array), "timeframes is NOT an Array"
+  	assert timeframes.length > 0, "timeframe array is EMPTY"
+  	timeframes.each { |tf|
+  		assert !@@timeline.weekday_percent[tf].nil?, "missing '#{tf}' for weekday"
+			assert !@@timeline.weekend_percent[tf].nil?, "missing '#{tf}' for weekend"
+  	}
+  end
 end
