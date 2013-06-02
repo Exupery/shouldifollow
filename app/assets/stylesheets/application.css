@@ -55,7 +55,7 @@ a:hover {
   width: 175px;
 }
 
-.content_top {
+.content-top {
   margin-top: 10px;
   margin-bottom: 20px;
   width: 52%;
@@ -64,14 +64,14 @@ a:hover {
   background-position: top left;
 }
 
-.content_top h1 {
+.content-top h1 {
   margin: 0;
   margin-left: 2em;
   margin-bottom: 0.5em;
   font-size: 2.25em;
 }
 
-.content_top label {
+.content-top label {
   margin: 0;
   padding: 0;
   font-size: 3em;
@@ -79,7 +79,7 @@ a:hover {
   padding-bottom: 0.25em;
 }
 
-.content_top #username {
+.content-top #username {
   height: 1em;
   width: 227px;
   margin-left: 0;
@@ -87,12 +87,12 @@ a:hover {
   font-size: 2.25em;
 }
 
-.content_top #submit {
+.content-top #submit {
   font-size: 2.25em;
   min-height: 1.25em;  
 }
 
-.content_top #submit:hover {
+.content-top #submit:hover {
   color: #00A0D1;
   cursor: pointer;
 }
@@ -102,17 +102,17 @@ textarea::-webkit-input-placeholder {
   line-height: 1em;
 }
 
-.uname_link {
+.uname-link {
   text-decoration: none;
 }
 
-.uname_link:hover {
+.uname-link:hover {
   color: #004053;
   background-color: #FFFFFF;
   text-decoration: none;
 }
 
-.avg_act_header {
+.avg-act-header {
   font-size: 2.25em;
 }
 
@@ -129,31 +129,31 @@ textarea::-webkit-input-placeholder {
   color: #959595;
 }
 
-.metrics_table {
+.metrics-table {
   font-size: 1.6em;
 }
 
-.metrics_table td {
+.metrics-table td {
   text-align: right;
   font-size: 1.17em;
   font-weight: bold;
 }
 
-.metrics_table .metric {
+.metrics-table .metric {
   padding: 0.25em;
   padding-left: 3.5em;
 }
 
-.metrics_table th {
+.metrics-table th {
   padding-left: 1em;
   text-align: center;
 }
 
-#all_time {
+#all-time {
   font-size: 1.8em;
 }
 
-#all_time iframe {
+#all-time iframe {
   vertical-align: -0.25em;
 }
 
@@ -204,7 +204,7 @@ textarea::-webkit-input-placeholder {
   padding-right: 0;
 }
 
-#fail_image a:hover {
+#fail-image a:hover {
   background-color: #FFFFFF !important;
 }
 
