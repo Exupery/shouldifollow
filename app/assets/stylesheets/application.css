@@ -86,8 +86,8 @@ a:hover {
 }
 
 .content_top #submit {
-  font-size: 32px;
-  min-height: 34px;
+  font-size: 2.25em;
+  min-height: 1.25em;  
 }
 
 .content_top #submit:hover {
