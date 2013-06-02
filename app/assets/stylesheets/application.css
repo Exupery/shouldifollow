@@ -157,6 +157,11 @@ textarea::-webkit-input-placeholder {
   vertical-align: -0.25em;
 }
 
+#timeline {
+  margin-top: 2.5em;
+  width: 500px;
+}
+
 .left {
   text-align: left !important;
 }

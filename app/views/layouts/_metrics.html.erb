@@ -46,8 +46,7 @@
 </table>
 
 <% if tw.has_latest_tweet? %>
-    <div id="timeline">
-        <h3>Latest Tweet:</h3>
+    <div id="timeline" class="auto-lr-margin">
         <%= raw(tw.get_recent_tweet_html) %>
     </div>
 <% end %>
