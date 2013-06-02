@@ -88,8 +88,8 @@ class Timeline
 	def calc_timing total
 		if total > 0
 			@timeframes.each { |tf|
-				@weekday_percent[tf] = (@weekday_cnt[tf] / total * 100).to_f.round(1)
-				@weekend_percent[tf] = (@weekend_cnt[tf] / total * 100).to_f.round(1)
+				@weekday_percent[tf] = (@weekday_cnt[tf] / total * 100).round
+				@weekend_percent[tf] = (@weekend_cnt[tf] / total * 100).round
 			}
 		end
 	end
