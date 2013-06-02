@@ -36,6 +36,10 @@ a:hover {
   margin-right: auto;
 }
 
+.center-text {
+  text-align: center;
+}
+
 .content {
   background-color: #FFFFFF;
   border: 3px solid #00A0D1;
@@ -109,7 +113,6 @@ textarea::-webkit-input-placeholder {
 }
 
 .avg_act_header {
-  text-align: center;
   font-size: 2.25em;
 }
 
@@ -178,7 +181,6 @@ textarea::-webkit-input-placeholder {
 }
 
 #footer {
-  text-align: center;
   clear: both;
   padding: 25px;
   padding-top: 20px;
@@ -196,10 +198,6 @@ textarea::-webkit-input-placeholder {
   list-style-type: none;
   padding-right: 1.75em;
   vertical-align: top;
-}
-
-#fail_image {
-  text-align: center;
 }
 
 #footer .last {
