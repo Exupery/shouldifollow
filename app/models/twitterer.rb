@@ -3,10 +3,18 @@ require "json"
 require "date"
 require "timeout"
 
-class Twitterer 
-	@@user_url = "https://api.twitter.com/1.1/users/show.json?screen_name="
-	@@tweet_url = "https://api.twitter.com/1.1/statuses/user_timeline.json?count=200&include_rts=1&screen_name="
-	@@oembed_url = "https://api.twitter.com/1.1/statuses/oembed.json?maxwidth=500&id="
+class Twitterer
+	#REVERT 
+	#@@user_url = "https://api.twitter.com/1.1/users/show.json?screen_name="
+	#@@tweet_url = "https://api.twitter.com/1.1/statuses/user_timeline.json?count=200&include_rts=1&screen_name="
+	#@@oembed_url = "https://api.twitter.com/1.1/statuses/oembed.json?maxwidth=500&id="
+	#REVERT 
+	#DELME
+	Rails.logger.warn "USING LOCAL RESOURCES"
+	@@user_url = "http://127.0.0.1/user.json?screen_name="
+	@@tweet_url = "http://127.0.0.1/timeline.json?screen_name="
+	@@oembed_url = "http://127.0.0.1/oembed.json?id="
+	#DELME
 
 	@@rate_limit_err = "Whoa! shouldifollow seems to have hit the Twitter API hourly rate limit."
 	@@no_user_err = "Username not found"

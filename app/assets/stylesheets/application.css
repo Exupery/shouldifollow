@@ -29,21 +29,20 @@ a:hover {
 }
 
 #page {
-  width: 810px;
   margin: 0;
   margin-left: auto;
   margin-right: auto;
 }
 
 #content {
-  float: left;
   background-color: #FFFFFF;
   border: 3px solid #00A0D1;
   border-top: none;
   padding: 25px;
-  padding-left: 60px;
-  width: 515px;
+  width: 640px;
   min-height: 175px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #sidebar {
@@ -54,45 +53,51 @@ a:hover {
 
 .content_top {
   margin-top: 10px;
-  padding-left: 75px;
-  padding-right: 30px;
-}
-
-.content_top {
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 52%;
   background-image: url("bird_blue_48.png");
   background-repeat: no-repeat;
   background-position: top left;
-  margin-bottom: 20px;
 }
 
 .content_top h1 {
   margin: 0;
-  margin-left: 1em;
+  margin-left: 2em;
+  margin-bottom: 0.5em;
   font-size: 2.25em;
 }
 
 .content_top label {
   margin: 0;
   padding: 0;
-  font-size: 2.1em;
+  font-size: 3em;
+  vertical-align: middle;
+  padding-bottom: 0.25em;
 }
 
 .content_top #username {
-  height: 29px;
+  height: 1em;
   width: 227px;
   margin-left: 0;
-  margin-top: 0.5em;
   padding-left: 0;
-  font-size: 1.75em;
+  font-size: 2.25em;
 }
 
 .content_top #submit {
-  font-size: 1.8em;
+  font-size: 32px;
+  min-height: 34px;
 }
 
 .content_top #submit:hover {
   color: #00A0D1;
   cursor: pointer;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  line-height: 1em;
 }
 
 .uname_link {
@@ -172,7 +177,7 @@ a:hover {
 }
 
 #expl {
-  width: 65%;
+  width: 75%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -192,8 +197,10 @@ a:hover {
   padding-bottom: 10px;
 }
 
-#sidebar li {
+#footer li {
+  display: inline-block;
   list-style-type: none;
+  padding-right: 1.25em;
 }
 
 #sidebar ul.links li {
@@ -201,10 +208,11 @@ a:hover {
 }
 
 #footer {
+  text-align: center;
   clear: both;
   padding: 25px;
   padding-left: 60px;
-  width: 515px;
+  /*width: 515px;*/
   padding-top: 20px;
 }
 
