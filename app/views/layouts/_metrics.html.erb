@@ -44,7 +44,25 @@
         <% } %>
     </tbody>
 </table>
-
+<!-- DELME -->
+<!-- <table class="metrics-table auto-lr-margin">
+    <tr class="heading-row">
+        <th><span class="parens">(times in UTC)</span></th>
+        <th>weekdays</th>
+        <th>weekends</th>
+    </tr>
+    <tbody>
+        <% tl = tw.timeline %>
+        <% tl.timeframes.each { |tf| %>
+            <tr>
+                <td class="left"><%= tf %></td>
+                <td class="metric"><%= tl.weekday_percent[tf] %></td>
+                <td class="metric"><%= tl.weekend_percent[tf] %></td>
+            </tr>
+        <% } %>
+    </tbody>
+</table> -->
+<!-- DELME -->
 <% if tw.has_latest_tweet? %>
     <div id="timeline" class="auto-lr-margin">
         <%= raw(tw.get_recent_tweet_html) %>

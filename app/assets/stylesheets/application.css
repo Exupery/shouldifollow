@@ -49,12 +49,6 @@ a:hover {
   min-height: 175px;
 }
 
-#sidebar {
-  float: right;
-  padding-left: 10px;
-  width: 175px;
-}
-
 .content-top {
   margin-top: 10px;
   margin-bottom: 20px;
