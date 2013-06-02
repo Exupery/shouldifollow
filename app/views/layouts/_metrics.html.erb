@@ -25,10 +25,10 @@
 
 <h3 id="all-time"><span class="metric"><%= tw.all_per_day %></span> total per day <span class="parens">(includes @replies)</span> since joining Twitter on <%= tw.joined %><%= render 'layouts/tweet', :tw => tw %></h3>
 
-<h2 class="avg-act-header center-text">Activity timing</h2>
-<h4 class="auto-lr-margin center-text"><span class="parens">(as percent of last 200 tweets)</span></h4>
+<h2 class="avg-act-header center-text" title="As percent of last 200 tweets">Activity timing</h2>
 <table id="timing-table" class="auto-lr-margin">
     <% tl = tw.timeline %>
+    <% peak = tl.peak_percent %>
     <tr class="heading-row">
         <th><span class="parens">(times in UTC)</span></th>
         <% tl.timeframes.each { |h| %>
@@ -39,13 +39,13 @@
         <tr>
             <td>weekdays</td>
             <% tl.weekday_percent.each { |k, v| %>
-                <td class="" title="<%= "#{v}% of activity" %>" style="background-color: rgba(13, 51, 63, <%= get_bg_trans(v, 18) %>)"></td>
+                <td class="" title="<%= "#{v}% of activity" %>" style="background-color: rgba(13, 51, 63, <%= get_bg_trans(v, peak) %>)"></td>
             <% } %>
         </tr>
         <tr>
             <td>weekends</td>
             <% tl.weekend_percent.each { |k, v| %>
-                <td class="" title="<%= "#{v}% of activity" %>" style="background-color: rgba(13, 51, 63, <%= get_bg_trans(v, 18) %>)"></td>
+                <td class="" title="<%= "#{v}% of activity" %>" style="background-color: rgba(13, 51, 63, <%= get_bg_trans(v, peak) %>)"></td>
             <% } %>
         </tr>
     </tbody>

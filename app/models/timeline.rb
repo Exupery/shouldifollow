@@ -1,6 +1,6 @@
 class Timeline
 
-	attr_reader :user_id, :latest_tweet_id, :tweets_per_day, :retweets_per_day, :timeframes, :weekday_percent, :weekend_percent
+	attr_reader :user_id, :latest_tweet_id, :tweets_per_day, :retweets_per_day, :timeframes, :weekday_percent, :weekend_percent, :peak_percent
 
 	def initialize user_id, timeline_json
 		@user_id = user_id
@@ -10,6 +10,7 @@ class Timeline
 		@weekend_cnt = Hash.new
 		@weekday_percent = Hash.new
 		@weekend_percent = Hash.new
+		@peak_percent = 1.0
 		@timeframes = Array(0..23)
 		@timeframes.each { |tf|
 			@weekday_cnt[tf] = 0.0
@@ -90,6 +91,8 @@ class Timeline
 			@timeframes.each { |tf|
 				@weekday_percent[tf] = (@weekday_cnt[tf] / total * 100).round
 				@weekend_percent[tf] = (@weekend_cnt[tf] / total * 100).round
+				@peak_percent = @weekday_percent[tf] if @weekday_percent[tf] > @peak_percent
+				@peak_percent = @weekend_percent[tf] if @weekend_percent[tf] > @peak_percent
 			}
 		end
 	end
