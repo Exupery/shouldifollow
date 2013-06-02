@@ -31,21 +31,18 @@ a:hover {
   text-decoration: underline;
 }
 
-#page {
-  margin: 0;
+.auto-lr-margin {
   margin-left: auto;
   margin-right: auto;
 }
 
-#content {
+.content {
   background-color: #FFFFFF;
   border: 3px solid #00A0D1;
   border-top: none;
   padding: 25px;
   width: 640px;
   min-height: 175px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 #sidebar {
@@ -57,8 +54,6 @@ a:hover {
 .content_top {
   margin-top: 10px;
   margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
   width: 52%;
   background-image: url("bird_blue_48.png");
   background-repeat: no-repeat;
@@ -113,13 +108,9 @@ textarea::-webkit-input-placeholder {
   text-decoration: none;
 }
 
-#stats,
-#profile {
-  width: 90%;
-}
-
 .avg_act_header {
-  padding-left: 0.75em;
+  text-align: center;
+  font-size: 2.25em;
 }
 
 .metric {
@@ -136,8 +127,7 @@ textarea::-webkit-input-placeholder {
 }
 
 .metrics_table {
-  font-size: 1.2em;
-  margin-left: 1.5em;
+  font-size: 1.6em;
 }
 
 .metrics_table td {
@@ -157,11 +147,11 @@ textarea::-webkit-input-placeholder {
 }
 
 #all_time {
-  font-size: 1.4em;
+  font-size: 1.8em;
 }
 
 #all_time iframe {
-  vertical-align: middle;
+  vertical-align: -0.25em;
 }
 
 .left {
@@ -180,8 +170,6 @@ textarea::-webkit-input-placeholder {
 }
 
 #expl {
-  margin-left: auto;
-  margin-right: auto;
   padding-left: 2em;
 }
 
@@ -212,8 +200,6 @@ textarea::-webkit-input-placeholder {
 
 #fail_image {
   text-align: center;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 #footer .last {

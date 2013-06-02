@@ -1,6 +1,6 @@
-<div id="content" class="shadow">
+<div class="content shadow auto-lr-margin">
 
-  <div id="search_area" class="content_top">
+  <div id="search_area" class="content_top auto-lr-margin">
     <h1>Should I follow</h1>
     <%= form_tag("/search/should-i-follow", :method=>"get", :class=>"form-inline") do %>
       <%= label_tag(:username, "@") %>
@@ -26,7 +26,7 @@
       <% else %>
         <h2 class="avg_act_header">Average activity for <%= link_to("@#{uname}", "https://twitter.com/intent/user?screen_name=#{uname}", "class"=>"uname_link") %>:</h2>
         <% if tw.is_protected? %>
-          <div id="fail_image">
+          <div id="fail_image" class="auto-lr-margin">
             <h2 class="red">LOLZ, that account is protected.</h2>
             <h3 class="red">Perhaps look up someone not trying to fail at Twitter</h3>
             <a href="http://xkcd.com/336/"><img src="http://imgs.xkcd.com/comics/priorities.png" /></a>
