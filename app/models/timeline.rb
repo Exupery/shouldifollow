@@ -10,7 +10,7 @@ class Timeline
 		@weekend_cnt = Hash.new
 		@weekday_percent = Hash.new
 		@weekend_percent = Hash.new
-		@timeframes = ["midnight - 6am", "6am - noon", "noon - 6pm", "6pm - midnight"]
+		@timeframes = Array(0..23)
 		@timeframes.each { |tf|
 			@weekday_cnt[tf] = 0.0
 			@weekday_percent[tf] = 0.0
@@ -82,15 +82,7 @@ class Timeline
 	def add_to_times t
 		wday = t.wday
 		hour = t.hour
-		if hour >= 0 && hour < 6
-			(wday == 0 || wday == 6) ? @weekend_cnt[@timeframes[0]] += 1 : @weekday_cnt[@timeframes[0]] += 1
-		elsif hour >= 6 && hour < 12
-			(wday == 0 || wday == 6) ? @weekend_cnt[@timeframes[1]] += 1 : @weekday_cnt[@timeframes[1]] += 1
-		elsif hour >= 12 && hour < 18
-			(wday == 0 || wday == 6) ? @weekend_cnt[@timeframes[2]] += 1 : @weekday_cnt[@timeframes[2]] += 1
-		elsif hour >= 18 
-			(wday == 0 || wday == 6) ? @weekend_cnt[@timeframes[3]] += 1 : @weekday_cnt[@timeframes[3]] += 1
-		end
+		(wday == 0 || wday == 6) ? @weekend_cnt[@timeframes[hour]] += 1 : @weekday_cnt[@timeframes[hour]] += 1
 	end
 
 	def calc_timing total
