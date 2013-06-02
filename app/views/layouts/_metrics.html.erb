@@ -26,11 +26,11 @@
 <h3 id="all-time"><span class="metric"><%= tw.all_per_day %></span> total per day <span class="parens">(includes @replies)</span> since joining Twitter on <%= tw.joined %><%= render 'layouts/tweet', :tw => tw %></h3>
 
 <h2 class="avg-act-header center-text" title="As percent of last 200 tweets">Activity timing</h2>
-<table id="timing-table" class="auto-lr-margin">
+<table id="timing-table" class="auto-lr-margin table table-bordered table-condensed">
     <% tl = tw.timeline %>
     <% peak = tl.peak_percent %>
     <tr class="heading-row">
-        <th><span class="parens">(times in UTC)</span></th>
+        <th class="parens auto-lr-margin" title="times in Coordinated Universal Time (UTC)">(UTC)</th>
         <% tl.timeframes.each { |h| %>
             <th><%= h %></th>
         <% } %>
