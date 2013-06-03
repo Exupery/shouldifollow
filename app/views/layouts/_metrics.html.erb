@@ -39,13 +39,13 @@
         <tr>
             <td>weekdays</td>
             <% tl.weekday_percent.each { |k, v| %>
-                <td title="<%= "#{v}% of activity" %>" style="background-color: rgba(13, 51, 63, <%= get_bg_trans(v, peak) %>)"></td>
+                <td id="<%= "wkday-utc#{k}" %>" title="<%= "#{v}% of activity" %>" style="background-color: rgba(13, 51, 63, <%= get_bg_trans(v, peak) %>)" class="time-data" data-utc="<%= k %>" data-base="<%= v %>" data-day="wkday"></td>
             <% } %>
         </tr>
         <tr>
             <td>weekends</td>
             <% tl.weekend_percent.each { |k, v| %>
-                <td title="<%= "#{v}% of activity" %>" style="background-color: rgba(13, 51, 63, <%= get_bg_trans(v, peak) %>)"></td>
+                <td id="<%= "wkend-utc#{k}" %>" title="<%= "#{v}% of activity" %>" style="background-color: rgba(13, 51, 63, <%= get_bg_trans(v, peak) %>)" class="time-data" data-utc="<%= k %>" data-base="<%= v %>" data-day="wkend"></td>
             <% } %>
         </tr>
     </tbody>
