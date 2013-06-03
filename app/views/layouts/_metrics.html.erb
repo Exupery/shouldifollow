@@ -32,20 +32,20 @@
     <tr class="heading-row">
         <th class="parens auto-lr-margin" title="times in Coordinated Universal Time (UTC)">(UTC)</th>
         <% tl.timeframes.each { |h| %>
-            <th><%= h %></th>
+            <th class="time-header" data-utc="<%= h %>"><%= h %></th>
         <% } %>
     </tr>
     <tbody>
         <tr>
             <td>weekdays</td>
             <% tl.weekday_percent.each { |k, v| %>
-                <td class="" title="<%= "#{v}% of activity" %>" style="background-color: rgba(13, 51, 63, <%= get_bg_trans(v, peak) %>)"></td>
+                <td title="<%= "#{v}% of activity" %>" style="background-color: rgba(13, 51, 63, <%= get_bg_trans(v, peak) %>)"></td>
             <% } %>
         </tr>
         <tr>
             <td>weekends</td>
             <% tl.weekend_percent.each { |k, v| %>
-                <td class="" title="<%= "#{v}% of activity" %>" style="background-color: rgba(13, 51, 63, <%= get_bg_trans(v, peak) %>)"></td>
+                <td title="<%= "#{v}% of activity" %>" style="background-color: rgba(13, 51, 63, <%= get_bg_trans(v, peak) %>)"></td>
             <% } %>
         </tr>
     </tbody>
