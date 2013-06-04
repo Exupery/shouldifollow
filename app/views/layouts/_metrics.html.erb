@@ -39,13 +39,15 @@
         <tr>
             <td>weekdays</td>
             <% tl.weekday_percent.each { |k, v| %>
-                <td id="<%= "wkday-utc#{k}" %>" title="<%= "#{v}% of activity" %>" style="background-color: rgba(13, 51, 63, <%= get_bg_trans(v, peak) %>)" class="time-data" data-utc="<%= k %>" data-base="<%= v %>" data-day="wkday"></td>
+                <% alpha = get_bg_trans(v, peak) %>
+                <td id="<%= "wkday-utc#{k}" %>" title="<%= "#{v}% of activity" %>" style="background-color: rgba(13, 51, 63, <%= alpha %>)" class="time-data" data-utc="<%= k %>" data-base="<%= v %>" data-alpha="<%= alpha %>" data-day="wkday"></td>
             <% } %>
         </tr>
         <tr>
             <td>weekends</td>
             <% tl.weekend_percent.each { |k, v| %>
-                <td id="<%= "wkend-utc#{k}" %>" title="<%= "#{v}% of activity" %>" style="background-color: rgba(13, 51, 63, <%= get_bg_trans(v, peak) %>)" class="time-data" data-utc="<%= k %>" data-base="<%= v %>" data-day="wkend"></td>
+                <% alpha = get_bg_trans(v, peak) %>
+                <td id="<%= "wkend-utc#{k}" %>" title="<%= "#{v}% of activity" %>" style="background-color: rgba(13, 51, 63, <%= alpha %>)" class="time-data" data-utc="<%= k %>" data-base="<%= v %>" data-alpha="<%= alpha %>" data-day="wkend"></td>
             <% } %>
         </tr>
     </tbody>

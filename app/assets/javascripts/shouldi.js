@@ -8,7 +8,7 @@ $(document).ready(function() {
 	});
 
 	update_headers();
-	update_times(0);
+	update_times(-1);	//TODO: get initial from cookie for returning visitors
 
 });
 
@@ -32,17 +32,19 @@ function update_headers() {
 
 function update_times(offset) {
 	$(".time-data").each( function() {
-		var h = $(this).attr("data-utc");
+		var utc_hour = parseInt($(this).attr("data-utc"));
 		var adj = 0;
-		if (h+offset < 0) {
-			adj = 25 + offset;
-		} else if (h+offset > 23) {
-			adj = 0 + offset;
+		if (utc_hour+offset < 0) {
+			adj = 24 + offset;
+		} else if (utc_hour+offset > 23) {
+			adj = -1 + offset;
 		} else {
-			adj = h + offset;
+			adj = utc_hour + offset;
 		}
 		var v = $("#"+$(this).attr("data-day")+"-utc"+adj).attr("data-base");
-		console.log("#"+$(this).attr("data-day")+"-utc"+adj);	//DELME
-		console.log("h"+h+" w/offset "+offset+" = adj "+adj+" for v="+v);	//DELME
+		var a = $("#"+$(this).attr("data-day")+"-utc"+adj).attr("data-alpha");
+		console.log("utc_hour"+utc_hour+" w/offset "+offset+" = adj "+adj+" for v="+v);	//DELME
+		$(this).css("background-color", "rgba(13, 51, 63, "+a+")");
+		$(this).attr("title", v+"% of activity");
 	});
 }
