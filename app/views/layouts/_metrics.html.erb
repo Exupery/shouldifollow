@@ -30,7 +30,10 @@
     <% tl = tw.timeline %>
     <% peak = tl.peak_percent %>
     <tr class="heading-row">
-        <th class="parens auto-lr-margin" title="times in Coordinated Universal Time (UTC)">(UTC)</th>
+        <!-- <th class="parens auto-lr-margin" title="times in Coordinated Universal Time (UTC)">(UTC)</th> -->
+        <th>
+
+        </th>
         <% tl.timeframes.each { |h| %>
             <th class="time-header" data-utc="<%= h %>"><%= h %></th>
         <% } %>
