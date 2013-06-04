@@ -8,7 +8,7 @@ $(document).ready(function() {
 	});
 
 	update_headers();
-	update_times(-1);	//TODO: get initial from cookie for returning visitors
+	update_times(0);	//TODO: get initial from cookie for returning visitors
 
 });
 
@@ -31,6 +31,11 @@ function update_headers() {
 }
 
 function update_times(offset) {
+	if (!offset || isNaN(offset)) {
+		offset = 0;
+	} else {
+		offset = -offset;
+	}
 	$(".time-data").each( function() {
 		var utc_hour = parseInt($(this).attr("data-utc"));
 		var adj = 0;
@@ -43,7 +48,6 @@ function update_times(offset) {
 		}
 		var v = $("#"+$(this).attr("data-day")+"-utc"+adj).attr("data-base");
 		var a = $("#"+$(this).attr("data-day")+"-utc"+adj).attr("data-alpha");
-		console.log("utc_hour"+utc_hour+" w/offset "+offset+" = adj "+adj+" for v="+v);	//DELME
 		$(this).css("background-color", "rgba(13, 51, 63, "+a+")");
 		$(this).attr("title", v+"% of activity");
 	});
