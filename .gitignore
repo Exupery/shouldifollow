@@ -4,3 +4,4 @@
 /tmp
 .env
 dev_urls
+dev_local_start.sh
