@@ -10,6 +10,10 @@ $(document).ready(function() {
 	update_headers();
 	update_times(0);	//TODO: get initial from cookie for returning visitors
 
+	$("#timezones-offsets").change(function() {
+		update_times($("#timezones-offsets option:selected").val());
+	});
+
 });
 
 function update_headers() {
@@ -40,9 +44,9 @@ function update_times(offset) {
 		var utc_hour = parseInt($(this).attr("data-utc"));
 		var adj = 0;
 		if (utc_hour+offset < 0) {
-			adj = 24 + offset;
+			adj = utc_hour + offset + 24;
 		} else if (utc_hour+offset > 23) {
-			adj = -1 + offset;
+			adj = utc_hour + offset - 24;
 		} else {
 			adj = utc_hour + offset;
 		}

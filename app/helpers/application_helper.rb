@@ -35,7 +35,7 @@ module ApplicationHelper
 			"Eastern European Time (UTC+2)"=>+2,
 			"European Central Time (UTC+1)"=>+1
 		}
-		select("timezones", "offsets", timezones)
+		select("timezones", "offsets", timezones, {}, {:id=>"timezones-offsets"})
 	end
 
 end

@@ -214,8 +214,8 @@ textarea::-webkit-input-placeholder {
   padding-right: 0;
 }
 
-#timezones_offsets {
-  width: 275px;
+#timezones-offsets {
+  width: 300px;
 }
 
 #fail-image a:hover {
