@@ -12,7 +12,7 @@ class Twitterer
 	#DELME
 	@@user_url = "http://127.0.0.1/user.json?screen_name="
 	@@tweet_url = "http://127.0.0.1/timeline.json?screen_name="
-	@@oembed_url = "http://127.0.0.1/oembed.json?id="
+	#@@oembed_url = "http://127.0.0.1/oembed.json?id="
 	#DELME
 
 	@@rate_limit_err = "Whoa! shouldifollow seems to have hit Twitter's API rate limit."

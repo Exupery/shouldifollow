@@ -84,6 +84,8 @@ a:hover {
 .content-top #submit {
   font-size: 2.25em;
   min-height: 1.25em;  
+  max-width: 32px;
+  max-height: 38px;
 }
 
 .content-top #submit:hover {
@@ -212,6 +214,10 @@ textarea::-webkit-input-placeholder {
   padding-right: 0;
 }
 
+#timezones_offsets {
+  width: 275px;
+}
+
 #fail-image a:hover {
   background-color: #FFFFFF !important;
 }
@@ -220,4 +226,10 @@ textarea::-webkit-input-placeholder {
   -webkit-box-shadow: 4px 8px 25px rgba(13, 51, 63, 0.5);
   -moz-box-shadow: 4px 8px 25px rgba(13, 51, 63, 0.5);
   box-shadow: 4px 8px 25px rgba(13, 51, 63, 0.5); 
+}
+
+.minor_shadow {
+  -webkit-box-shadow: 3px 3px 12px rgba(13, 51, 63, 0.2);
+  -moz-box-shadow: 3px 3px 12px rgba(13, 51, 63, 0.2);
+  box-shadow: 3px 3px 12px rgba(13, 51, 63, 0.2); 
 }

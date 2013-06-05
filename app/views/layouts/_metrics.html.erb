@@ -1,4 +1,4 @@
-<table class="metrics-table auto-lr-margin">
+<table class="metrics-table table table-hover auto-lr-margin minor_shadow">
     <tr class="heading-row">
         <th></th>
         <th>past week</th>
@@ -26,14 +26,14 @@
 <h3 id="all-time"><span class="metric"><%= tw.all_per_day %></span> total per day <span class="parens">(includes @replies)</span> since joining Twitter on <%= tw.joined %><%= render 'layouts/tweet', :tw => tw %></h3>
 
 <h2 class="avg-act-header center-text" title="As percent of last 200 tweets">Activity timing</h2>
-<table id="timing-table" class="auto-lr-margin table table-bordered table-condensed">
+<div class="auto-lr-margin center-text">
+    <%= get_timezones %>
+</div>
+<table id="timing-table" class="auto-lr-margin table table-bordered table-condensed minor_shadow">
     <% tl = tw.timeline %>
     <% peak = tl.peak_percent %>
     <tr class="heading-row">
-        <!-- <th class="parens auto-lr-margin" title="times in Coordinated Universal Time (UTC)">(UTC)</th> -->
-        <th>
-
-        </th>
+        <th></th>
         <% tl.timeframes.each { |h| %>
             <th class="time-header" data-utc="<%= h %>"><%= h %></th>
         <% } %>
