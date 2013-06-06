@@ -178,7 +178,7 @@ textarea::-webkit-input-placeholder {
 
 .youtube {
   position: relative;
-  left: -40px;
+  left: 40px;
   top: 5px;
 }
 
