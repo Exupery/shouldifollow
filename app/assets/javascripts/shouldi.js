@@ -7,12 +7,15 @@ $(document).ready(function() {
 		$(this).attr("placeholder", "username");
 	});
 
-	update_headers();
-	update_times(0);	//TODO: get initial from cookie for returning visitors
-
 	$("#timezones-offsets").change(function() {
-		update_times($("#timezones-offsets option:selected").val());
+		var offset = $("#timezones-offsets option:selected").val();
+		update_times(offset);
+		$.cookie("offset", offset, {expires: 365, path: "/"});
 	});
+
+	update_headers();
+	update_times($.cookie("offset"));
+	$("#timezones-offsets").val($.cookie("offset"));
 
 });
 
