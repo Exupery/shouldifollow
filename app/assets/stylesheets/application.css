@@ -52,10 +52,10 @@ a:hover {
 .content-top {
   margin-top: 10px;
   margin-bottom: 20px;
-  width: 52%;
+  text-align: center;
   background-image: url("bird_blue_48.png");
   background-repeat: no-repeat;
-  background-position: top left;
+  background-position: 26% 0%;
 }
 
 .content-top h1 {
