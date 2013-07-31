@@ -125,6 +125,10 @@ textarea::-webkit-input-placeholder {
   color: #959595;
 }
 
+.ital {
+  font-style: italic;
+}
+
 .metrics-table {
   font-size: 1.6em;
 }
