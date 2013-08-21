@@ -12,7 +12,7 @@
   <% uname = params[:uname] %>
   <% if uname %>
     <div id="stats">
-      <% tw = Twitterer.new(uname) %>
+      <% tw = (Rails.cache.exist?(uname)) ? Rails.cache.read(uname) : Twitterer.new(uname) %>
       <% if tw.error %>
         <% if tw.is_user_not_found? %>
         <h2 class="avg-act-header center-text">Average activity for @<%= uname %>:</h2>

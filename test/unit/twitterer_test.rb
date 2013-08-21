@@ -39,7 +39,7 @@ class TwittererTest < ActiveSupport::TestCase
   end
 
   test "returns most recent tweet" do
-  	tweet = @@tw.get_recent_tweet_html
+  	tweet = @@tw.recent_tweet_html
   	assert !tweet.nil?, "recent tweet is NIL"
   	assert !tweet.empty?, "recent tweet is empty string"
   end

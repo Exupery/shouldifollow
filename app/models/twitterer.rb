@@ -13,7 +13,7 @@ class Twitterer
 	@@gen_err = "Whoops, something went wrong :-("
 	@@timeout_err = "OH NOES - looks likes there was some trouble accessing the Twitter API :-("
 
-	attr_reader :id, :uname, :error, :latest_tweet_id, :joined, :all_per_day, :timeline
+	attr_reader :id, :uname, :error, :joined, :all_per_day, :recent_tweet_html, :timeline
 
 	def initialize uname
 		@uname = uname
@@ -26,11 +26,14 @@ class Twitterer
 			fetch = Timeout::timeout(8) {
 				fetch_id_and_allpd
 				fetch_per_day_counts if (@id && !@protected)
+				@recent_tweet_html = set_recent_tweet_html if @timeline
 			}
 		rescue Timeout::Error => ex
 			Rails.logger.error "TIMEOUT=>#{ex}"
 			@error = @@timeout_err
 		end
+
+		Rails.cache.write(@uname, self) if @error.nil?
 	end
 
 	def fetch_id_and_allpd
@@ -113,7 +116,7 @@ class Twitterer
 		end
 	end
 
-	def get_recent_tweet_html
+	def set_recent_tweet_html
 		if has_latest_tweet? 
 			begin
 				response = @twitter.request(:get, @@oembed_url+@timeline.latest_tweet_id)
