@@ -4,6 +4,7 @@ gem 'rails', '3.2.13'
 
 gem 'oauth'
 gem 'pg'
+gem 'newrelic_rpm'
 gem 'thin'
 gem 'twitter'
 
