@@ -4,6 +4,8 @@ class Timeline
 
 	def initialize user_id, timeline_json
 		@user_id = user_id
+		@oldest_tweet_id = nil
+		@oldest_tweet_time = Time.now.utc
 		@tweets_per_day = Hash.new
 		@retweets_per_day = Hash.new
 		@weekday_cnt = Hash.new
@@ -18,11 +20,12 @@ class Timeline
 			@weekend_cnt[tf] = 0.0
 			@weekend_percent[tf] = 0.0
 		}
-		parse_timeline timeline_json
+		parse_timeline timeline_json, true
+		parse_prev_timeline_batch if @oldest_tweet_time > 7.days.ago
 		calc_timing timeline_json.length if !timeline_json.nil?
 	end
 
-	def parse_timeline tweets
+	def parse_timeline tweets, process_week
 		now = Time.now.utc
 
 		week_tweet_cnt = 0
@@ -59,21 +62,33 @@ class Timeline
 						month_oldest = created if created < month_oldest
 					end
 					@latest_tweet_id = t["id_str"] if t["id_str"] && (!@latest_tweet_id || t["id_str"] > @latest_tweet_id)
+					@oldest_tweet_id = t["id_str"] if t["id_str"] && (!@oldest_tweet_id || t["id_str"] < @oldest_tweet_id)
 				end
 			end
 		end
 
-		week_day_cnt = (now - week_oldest) / 60 / 60 / 24
+		@oldest_tweet_time = month_oldest
+
+		if process_week
+			week_day_cnt = (now - week_oldest) / 60 / 60 / 24		
+			@tweets_per_day["week"] = calc_per_day_counts week_tweet_cnt, week_day_cnt
+			@retweets_per_day["week"] = calc_per_day_counts week_retweet_cnt, week_day_cnt
+		end
+
 		month_day_cnt = (now - month_oldest) / 60 / 60 / 24
-		
-		@tweets_per_day["week"] = calc_per_day_counts week_tweet_cnt, week_day_cnt
-		@retweets_per_day["week"] = calc_per_day_counts week_retweet_cnt, week_day_cnt
 		@tweets_per_day["month"] = calc_per_day_counts month_tweet_cnt, month_day_cnt
 		@retweets_per_day["month"] = calc_per_day_counts month_retweet_cnt, month_day_cnt
-		#For very active users (>200 tweets per week) month and week stats will be same
-		#rounding month up in those cases to reflect less precision
-		@tweets_per_day["month"] = @tweets_per_day["month"].ceil if month_day_cnt < 7
-		@retweets_per_day["month"] = @retweets_per_day["month"].ceil if month_day_cnt < 7
+	end
+
+	def parse_prev_timeline_batch
+		url = "https://api.twitter.com/1.1/statuses/user_timeline.json?count=200&include_rts=1&user_id=#{@user_id}&max_id=#{@oldest_tweet_id}"
+		begin
+			response = User.new.client.request(:get, url)
+			json = JSON.parse(response.body)
+			parse_timeline(json, false) if json.kind_of?(Array)
+		rescue => ex
+			Rails.logger.error "ERROR=>#{ex.to_s}=>#{url}"
+		end
 	end
 
 	def calc_per_day_counts cnt, days
