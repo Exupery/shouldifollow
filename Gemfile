@@ -12,5 +12,5 @@ gem "twitter"
 gem "sass-rails",   "~> 4.0.1"
 gem "coffee-rails", "~> 4.0.1"
 gem "uglifier", "~> 2.3.0"
-
+gem "rails_12factor"
 gem "jquery-rails"
