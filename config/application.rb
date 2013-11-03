@@ -1,6 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
+require "rails/all"
 
 if defined?(Bundler)
   Bundler.require(:default, Rails.env)
@@ -48,7 +48,7 @@ module Shouldifollow
     config.assets.enabled = true
 
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
+    config.assets.version = "1.1"
     
     #disables ruby's buffering of stdout in dev mode so foreman receives output
     if Rails.env.development?
