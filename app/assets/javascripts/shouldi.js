@@ -10,12 +10,13 @@ $(document).ready(function() {
 	$("#timezones-offsets").change(function() {
 		var offset = $("#timezones-offsets option:selected").val();
 		update_times(offset);
-		$.cookie("offset", offset, {expires: 365, path: "/"});
+		$.cookie("tz-offset", offset, {expires: 365, path: "/"});
 	});
 
 	update_headers();
-	update_times($.cookie("offset"));
-	$("#timezones-offsets").val($.cookie("offset"));
+	var offset = ($.cookie("tz-offset")) ? $.cookie("tz-offset") : getUtcOffset();
+	update_times(offset);
+	$("#timezones-offsets").val(offset);
 
 });
 
@@ -35,6 +36,11 @@ function update_headers() {
 			$(this).attr("title", h+"AM");
 		}
 	}); 
+}
+
+function getUtcOffset() {
+	var mins = (new Date()).getTimezoneOffset();
+	return (mins != 0) ? mins / 60 : 0;
 }
 
 function update_times(offset) {
