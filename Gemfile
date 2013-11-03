@@ -1,17 +1,15 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-gem 'rails', '3.2.13'
+gem "rails", "4.0.1"
 
-gem 'oauth'
-gem 'pg'
-gem 'newrelic_rpm'
-gem 'thin'
-gem 'twitter'
+gem "oauth"
+gem "pg"
+gem "newrelic_rpm"
+gem "thin"
+gem "twitter"
 
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
-end
+gem "sass-rails",   "~> 4.0.1"
+gem "coffee-rails", "~> 4.0.1"
+gem "uglifier", "~> 2.3.0"
 
-gem 'jquery-rails'
+gem "jquery-rails"

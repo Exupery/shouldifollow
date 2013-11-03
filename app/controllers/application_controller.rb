@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   end
 
   def notfound
-    raise ActionController::RoutingError.new('Not Found')
+    raise ActionController::RoutingError.new("Not Found")
   end
 
 end
