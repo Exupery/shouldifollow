@@ -23,13 +23,13 @@ class Twitterer
 		@twitter = user.client if user
 		
 		begin
-			fetch = Timeout::timeout(8) {
+			fetch = Timeout::timeout(10) {
 				fetch_id_and_allpd
 				fetch_per_day_counts if (@id && !@protected)
 				@recent_tweet_html = set_recent_tweet_html if @timeline
 			}
 		rescue Timeout::Error => ex
-			Rails.logger.error "TIMEOUT=>#{ex}"
+			Rails.logger.error "TIMEOUT ERROR=>#{ex}"
 			@error = @@timeout_err
 		end
 
