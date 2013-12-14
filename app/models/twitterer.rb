@@ -51,7 +51,7 @@ class Twitterer
 			end
 		rescue => ex
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@user_url+@uname}"
-			@error = @@gen_err
+			@error = (ex.to_s.include?("suspend")) ? @@no_user_err : @@gen_err
 		end
 
 		if json && json["errors"]
@@ -106,7 +106,7 @@ class Twitterer
 			code = err["code"] if err["code"]
 			if code && (code==88 || code==420)
 				@@rate_limit_err
-			elsif code==34
+			elsif (code==34 || code==63)
 				@@no_user_err
 			elsif err["message"] 
 				err["message"] 
