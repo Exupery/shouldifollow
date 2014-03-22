@@ -10,14 +10,13 @@ $(document).ready(function() {
 	$("#timezones-offsets").change(function() {
 		var offset = $("#timezones-offsets option:selected").val();
 		update_times(offset);
-		$.cookie("tz-offset", offset, {expires: 365, path: "/"});
+		$.cookie("utc-offset", offset, {expires: 30, path: "/"});
 	});
 
 	update_headers();
-	var offset = ($.cookie("tz-offset")) ? $.cookie("tz-offset") : getUtcOffset();
+	var offset = ($.cookie("utc-offset")) ? $.cookie("utc-offset") : getUtcOffset();
 	update_times(offset);
 	$("#timezones-offsets").val(offset);
-
 });
 
 function update_headers() {
@@ -40,7 +39,7 @@ function update_headers() {
 
 function getUtcOffset() {
 	var mins = (new Date()).getTimezoneOffset();
-	return (mins != 0) ? mins / 60 : 0;
+	return (mins != 0) ? -(mins / 60) : 0;
 }
 
 function update_times(offset) {

@@ -7,6 +7,7 @@ gem "pg"
 gem "newrelic_rpm"
 gem "thin"
 gem "twitter"
+gem "timezone"
 
 gem "sass-rails"
 gem "coffee-rails"

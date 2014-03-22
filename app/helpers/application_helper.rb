@@ -10,32 +10,40 @@ module ApplicationHelper
 
 	def get_timezones
 		timezones = {
-			"Universal Coordinated Time (UTC)"=>0,
-			"Central African Time (UTC-1)"=>+1, 
-			"Brazil Eastern Time (UTC-2)"=>+2, 
-			"Argentina Standard Time (UTC-3)"=>+3,
-			"Canada Newfoundland Time (UTC-4)"=>+4,
-			"Eastern Standard Time (UTC-5)"=>+5,
-			"Central Standard Time (UTC-6)"=>+6,
-			"Mountain Standard Time (UTC-7)"=>+7,
-			"Pacific Standard Time (UTC-8)"=>+8,
-			"Alaska Standard Time (UTC-9)"=>+9,
-			"Hawaii Standard Time (UTC-10)"=>+10,
-			"Midway Islands Time (UTC-11)"=>+11,
-			"New Zealand Standard Time (UTC+12)"=>-12,
-			"Solomon Standard Time (UTC+11)"=>-11,
-			"Australia Eastern Time (UTC+10)"=>-10,
-			"Japan Standard Time (UTC+9)"=>-9,
-			"China Taiwan Time (UTC+8)"=>-8,
-			"Vietnam Standard Time (UTC+7)"=>-7,
-			"Bangladesh Standard Time (UTC+6)"=>-6,
-			"Pakistan Lahore Time (UTC+5)"=>-5,
-			"Near East Time (UTC+4)"=>-4,
-			"Eastern African Time (UTC+3)"=>-3,
-			"Eastern European Time (UTC+2)"=>-2,
-			"European Central Time (UTC+1)"=>-1
+			"Universal Coordinated Time" => "Etc/UTC",
+			"Atlantic/Azores" => "Atlantic/Azores",
+			"America/Noronha" => "America/Noronha",
+			"Argentina/Buenos Aires" => "America/Argentina/Buenos_Aires",
+			"America/New York" => "America/New_York",
+			"America/Chicago" => "America/Chicago",
+			"America/Denver" => "America/Denver",
+			"America/Los Angeles" => "America/Los_Angeles",
+			"America/Anchorage" => "America/Anchorage",
+			"America/Adak" => "America/Adak",
+			"Pacific/Honolulu" => "Pacific/Honolulu",
+			"Pacific/Pago Pago" => "Pacific/Pago_Pago",
+			"Pacific/Auckland" => "Pacific/Auckland",
+			"Pacific/Nauru" => "Pacific/Nauru",
+			"Australia/Sydney" => "Australia/Sydney",
+			"Pacific/Guam" => "Pacific/Guam",
+			"Asia/Tokyo" => "Asia/Tokyo",
+			"Asia/Shanghai" => "Asia/Shanghai",
+			"Asia/Jakarta" => "Asia/Jakarta",
+			"Asia/Dhaka" => "Asia/Dhaka",
+			"Asia/Karachi" => "Asia/Karachi",
+			"Europe/Moscow" => "Europe/Moscow",
+			"Europe/Kaliningrad" => "Europe/Kaliningrad",
+			"Europe/Helsinki" => "Europe/Helsinki",
+			"Europe/Berlin" => "Europe/Berlin",
+			"Europe/London" => "Europe/London"
 		}
-		select("timezones", "offsets", timezones, {}, {:id=>"timezones-offsets"})
+		tz_offsets = Hash.new 
+		timezones.each do |k, v|
+			tz = Timezone::Zone.new :zone => v
+			offset = tz.utc_offset != 0 ? tz.utc_offset / 60 / 60 : 0
+			tz_offsets["#{k} UTC#{"+" if offset >= 0}#{offset.to_s}"] = offset
+		end
+		select("timezones", "offsets", tz_offsets, {}, {:id=>"timezones-offsets"})
 	end
 
 end
