@@ -39,7 +39,7 @@ class Twitterer
 	def fetch_id_and_allpd
 		begin
 			response = @twitter.request(:get, @@user_url+@uname)
-			json = JSON.parse(response.body)			
+			json = JSON.parse(response.body)
 		rescue OpenURI::HTTPError => ex
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@user_url+@uname}"
 			if ex.to_s.start_with?("404")

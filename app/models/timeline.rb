@@ -1,18 +1,25 @@
 class Timeline
 
-	attr_reader :user_id, :latest_tweet_id, :tweets_per_day, :retweets_per_day, :timeframes, :weekday_percent, :weekend_percent, :peak_percent
+	attr_reader :user_id, :latest_tweet_id, :tweets_per_day, :retweets_per_day, :timeframes, :peak_percent, 
+		:weekday_percent, :weekend_percent
 
 	def initialize user_id, timeline_json
 		@user_id = user_id
+		@latest_tweet_id = nil
 		@oldest_tweet_id = nil
 		@oldest_tweet_time = Time.now.utc
 		@tweets_per_day = Hash.new
 		@retweets_per_day = Hash.new
+		
+		@num_hashtags = {"week" => 0, "month" => 0}
+		@hashtags = {"week" => Hash.new, "month" => Hash.new}
+
 		@weekday_cnt = Hash.new
 		@weekend_cnt = Hash.new
 		@weekday_percent = Hash.new
 		@weekend_percent = Hash.new
 		@peak_percent = 1.0
+
 		@timeframes = Array(0..23)
 		@timeframes.each { |tf|
 			@weekday_cnt[tf] = 0.0
@@ -20,64 +27,80 @@ class Timeline
 			@weekend_cnt[tf] = 0.0
 			@weekend_percent[tf] = 0.0
 		}
-		parse_timeline timeline_json, true
-		parse_prev_timeline_batch if @oldest_tweet_time > 7.days.ago
-		calc_timing timeline_json.length if !timeline_json.nil?
+
+		@week_ago = 7.days.ago
+		@month_ago = 30.days.ago
+		@counts = {
+			"week_tweet_cnt" => 0,
+			"week_retweet_cnt" => 0,
+			"week_oldest" => Time.now.utc,
+			"month_tweet_cnt" => 0,
+			"month_retweet_cnt" => 0,
+			"month_oldest" => Time.now.utc
+		}
+
+		parse_timeline timeline_json
+		num_prev = 0
+		while num_prev < 2 && @oldest_tweet_time >= @month_ago do
+			parse_prev_timeline_batch
+			num_prev += 1
+		end
+		process_timeline
+		calc_timing @counts["week_tweet_cnt"] + @counts["week_retweet_cnt"] + @counts["month_tweet_cnt"] + @counts["month_retweet_cnt"]
 	end
 
-	def parse_timeline tweets, process_week
-		now = Time.now.utc
-
-		week_tweet_cnt = 0
-		week_retweet_cnt = 0
-		week_ago = 7.days.ago
-		week_oldest = now
-		
-		month_tweet_cnt = 0
-		month_retweet_cnt = 0
-		month_ago = 30.days.ago
-		month_oldest = now
-
+	def parse_timeline tweets
 		tweets.each do |t|
 			if t["created_at"] && t["text"]
 				created = Time.parse(t["created_at"]).utc
 				add_to_times created
+				@oldest_tweet_time = [created, @oldest_tweet_time].min
 
-				if t["retweeted_status"] || t["text"].start_with?("RT")
-					if created >= week_ago
-						week_retweet_cnt += 1
-						week_oldest = created if created < week_oldest
-					end
-					if created >= month_ago
-						month_retweet_cnt += 1
-						month_oldest = created if created < month_oldest
-					end
-				elsif t["in_reply_to_user_id"].nil?
-					if created >= week_ago
-						week_tweet_cnt += 1
-						week_oldest = created if created < week_oldest
-					end
-					if created >= month_ago
-						month_tweet_cnt += 1
-						month_oldest = created if created < month_oldest
-					end
-					@latest_tweet_id = t["id_str"] if t["id_str"] && (!@latest_tweet_id || t["id_str"] > @latest_tweet_id)
-					@oldest_tweet_id = t["id_str"] if t["id_str"] && (!@oldest_tweet_id || t["id_str"] < @oldest_tweet_id)
+				is_rt = t["retweeted_status"] || t["text"].start_with?("RT")
+				is_reply = !t["in_reply_to_user_id"].nil?
+
+				if created >= @week_ago
+					@counts["week_retweet_cnt"] += 1 if is_rt
+					@counts["week_tweet_cnt"] += 1 unless is_reply || is_rt
+					@counts["week_oldest"] = [created, @counts["week_oldest"]].min
 				end
+
+				if created >= @month_ago
+					@counts["month_retweet_cnt"] += 1 if is_rt
+					@counts["month_tweet_cnt"] += 1 unless is_reply || is_rt
+					@counts["month_oldest"] = [created, @counts["month_oldest"]].min
+				end
+					
+				parse_hashtags t["entities"]["hashtags"], created < @week_ago
+				if t["id_str"]
+					@latest_tweet_id = t["id_str"] if @latest_tweet_id.nil? || (t["id_str"] > @latest_tweet_id)
+					@oldest_tweet_id = t["id_str"] if @oldest_tweet_id.nil? || (t["id_str"] < @oldest_tweet_id)
+				end
+
 			end
 		end
+	end
 
-		@oldest_tweet_time = month_oldest
+	def process_timeline
+		now = Time.now.utc
+		seconds_per_day = 60 * 60 * 24
 
-		if process_week
-			week_day_cnt = (now - week_oldest) / 60 / 60 / 24		
-			@tweets_per_day["week"] = calc_per_day_counts week_tweet_cnt, week_day_cnt
-			@retweets_per_day["week"] = calc_per_day_counts week_retweet_cnt, week_day_cnt
+		week_day_cnt = (now - @counts["week_oldest"]) / seconds_per_day	
+		@tweets_per_day["week"] = calc_per_day_counts @counts["week_tweet_cnt"], week_day_cnt
+		@retweets_per_day["week"] = calc_per_day_counts @counts["week_retweet_cnt"], week_day_cnt
+
+		month_day_cnt = (now - @counts["month_oldest"]) / seconds_per_day
+		@tweets_per_day["month"] = calc_per_day_counts @counts["month_tweet_cnt"], month_day_cnt
+		@retweets_per_day["month"] = calc_per_day_counts @counts["month_retweet_cnt"], month_day_cnt
+	end
+
+	def parse_hashtags hashtags, month_only
+		hashtags.each do |h|
+			#puts h ##DELME
+			#puts h["text"] ##DELME
+			@num_hashtags["week"] += 1 unless month_only
+			@num_hashtags["month"] += 1
 		end
-
-		month_day_cnt = (now - month_oldest) / 60 / 60 / 24
-		@tweets_per_day["month"] = calc_per_day_counts month_tweet_cnt, month_day_cnt
-		@retweets_per_day["month"] = calc_per_day_counts month_retweet_cnt, month_day_cnt
 	end
 
 	def parse_prev_timeline_batch
@@ -85,7 +108,7 @@ class Timeline
 		begin
 			response = User.new.client.request(:get, url)
 			json = JSON.parse(response.body)
-			parse_timeline(json, false) if json.kind_of?(Array)
+			parse_timeline(json) if json.kind_of?(Array)
 		rescue => ex
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{url}"
 		end
@@ -103,12 +126,17 @@ class Timeline
 
 	def calc_timing total
 		if total > 0
-			@timeframes.each { |tf|
+			@timeframes.each do |tf|
 				@weekday_percent[tf] = (@weekday_cnt[tf] / total * 100).round
 				@weekend_percent[tf] = (@weekend_cnt[tf] / total * 100).round
-				@peak_percent = @weekday_percent[tf] if @weekday_percent[tf] > @peak_percent
-				@peak_percent = @weekend_percent[tf] if @weekend_percent[tf] > @peak_percent
-			}
+				@peak_percent = [@weekday_percent[tf], @weekend_percent[tf], @peak_percent].max
+			end
 		end
+	end
+
+	def num_hashtags period
+		puts @hashtags[period].size 
+		puts @num_hashtags[period]
+		@num_hashtags[period]
 	end
 end

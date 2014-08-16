@@ -20,6 +20,11 @@
             <td class="metric"><%= tw.combined_per_day "week" %></td>
             <td class="metric"><%= tw.combined_per_day "month" %></td>
         </tr>
+        <tr>
+            <td class="left">hashtags used</td>
+            <td class="metric"><%= tw.timeline.num_hashtags "week" %></td>
+            <td class="metric"><%= tw.timeline.num_hashtags "month" %></td>
+        </tr>
     </tbody>
 </table>
 
