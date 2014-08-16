@@ -39,7 +39,7 @@ class Timeline
 			"month_oldest" => Time.now.utc
 		}
 
-		parse_timeline timeline_json
+		parse_timeline timeline_json, true
 		num_prev = 0
 		while num_prev < 2 && @oldest_tweet_time >= @month_ago do
 			parse_prev_timeline_batch
@@ -49,7 +49,7 @@ class Timeline
 		calc_timing @counts["week_tweet_cnt"] + @counts["week_retweet_cnt"] + @counts["month_tweet_cnt"] + @counts["month_retweet_cnt"]
 	end
 
-	def parse_timeline tweets
+	def parse_timeline tweets, include_week
 		tweets.each do |t|
 			if t["created_at"] && t["text"]
 				created = Time.parse(t["created_at"]).utc
@@ -59,7 +59,7 @@ class Timeline
 				is_rt = t["retweeted_status"] || t["text"].start_with?("RT")
 				is_reply = !t["in_reply_to_user_id"].nil?
 
-				if created >= @week_ago
+				if include_week && created >= @week_ago
 					@counts["week_retweet_cnt"] += 1 if is_rt
 					@counts["week_tweet_cnt"] += 1 unless is_reply || is_rt
 					@counts["week_oldest"] = [created, @counts["week_oldest"]].min
@@ -108,7 +108,7 @@ class Timeline
 		begin
 			response = User.new.client.request(:get, url)
 			json = JSON.parse(response.body)
-			parse_timeline(json) if json.kind_of?(Array)
+			parse_timeline json, false if json.kind_of?(Array)
 		rescue => ex
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{url}"
 		end
