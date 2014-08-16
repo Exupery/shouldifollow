@@ -29,7 +29,7 @@ class ApplicationControllerTest < ActionController::TestCase
   end
 
   test "nonexistant path returns 404" do
-  	assert_raises ActionController::RoutingError do
+  	assert_raises ActionController::UrlGenerationError do
   	  get "/no/such/path/"
   	end
   end
