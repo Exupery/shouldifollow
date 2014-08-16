@@ -60,7 +60,7 @@ function update_times(offset) {
 		}
 		var v = $("#"+$(this).attr("data-day")+"-utc"+adj).attr("data-base");
 		var a = $("#"+$(this).attr("data-day")+"-utc"+adj).attr("data-alpha");
-		$(this).css("background-color", "rgba(13, 51, 63, "+a+")");
+		$(this).css("background-color", "rgba(85, 172, 238, "+a+")");
 		$(this).attr("title", v+"% of activity");
 	});
 }
