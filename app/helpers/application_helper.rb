@@ -1,11 +1,20 @@
 module ApplicationHelper
+	def hashtag_link hashtag
+		if hashtag.nil?
+			"-"
+		else
+			url = "https://twitter.com/hashtag/#{hashtag}?src=hash"
+			ht_text = hashtag.length > 20 ? hashtag.slice(0, 17) + "..." : hashtag
+			link_to("##{ht_text}", url, :class => "metric-link auto-size", :target => "_blank", :title => "##{hashtag}")
+		end
+	end
 
 	def mins_from_now future_time
-		return (Time.at(future_time) - Time.now) / 60
+		(Time.at(future_time) - Time.now) / 60
 	end
 
 	def get_bg_trans percent, highest_percent
-		return (percent.to_f / highest_percent).to_f.round(1)
+		(percent.to_f / highest_percent).to_f.round(1)
 	end
 
 	def get_timezones
@@ -45,5 +54,4 @@ module ApplicationHelper
 		end
 		select("timezones", "offsets", tz_offsets, {}, {:id=>"timezones-offsets"})
 	end
-
 end

@@ -1,4 +1,4 @@
-<table class="metrics-table table table-hover auto-lr-margin minor_shadow">
+<table class="metrics-table table table-hover auto-lr-margin minor-shadow">
     <tr class="heading-row">
         <th></th>
         <th>past week</th>
@@ -21,6 +21,11 @@
             <td class="metric"><%= tw.combined_per_day "month" %></td>
         </tr>
         <tr>
+            <td class="left">most used hashtag</td>
+            <td class="metric"><%= hashtag_link (tw.timeline.most_used_hashtag "week") %></td>
+            <td class="metric"><%= hashtag_link (tw.timeline.most_used_hashtag "month") %></td>
+        </tr>
+        <tr>
             <td class="left">hashtags used</td>
             <td class="metric"><%= tw.timeline.num_hashtags "week" %></td>
             <td class="metric"><%= tw.timeline.num_hashtags "month" %></td>
@@ -28,13 +33,13 @@
     </tbody>
 </table>
 
-<h3 id="all-time"><span class="metric"><%= tw.all_per_day %></span> total per day <span class="parens">(includes @replies)</span> since joining Twitter on <%= tw.joined %><%= render 'layouts/tweet', :tw => tw %></h3>
+<h3 id="all-time"><span class="metric"><%= tw.all_per_day %></span> total per day <span class="parens">(includes @replies)</span> since joining Twitter on <%= tw.joined %><%= render "layouts/tweet", :tw => tw %></h3>
 
 <h2 class="avg-act-header center-text" title="As percent of last 200 tweets">Activity timing</h2>
 <div class="auto-lr-margin center-text">
     <%= get_timezones %>
 </div>
-<table id="timing-table" class="auto-lr-margin table table-bordered table-condensed minor_shadow">
+<table id="timing-table" class="auto-lr-margin table table-bordered table-condensed minor-shadow">
     <% tl = tw.timeline %>
     <% peak = tl.peak_percent %>
     <tr class="heading-row">

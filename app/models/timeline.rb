@@ -14,7 +14,7 @@ class Timeline
 		@retweets_per_day = Hash.new
 		
 		@num_hashtags = {"week" => 0, "month" => 0}
-		@hashtags = {"week" => Hash.new, "month" => Hash.new}
+		@hashtags = {"week" => Hash.new(0), "month" => Hash.new(0)}
 
 		@weekday_cnt = Hash.new
 		@weekend_cnt = Hash.new
@@ -80,7 +80,7 @@ class Timeline
 					parse_hashtags t["entities"]["hashtags"], created < @week_ago unless is_rt
 				end
 					
-				if t["id_str"]
+				if t["id_str"] && !is_rt
 					@latest_tweet_id = t["id_str"] if @latest_tweet_id.nil? || (t["id_str"] > @latest_tweet_id)
 					@oldest_tweet_id = t["id_str"] if @oldest_tweet_id.nil? || (t["id_str"] < @oldest_tweet_id)
 				end
@@ -103,9 +103,11 @@ class Timeline
 
 	def parse_hashtags hashtags, month_only
 		hashtags.each do |h|
-			#puts h ##DELME
-			#puts h["text"] ##DELME
-			@num_hashtags["week"] += 1 unless month_only
+			unless month_only
+				@hashtags["week"][h["text"]] += 1
+				@num_hashtags["week"] += 1
+			end
+			@hashtags["month"][h["text"]] += 1
 			@num_hashtags["month"] += 1
 		end
 	end
@@ -143,5 +145,13 @@ class Timeline
 
 	def num_hashtags period
 		@num_hashtags[period]
+	end
+
+	def most_used_hashtag period
+		most_used = nil
+		@hashtags[period].each do |hashtag, count|
+			most_used = hashtag if count > @hashtags[period][most_used]
+		end
+		most_used
 	end
 end

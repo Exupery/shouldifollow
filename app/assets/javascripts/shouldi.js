@@ -9,18 +9,26 @@ $(document).ready(function() {
 
 	$("#timezones-offsets").change(function() {
 		var offset = $("#timezones-offsets option:selected").val();
-		update_times(offset);
+		updateTimes(offset);
 		$.cookie("utc-offset", offset, {expires: 30, path: "/"});
 	});
 
-	update_headers();
+	adjustFontSize();
+	updateHeaders();
 	var offset = ($.cookie("utc-offset")) ? $.cookie("utc-offset") : getUtcOffset();
-	update_times(offset);
+	updateTimes(offset);
 	$("#timezones-offsets").val(offset);
 });
 
-function update_headers() {
-	$(".time-header").each( function() {
+function adjustFontSize() {
+	var fontSize = parseInt($(".auto-size").css("font-size"));
+	while ($(".metrics-table").width() > $("#stats").width() && fontSize > 10) {
+		$(".auto-size").css("font-size", --fontSize + "px");
+	}
+}
+
+function updateHeaders() {
+	$(".time-header").each(function() {
 		var h = $(this).attr("data-utc");
 		if (h == 0) {
 			$(this).text("M");
@@ -29,10 +37,10 @@ function update_headers() {
 			$(this).text("N");
 			$(this).attr("title", "noon");
 		} else if (h > 12) {
-			$(this).text(h-12);
-			$(this).attr("title", (h-12)+"PM");
+			$(this).text(h - 12);
+			$(this).attr("title", (h - 12)+"PM");
 		} else {
-			$(this).attr("title", h+"AM");
+			$(this).attr("title", h + "AM");
 		}
 	}); 
 }
@@ -42,18 +50,18 @@ function getUtcOffset() {
 	return (mins != 0) ? -(mins / 60) : 0;
 }
 
-function update_times(offset) {
+function updateTimes(offset) {
 	if (!offset || isNaN(offset)) {
 		offset = 0;
 	} else {
 		offset = -offset;
 	}
-	$(".time-data").each( function() {
+	$(".time-data").each(function() {
 		var utc_hour = parseInt($(this).attr("data-utc"));
 		var adj = 0;
-		if (utc_hour+offset < 0) {
+		if (utc_hour + offset < 0) {
 			adj = utc_hour + offset + 24;
-		} else if (utc_hour+offset > 23) {
+		} else if (utc_hour + offset > 23) {
 			adj = utc_hour + offset - 24;
 		} else {
 			adj = utc_hour + offset;
