@@ -3,6 +3,8 @@ class Timeline
 	attr_reader :user_id, :latest_tweet_id, :tweets_per_day, :retweets_per_day, :timeframes, :peak_percent, 
 		:weekday_percent, :weekend_percent
 
+	@@seconds_per_day = 60 * 60 * 24
+
 	def initialize user_id, timeline_json
 		@user_id = user_id
 		@latest_tweet_id = nil
@@ -47,6 +49,12 @@ class Timeline
 		end
 		process_timeline
 		calc_timing @counts["week_tweet_cnt"] + @counts["week_retweet_cnt"] + @counts["month_tweet_cnt"] + @counts["month_retweet_cnt"]
+		if @counts["week_oldest"] > @week_ago
+			## For *extremely* active accounts (> 600 tweets a week) estimate hashtag usage
+			week_day_cnt = (Time.now.utc - @counts["week_oldest"]) / @@seconds_per_day	
+			@num_hashtags["week"] = (@num_hashtags["week"] / week_day_cnt * 7).floor
+			@num_hashtags["month"] = (@num_hashtags["week"] / week_day_cnt * 30).floor
+		end
 	end
 
 	def parse_timeline tweets, include_week
@@ -69,9 +77,9 @@ class Timeline
 					@counts["month_retweet_cnt"] += 1 if is_rt
 					@counts["month_tweet_cnt"] += 1 unless is_reply || is_rt
 					@counts["month_oldest"] = [created, @counts["month_oldest"]].min
+					parse_hashtags t["entities"]["hashtags"], created < @week_ago unless is_rt
 				end
 					
-				parse_hashtags t["entities"]["hashtags"], created < @week_ago
 				if t["id_str"]
 					@latest_tweet_id = t["id_str"] if @latest_tweet_id.nil? || (t["id_str"] > @latest_tweet_id)
 					@oldest_tweet_id = t["id_str"] if @oldest_tweet_id.nil? || (t["id_str"] < @oldest_tweet_id)
@@ -83,13 +91,12 @@ class Timeline
 
 	def process_timeline
 		now = Time.now.utc
-		seconds_per_day = 60 * 60 * 24
 
-		week_day_cnt = (now - @counts["week_oldest"]) / seconds_per_day	
+		week_day_cnt = (now - @counts["week_oldest"]) / @@seconds_per_day	
 		@tweets_per_day["week"] = calc_per_day_counts @counts["week_tweet_cnt"], week_day_cnt
 		@retweets_per_day["week"] = calc_per_day_counts @counts["week_retweet_cnt"], week_day_cnt
 
-		month_day_cnt = (now - @counts["month_oldest"]) / seconds_per_day
+		month_day_cnt = (now - @counts["month_oldest"]) / @@seconds_per_day
 		@tweets_per_day["month"] = calc_per_day_counts @counts["month_tweet_cnt"], month_day_cnt
 		@retweets_per_day["month"] = calc_per_day_counts @counts["month_retweet_cnt"], month_day_cnt
 	end
@@ -135,8 +142,6 @@ class Timeline
 	end
 
 	def num_hashtags period
-		puts @hashtags[period].size 
-		puts @num_hashtags[period]
 		@num_hashtags[period]
 	end
 end
