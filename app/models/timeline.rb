@@ -49,7 +49,7 @@ class Timeline
 		end
 		process_timeline
 		calc_timing @counts["week_tweet_cnt"] + @counts["week_retweet_cnt"] + @counts["month_tweet_cnt"] + @counts["month_retweet_cnt"]
-		if @counts["week_oldest"] > @week_ago
+		if @oldest_tweet_time > @week_ago
 			## For *extremely* active accounts (> 600 tweets a week) estimate hashtag usage
 			week_day_cnt = (Time.now.utc - @counts["week_oldest"]) / @@seconds_per_day	
 			@num_hashtags["week"] = (@num_hashtags["week"] / week_day_cnt * 7).floor
