@@ -88,7 +88,7 @@ a:hover {
 }
 
 .content-top #submit:hover {
-  color: #00A0D1;
+  color: #55ACEE;
   cursor: pointer;
 }
 
@@ -105,6 +105,7 @@ textarea::-webkit-input-placeholder {
   font-size: 2.25em;
 }
 
+ul,
 .metric,
 .metric-link {
   color: #55ACEE;

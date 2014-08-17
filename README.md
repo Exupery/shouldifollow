@@ -2,16 +2,14 @@
 
 http://www.shouldifollow.com
 
-When determining to follow someone on [Twitter](https://twitter.com/) it's often difficult to accurately assess how much they'll add to your stream. Looking at their recent activity on Twitter works in many cases, but for users with many replies and/or retweets it gets much more difficult to see at a glance how many tweets this person would actually add to your stream.
+When considering following someone on [Twitter](https://twitter.com/) it's often difficult to accurately assess how much they'll add to your stream. [ShouldIFollow](http://www.shouldifollow.com) takes the guesswork out by showing some metrics of their average activity. 
 
-ShouldIFollow takes the guesswork out by showing some simple metrics of their average activity over both the last week and last month:
+Metrics are shown for the past week and the past month unless otherwise noted:
 
-1. Tweets per day
-
-2. ReTweets per day (since retweets can be turned off for individual people)
-
-3. Tweets and ReTweets per day (convenience for people really bad at math)
-
-4. Total per day (since they joined Twitter, and includes replies)
-
-5. Timing of their tweets broken down by hour (based on last 200 tweets)
+* Tweets per day
+* Retweets per day
+* Combined (tweets and retweets) per day
+* Most used hashtag
+* Number of hashtags used
+* Total (tweets, retweets, and replies) per day (_since they joined Twitter_)
+* Timing of their tweets broken down by hour (_based on last 200 tweets_)
