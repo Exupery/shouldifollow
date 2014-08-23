@@ -11,8 +11,10 @@ body {
   padding: 0;
   background-color: #F4FAFC;
   font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
-  font-size: 13px;
   color: #292F33;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
 }
 
 h1 {
@@ -44,7 +46,7 @@ a:hover {
   border: 3px solid #55ACEE;
   border-top: none;
   padding: 25px;
-  width: 640px;
+  max-width: 640px;
   min-height: 175px;
 }
 
@@ -52,16 +54,18 @@ a:hover {
   margin-top: 10px;
   margin-bottom: 20px;
   text-align: center;
-  background-image: url("bird_blue_48.png");
-  background-repeat: no-repeat;
-  background-position: 26% 0%;
 }
 
 .content-top h1 {
   margin: 0;
-  margin-left: 2em;
   margin-bottom: 0.5em;
   font-size: 2.25em;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.content-top:before {
+  content: url("bird_blue_48.png");
 }
 
 .content-top label {
@@ -90,6 +94,15 @@ a:hover {
 .content-top #submit:hover {
   color: #55ACEE;
   cursor: pointer;
+}
+
+#search-area,
+.zcontent-top form {
+  min-width: 325px;
+}
+
+#stats {
+  min-width: 625px;
 }
 
 input::-webkit-input-placeholder,
@@ -144,7 +157,7 @@ ul,
 }
 
 #all-time {
-  font-size: 1.8em;
+  font-size: 1.7em;
   margin-bottom: 1.1em;
 }
 
@@ -196,7 +209,7 @@ ul,
 
 #footer ul {
   margin-top: 1.5em;
-  margin-bottom: 1em;
+  margin-bottom: 0.75em;
   font-size: 1.2em;
 }
 
@@ -204,6 +217,7 @@ ul,
   display: inline-block;
   list-style-type: none;
   padding-right: 1.75em;
+  margin-bottom: 0.5em;
   vertical-align: top;
 }
 

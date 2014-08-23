@@ -6,18 +6,19 @@
 <meta name="author" content="Matthew Frost"/>
 <meta name="description" content="<%= @description %>"/>
 <meta name="keywords" content="twitter, should i follow, shouldifollow, 47, twitter metrics, twitter stats, twitter join date"/>
+<meta name=viewport content="width=device-width, initial-scale=1">
 <%= render "layouts/ogtags" %>
 <%= render "layouts/twittertags" %>
 <link rel="publisher" href="https://plus.google.com/100792150980679428272"/>
 <%= stylesheet_link_tag "application", :media => "all" %>
+<%= javascript_include_tag "application", :cache => true %>
 <%= csrf_meta_tags %>
 </head>
 <body>
-	<div id="page" class="container auto-lr-margin">
+	<div id="page" class="auto-lr-margin">
 		<%= yield %>
 		<%= render "layouts/footer" %>
 	</div>
 	<%= render "layouts/analytics" %>
-	<%= javascript_include_tag "application", :cache => true %>
 </body>
 </html>
