@@ -96,7 +96,8 @@ class Timeline
 		@tweets_per_day["week"] = calc_per_day_counts @counts["week_tweet_cnt"], week_day_cnt
 		@retweets_per_day["week"] = calc_per_day_counts @counts["week_retweet_cnt"], week_day_cnt
 
-		month_day_cnt = (now - @counts["month_oldest"]) / @@seconds_per_day
+		month_oldest = @oldest_tweet_time < @counts["month_oldest"] ? @month_ago : @counts["month_oldest"]
+		month_day_cnt = (now - month_oldest) / @@seconds_per_day
 		@tweets_per_day["month"] = calc_per_day_counts @counts["month_tweet_cnt"], month_day_cnt
 		@retweets_per_day["month"] = calc_per_day_counts @counts["month_retweet_cnt"], month_day_cnt
 	end
