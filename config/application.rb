@@ -54,5 +54,8 @@ module Shouldifollow
     if Rails.env.development?
         $stdout.sync = true
     end
+
+    # Enable compression
+    config.middleware.use Rack::Deflater
   end
 end
