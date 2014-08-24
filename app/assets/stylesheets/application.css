@@ -3,6 +3,7 @@
 */
 html {
   background-color: #F4FAFC;
+  text-align: center;
 }
 
 body {
@@ -12,8 +13,9 @@ body {
   background-color: #F4FAFC;
   font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
   color: #292F33;
+  text-align: left;
   display: -webkit-box;
-  display: -moz-box;
+  display: -moz-deck;
   display: -ms-flexbox;
 }
 
@@ -45,7 +47,7 @@ a:hover {
   background-color: #FFFFFF;
   border: 3px solid #55ACEE;
   border-top: none;
-  padding: 25px;
+  padding: 20px;
   max-width: 740px;
   min-height: 175px;
 }
@@ -60,7 +62,6 @@ a:hover {
   margin: 0;
   margin-bottom: 0.5em;
   font-size: 2.25em;
-  white-space: nowrap;
   display: inline-block;
 }
 
@@ -78,10 +79,12 @@ a:hover {
 
 .content-top #username {
   height: 1em;
-  width: 227px;
   margin-left: 0;
   padding-left: 0;
   font-size: 2.25em;
+  width: 30%;
+  min-width: 150px;
+  max-width: 300px;
 }
 
 .content-top #submit {
@@ -97,8 +100,8 @@ a:hover {
 }
 
 #search-area,
-.zcontent-top form {
-  min-width: 325px;
+.content-top form {
+  min-width: 225px;
 }
 
 #stats {
