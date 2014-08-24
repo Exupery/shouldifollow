@@ -203,8 +203,8 @@ ul,
 
 #footer {
   clear: both;
-  padding: 25px;
   padding-top: 20px;
+  width: 100%;
 }
 
 #footer ul {
