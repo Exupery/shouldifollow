@@ -11,12 +11,10 @@ body {
   margin-bottom: 25px;
   padding: 0;
   background-color: #F4FAFC;
-  font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
+  font-family: "Lucida Grande", "Bitstream Vera Sans", "Lucida Sans Unicode", "Lucida Sans", Verdana, sans-serif;
   color: #292F33;
   text-align: left;
-  display: -webkit-box;
-  display: -moz-deck;
-  display: -ms-flexbox;
+  display: inline-block;
 }
 
 h1 {
