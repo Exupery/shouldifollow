@@ -1,8 +1,8 @@
 # Should I Follow?
 
-http://www.shouldifollow.com
+https://www.shouldifollow.com
 
-When considering following someone on [Twitter](https://twitter.com/) it's often difficult to accurately assess how much they'll add to your stream. [ShouldIFollow](http://www.shouldifollow.com) takes the guesswork out by showing some metrics of their average activity. 
+When considering following someone on [Twitter](https://twitter.com/) it's often difficult to accurately assess how much they'll add to your stream. [ShouldIFollow](https://www.shouldifollow.com) takes the guesswork out by showing some metrics of their average activity. 
 
 Metrics are shown for the past week and the past month unless otherwise noted:
 
