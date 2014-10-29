@@ -11,5 +11,6 @@ Metrics are shown for the past week and the past month unless otherwise noted:
 * Combined (tweets and retweets) per day
 * Most used hashtag
 * Number of hashtags used
+* Amount their tweets have been retweeted by others
 * Total (tweets, retweets, and replies) per day (_since they joined Twitter_)
 * Timing of their tweets broken down by hour (_based on last 200 tweets_)
