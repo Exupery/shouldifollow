@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/Exupery/shouldifollow.svg)](https://travis-ci.org/Exupery/shouldifollow)
 # Should I Follow?
 
 https://www.shouldifollow.com
