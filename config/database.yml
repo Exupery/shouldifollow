@@ -12,7 +12,7 @@ test:
   database: shouldi_test
   host: localhost
   pool: 5
-  username: test
+  username: postgres
 
 production:
   adapter: postgresql
