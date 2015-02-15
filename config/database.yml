@@ -4,7 +4,8 @@ development:
   database: shouldi_development
   host: localhost
   pool: 5
-  username: frost
+  username: <%= ENV['SHOULDIFOLLOW_DB_USER'] %>
+  password: <%= ENV['SHOULDIFOLLOW_DB_PASSWORD'] %>
 
 test:
   adapter: postgresql
@@ -13,6 +14,7 @@ test:
   host: localhost
   pool: 5
   username: postgres
+  password: <%= ENV['SHOULDIFOLLOW_DB_PASSWORD'] %>
 
 production:
   adapter: postgresql
@@ -20,4 +22,5 @@ production:
   database: shouldifollow
   host: localhost
   pool: 5
-  username: shouldi
+  username: <%= ENV['SHOULDIFOLLOW_DB_USER'] %>
+  password: <%= ENV['SHOULDIFOLLOW_DB_PASSWORD'] %>
