@@ -32,6 +32,15 @@ a:hover {
   text-decoration: underline;
 }
 
+.header-anchor {
+  color: inherit;
+}
+
+.header-anchor:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
 .auto-lr-margin {
   margin-left: auto;
   margin-right: auto;
