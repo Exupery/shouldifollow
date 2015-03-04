@@ -19,9 +19,9 @@
           <h2 class="error"><%= tw.error %> <span class="parens">(you probably typed it wrong or it's a lousy name nobody would want)</span></h2>
         <% else %>
           <h2 class="error"><%= tw.error %> Please check back later! In the meantime learn about nanoseconds from Grace Hopper!</h2>
-          <span class="youtube">
-            <iframe width="560" height="315" src="http://www.youtube.com/embed/JEpsKnWZrJ8" frameborder="0" allowfullscreen></iframe>
-          </span>
+          <div class="youtube text-center">
+            <iframe width="560" height="315" src="//www.youtube.com/embed/JEpsKnWZrJ8" frameborder="0" allowfullscreen></iframe>
+          </div>
         <% end %>
       <% else %>
         <h2 class="avg-act-header center-text">Average activity for <%= link_to("@#{uname}", "https://twitter.com/intent/user?screen_name=#{uname}", "class"=>"uname-link") %>:</h2>
