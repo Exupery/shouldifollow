@@ -1,4 +1,9 @@
-$(document).ready(function() {
+var ready = function() {
+	$("#search-form").submit(function(e) {
+		e.preventDefault();
+		Turbolinks.visit("/" + $("#username").val());
+	});
+
 	$("#username").focus(function(event) {
 		$(this).attr("placeholder", "");
 	});
@@ -18,7 +23,10 @@ $(document).ready(function() {
 	var offset = ($.cookie("utc-offset")) ? $.cookie("utc-offset") : getUtcOffset();
 	updateTimes(offset);
 	$("#timezones-offsets").val(offset);
-});
+};
+/* Needed so jQuery's ready plays well with Rails turbolinks */
+$(document).ready(ready);
+$(document).on('page:load', ready);
 
 function adjustFontSize() {
 	var fontSize = parseInt($(".auto-size").css("font-size"));

@@ -2,7 +2,7 @@
 
   <div id="search-area" class="content-top auto-lr-margin">
     <h1>Should I follow</h1>
-    <%= form_tag("/search/should-i-follow", :method=>"get", :class=>"form-inline") do %>
+    <%= form_tag("/search/should-i-follow", :method=>"get", :class=>"form-inline", :id=>"search-form") do %>
       <%= label_tag(:username, "@") %>
       <%= text_field_tag(:uname, nil, :placeholder=>"username", :id=>"username", :maxlength=>20) %>
       <%= submit_tag("?", "id"=>"submit") %>

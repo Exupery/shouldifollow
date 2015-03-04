@@ -148,6 +148,8 @@ GEM
     thread_safe (0.3.4)
     tilt (1.4.1)
     timezone (0.3.7)
+    turbolinks (2.5.3)
+      coffee-rails
     twitter (5.13.0)
       addressable (~> 2.3)
       buftok (~> 0.2.0)
@@ -186,6 +188,7 @@ DEPENDENCIES
   sass-rails
   spring
   timezone
+  turbolinks
   twitter
   uglifier (~> 2.3.0)
   web-console (~> 2.0)
