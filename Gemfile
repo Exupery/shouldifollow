@@ -6,7 +6,7 @@ gem "rails", "4.2.0"
 gem "oauth"
 gem "pg"
 gem "newrelic_rpm"
-gem "thin"
+gem "puma"
 gem "twitter"
 gem "timezone"
 
