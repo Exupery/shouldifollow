@@ -49,11 +49,6 @@ module Shouldifollow
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = "1.1"
-    
-    #disables ruby's buffering of stdout in dev mode so foreman receives output
-    if Rails.env.development?
-        $stdout.sync = true
-    end
 
     # Enable compression
     config.middleware.use Rack::Deflater
