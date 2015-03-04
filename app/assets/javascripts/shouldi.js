@@ -1,6 +1,10 @@
 var ready = function() {
 	$("#search-form").submit(function(e) {
 		e.preventDefault();
+		// Prevent page width from changing once content is hidden
+		$("#page").css("width", $("#page").css("width"));
+		$("#stats").slideUp(900);
+		$("#loading").slideDown();
 		Turbolinks.visit("/" + $("#username").val());
 	});
 
