@@ -92,7 +92,7 @@ class Timeline
 					@latest_tweet_id = t["id_str"] if @latest_tweet_id.nil? || (t["id_str"].to_i > @latest_tweet_id.to_i)
 					@oldest_tweet_id = t["id_str"] if @oldest_tweet_id.nil? || (t["id_str"].to_i < @oldest_tweet_id.to_i)
 					@num_retweeted["week"] += t["retweet_count"] if include_week && created >= @week_ago
-					@num_retweeted["month"] += t["retweet_count"]
+					@num_retweeted["month"] += t["retweet_count"] if created >= @month_ago
 				end
 
 			end
