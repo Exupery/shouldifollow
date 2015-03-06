@@ -135,7 +135,8 @@ class Timeline
 	end
 
 	def calc_per_day_counts cnt, days
-		(days>0) ? (cnt / days).to_f.round(1) : 0
+		return 0 if days <= 0
+		return (days < 1 ? cnt : cnt / days).to_f.round(1)
 	end
 
 	def add_to_times t
