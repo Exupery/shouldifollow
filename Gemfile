@@ -9,6 +9,7 @@ gem "newrelic_rpm"
 gem "puma"
 gem "twitter"
 gem "timezone"
+gem "dalli"
 
 gem "sass-rails"
 gem "coffee-rails"
