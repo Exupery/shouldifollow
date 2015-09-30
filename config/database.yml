@@ -1,7 +1,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: shouldi_development
+  database: <%= ENV['SHOULDIFOLLOW_DB'] %>
   host: localhost
   pool: 5
   username: <%= ENV['SHOULDIFOLLOW_DB_USER'] %>
