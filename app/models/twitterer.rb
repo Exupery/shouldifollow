@@ -9,7 +9,7 @@ class Twitterer
 	@@oembed_url = "https://api.twitter.com/1.1/statuses/oembed.json?maxwidth=500&id="
 
 	@@rate_limit_err = "Whoa! shouldifollow seems to have hit Twitter's API rate limit."
-	@@no_user_err = "Username not found"
+	@@no_user_err = "User not found."
 	@@gen_err = "Whoops, something went wrong :-("
 	@@timeout_err = "OH NOES - looks likes there was some trouble accessing the Twitter API :-("
 
@@ -21,7 +21,7 @@ class Twitterer
 		@protected = false
 		user = User.new
 		@twitter = user.client if user
-		
+
 		begin
 			fetch = Timeout::timeout(10) {
 				fetch_id_and_allpd
@@ -43,9 +43,9 @@ class Twitterer
 		rescue OpenURI::HTTPError => ex
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@user_url+@uname}"
 			if ex.to_s.start_with?("404")
-				@error = @@no_user_err 
+				@error = @@no_user_err
 			elsif ex.to_s.start_with?("420")
-				@error = @@rate_limit_err 
+				@error = @@rate_limit_err
 			else
 				@error = @@gen_err
 			end
@@ -85,7 +85,7 @@ class Twitterer
 			Rails.logger.error "ERROR=>#{ex.to_s}=>#{@@tweet_url+@uname}"
 			@error = @@gen_err
 		end
-		
+
 		if json.kind_of?(Array)
 			@timeline = Timeline.new @id, json
 		else
@@ -108,8 +108,8 @@ class Twitterer
 				@@rate_limit_err
 			elsif (code==34 || code==63)
 				@@no_user_err
-			elsif err["message"] 
-				err["message"] 
+			elsif err["message"]
+				err["message"]
 			end
 		else
 			@@gen_err
@@ -117,7 +117,7 @@ class Twitterer
 	end
 
 	def set_recent_tweet_html
-		if has_latest_tweet? 
+		if has_latest_tweet?
 			begin
 				response = @twitter.request(:get, @@oembed_url+@timeline.latest_tweet_id)
 				json = JSON.parse(response.body)
