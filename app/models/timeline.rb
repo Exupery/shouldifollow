@@ -1,9 +1,10 @@
 class Timeline
 
-	attr_reader :user_id, :latest_tweet_id, :tweets_per_day, :retweets_per_day, :timeframes, :peak_percent, 
+	attr_reader :user_id, :latest_tweet_id, :tweets_per_day, :retweets_per_day, :timeframes, :peak_percent,
 		:weekday_percent, :weekend_percent
 
 	@@seconds_per_day = 60 * 60 * 24
+	@@max_timelines = ENV["MAX_TIMELINES"] ? ENV["MAX_TIMELINES"].to_i : 3
 
 	def initialize user_id, timeline_json
 		@user_id = user_id
@@ -12,7 +13,7 @@ class Timeline
 		@oldest_tweet_time = Time.now.utc
 		@tweets_per_day = Hash.new
 		@retweets_per_day = Hash.new
-		
+
 		@num_hashtags = {"week" => 0, "month" => 0}
 		@hashtags = {"week" => Hash.new(0), "month" => Hash.new(0)}
 
@@ -45,7 +46,7 @@ class Timeline
 
 		parse_timeline timeline_json, true
 		num_prev = 0
-		while num_prev < 2 && @oldest_tweet_time >= @month_ago do
+		while num_prev < @@max_timelines && @oldest_tweet_time >= @month_ago do
 			parse_prev_timeline_batch
 			num_prev += 1
 		end
@@ -53,7 +54,7 @@ class Timeline
 		calc_timing @counts["week_tweet_cnt"] + @counts["week_retweet_cnt"] + @counts["month_tweet_cnt"] + @counts["month_retweet_cnt"]
 		if @oldest_tweet_time > @week_ago
 			## For extremely active accounts (> 600 tweets a week) estimate hashtag usage and retweeted by others
-			days = (Time.now.utc - @counts["week_oldest"]) / @@seconds_per_day	
+			days = (Time.now.utc - @counts["week_oldest"]) / @@seconds_per_day
 
 			num_hashtags_week = @num_hashtags["week"]
 			@num_hashtags["week"] = (num_hashtags_week / days * 7).floor
@@ -87,7 +88,7 @@ class Timeline
 					@counts["month_oldest"] = [created, @counts["month_oldest"]].min
 					parse_hashtags t["entities"]["hashtags"], created < @week_ago unless is_rt
 				end
-					
+
 				if t["id_str"] && !is_rt && !is_reply
 					@latest_tweet_id = t["id_str"] if @latest_tweet_id.nil? || (t["id_str"].to_i > @latest_tweet_id.to_i)
 					@oldest_tweet_id = t["id_str"] if @oldest_tweet_id.nil? || (t["id_str"].to_i < @oldest_tweet_id.to_i)
@@ -102,7 +103,7 @@ class Timeline
 	def process_timeline
 		now = Time.now.utc
 
-		days = (now - @counts["week_oldest"]) / @@seconds_per_day	
+		days = (now - @counts["week_oldest"]) / @@seconds_per_day
 		@tweets_per_day["week"] = calc_per_day_counts @counts["week_tweet_cnt"], days
 		@retweets_per_day["week"] = calc_per_day_counts @counts["week_retweet_cnt"], days
 
