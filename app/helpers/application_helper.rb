@@ -56,12 +56,13 @@ module ApplicationHelper
 			"Europe/Berlin" => "Europe/Berlin",
 			"Europe/London" => "Europe/London"
 		}
-		tz_offsets = Hash.new 
+		tz_offsets = Hash.new
 		timezones.each do |k, v|
-			tz = Timezone::Zone.new :zone => v
+			tz = Timezone::fetch v
 			offset = tz.utc_offset != 0 ? tz.utc_offset / 60 / 60 : 0
 			tz_offsets["#{k} UTC#{"+" if offset >= 0}#{offset.to_s}"] = offset
 		end
-		select("timezones", "offsets", tz_offsets, {}, {:id=>"timezones-offsets"})
+
+		return tz_offsets
 	end
 end

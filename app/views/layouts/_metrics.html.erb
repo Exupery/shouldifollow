@@ -42,7 +42,7 @@
 
 <h2 class="avg-act-header center-text" title="As percent of last 200 tweets">Activity timing</h2>
 <div class="auto-lr-margin center-text">
-    <%= get_timezones %>
+    <%= select("timezones", "offsets", get_timezones(), {}, {:id=>"timezones-offsets"}) %>
 </div>
 <table id="timing-table" class="auto-lr-margin table table-bordered table-condensed minor-shadow">
     <% tl = tw.timeline %>
