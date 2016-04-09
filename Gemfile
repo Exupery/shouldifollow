@@ -9,6 +9,7 @@ gem "puma"
 gem "twitter"
 gem "timezone"
 gem "dalli"
+gem 'react-rails', '~> 1.6.0'
 
 gem "sass-rails"
 gem "coffee-rails"
