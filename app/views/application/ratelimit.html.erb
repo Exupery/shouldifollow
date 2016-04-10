@@ -6,33 +6,14 @@
 	<% if Rails.env.development? %>
 	<div id="rate-limits">
 		<% limits = Ratelimit.new %>
-		<table class="metrics-table">
-			<thead>
-				<tr class="heading-row">
-					<th></th><th>Remaining</th><th>Limit</th><th>Resets in</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>users</td>
-					<td><%= limits.user_lookups["remaining"] %></td>
-					<td><%= limits.user_lookups["limit"] %></td>
-					<td><%= (mins_from_now limits.user_lookups["reset"]).ceil %>m</td>
-				</tr>
-				<tr>
-					<td>timelines</td>
-					<td><%= limits.timelines["remaining"] %></td>
-					<td><%= limits.timelines["limit"] %></td>
-					<td><%= (mins_from_now limits.timelines["reset"]).ceil %>m</td>
-				</tr>
-				<tr>
-					<td>oembeds</td>
-					<td><%= limits.oembeds["remaining"] %></td>
-					<td><%= limits.oembeds["limit"] %></td>
-					<td><%= (mins_from_now limits.oembeds["reset"]).ceil %>m</td>
-				</tr>
-			</tbody>
-		</table>
+		<%= react_component("MetricsTable", {
+			headings: ["", "Remaining", "Limit", "Resets in"],
+			rows: [
+				["users", limits.user_lookups["remaining"], limits.user_lookups["limit"], "#{(mins_from_now limits.user_lookups['reset']).ceil}m"],
+				["timelines", limits.timelines["remaining"], limits.timelines["limit"], "#{(mins_from_now limits.timelines['reset']).ceil}m"],
+				["oembeds", limits.oembeds["remaining"], limits.oembeds["limit"], "#{(mins_from_now limits.oembeds['reset']).ceil}m"]
+			]
+		}) %>
 	</div>
 	<% end %>
 </div>
