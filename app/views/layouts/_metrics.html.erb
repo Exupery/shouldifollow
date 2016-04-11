@@ -1,42 +1,14 @@
-<table class="metrics-table table table-hover auto-lr-margin minor-shadow">
-    <tr class="heading-row">
-        <th></th>
-        <th>past week</th>
-        <th>past month</th>
-    </tr>
-    <tbody>
-        <tr>
-            <td class="left">tweets per day</td>
-            <td class="metric"><%= tw.tweets_per_day "week" %></td>
-            <td class="metric"><%= tw.tweets_per_day "month" %></td>
-        </tr>
-        <tr>
-            <td class="left">retweets per day</td>
-            <td class="metric"><%= tw.retweets_per_day "week" %></td>
-            <td class="metric"><%= tw.retweets_per_day "month" %></td>
-        </tr>
-        <tr>
-            <td class="left">combined per day</td>
-            <td class="metric"><%= tw.combined_per_day "week" %></td>
-            <td class="metric"><%= tw.combined_per_day "month" %></td>
-        </tr>
-        <tr>
-            <td class="left">most used hashtag</td>
-            <td class="metric"><%= hashtag_link(tw.timeline.most_used_hashtag "week") %></td>
-            <td class="metric"><%= hashtag_link(tw.timeline.most_used_hashtag "month") %></td>
-        </tr>
-        <tr>
-            <td class="left">hashtags used</td>
-            <td class="metric"><%= tw.timeline.num_hashtags "week" %></td>
-            <td class="metric"><%= tw.timeline.num_hashtags "month" %></td>
-        </tr>
-        <tr>
-            <td class="left">retweeted by others</td>
-            <td class="metric"><%= format_num(tw.timeline.num_retweeted "week") %></td>
-            <td class="metric"><%= format_num(tw.timeline.num_retweeted "month") %></td>
-        </tr>
-    </tbody>
-</table>
+<%= react_component("MetricsTable", {
+    headings: ["", "past week", "past month"],
+    rows: [
+        ["tweets per day", tw.tweets_per_day("week").to_s, tw.tweets_per_day("month").to_s],
+        ["retweets per day", tw.retweets_per_day("week").to_s, tw.retweets_per_day("month").to_s],
+        ["combined per day", tw.combined_per_day("week").to_s, tw.combined_per_day("month").to_s],
+        ["most used hashtag", hashtag_link(tw.timeline.most_used_hashtag "week"), hashtag_link(tw.timeline.most_used_hashtag "month")],
+        ["hashtags used", tw.timeline.num_hashtags("week"), tw.timeline.num_hashtags("month")],
+        ["retweeted by others", format_num(tw.timeline.num_retweeted "week"), format_num(tw.timeline.num_retweeted "month")]
+    ]
+}) %>
 
 <h3 id="all-time"><span><span class="metric"><%= tw.all_per_day %></span> total per day <span class="parens">(includes @replies)</span> since joining Twitter on <%= tw.joined %></span><%= render "layouts/tweet", :tw => tw %></h3>
 

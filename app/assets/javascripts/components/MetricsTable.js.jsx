@@ -16,7 +16,7 @@ var MetricsTable = React.createClass({
     });
 
     return (
-      <table className="metrics-table">
+      <table className="metrics-table table table-hover auto-lr-margin minor-shadow">
         <thead>
           <tr className="heading-row">{tableHeadings}</tr>
         </thead>
@@ -36,8 +36,26 @@ var TableRow = React.createClass({
   render: function() {
     var cols = [];
     this.props.tds.forEach(function(td, i) {
-      cols.push(<td key={i}>{td}</td>);
+      cols.push(<TableCell td={td} index={i} key={i} />);
     });
     return (<tr>{cols}</tr>);
+  }
+});
+
+var TableCell = React.createClass({
+  propTypes: {
+    td: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.number
+    ]),
+    index: React.PropTypes.number
+  },
+
+  render: function() {
+    function getHtml(td) {
+        return {__html: td};
+    };
+    var clazz = (this.props.index == 0) ? "left" : "metric";
+    return (<td className={clazz} key={this.props.index} dangerouslySetInnerHTML={getHtml(this.props.td)}></td>);
   }
 });
