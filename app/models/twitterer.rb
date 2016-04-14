@@ -140,7 +140,7 @@ class Twitterer
 	end
 
 	def combined_per_day period
-		(tweets_per_day(period) + retweets_per_day(period)).to_f.round(1)
+		tweets_per_day(period) + retweets_per_day(period)
 	end
 
 	def has_latest_tweet?

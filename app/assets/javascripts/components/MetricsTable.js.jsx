@@ -35,8 +35,9 @@ var TableRow = React.createClass({
 
   render: function() {
     var cols = [];
-    this.props.tds.forEach(function(td, i) {
-      cols.push(<TableCell td={td} index={i} key={i} />);
+    this.props.tds.forEach(function(td, i, tds) {
+      var value = (i > 0 && tds[0].indexOf("per day") != -1) ? td.toFixed(1) : td;
+      cols.push(<TableCell td={value} index={i} key={i} />);
     });
     return (<tr>{cols}</tr>);
   }

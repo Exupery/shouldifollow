@@ -1,9 +1,9 @@
 <%= react_component("MetricsTable", {
     headings: ["", "past week", "past month"],
     rows: [
-        ["tweets per day", tw.tweets_per_day("week").to_s, tw.tweets_per_day("month").to_s],
-        ["retweets per day", tw.retweets_per_day("week").to_s, tw.retweets_per_day("month").to_s],
-        ["combined per day", tw.combined_per_day("week").to_s, tw.combined_per_day("month").to_s],
+        ["tweets per day", tw.tweets_per_day("week"), tw.tweets_per_day("month")],
+        ["retweets per day", tw.retweets_per_day("week"), tw.retweets_per_day("month")],
+        ["combined per day", tw.combined_per_day("week"), tw.combined_per_day("month")],
         ["most used hashtag", hashtag_link(tw.timeline.most_used_hashtag "week"), hashtag_link(tw.timeline.most_used_hashtag "month")],
         ["hashtags used", tw.timeline.num_hashtags("week"), tw.timeline.num_hashtags("month")],
         ["retweeted by others", tw.timeline.num_retweeted("week"), tw.timeline.num_retweeted("month")]
