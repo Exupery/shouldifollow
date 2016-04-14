@@ -6,7 +6,7 @@
         ["combined per day", tw.combined_per_day("week").to_s, tw.combined_per_day("month").to_s],
         ["most used hashtag", hashtag_link(tw.timeline.most_used_hashtag "week"), hashtag_link(tw.timeline.most_used_hashtag "month")],
         ["hashtags used", tw.timeline.num_hashtags("week"), tw.timeline.num_hashtags("month")],
-        ["retweeted by others", format_num(tw.timeline.num_retweeted "week"), format_num(tw.timeline.num_retweeted "month")]
+        ["retweeted by others", tw.timeline.num_retweeted("week"), tw.timeline.num_retweeted("month")]
     ]
 }) %>
 

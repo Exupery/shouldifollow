@@ -53,9 +53,13 @@ var TableCell = React.createClass({
 
   render: function() {
     function getHtml(td) {
-        return {__html: td};
+        return {__html: formatNum(td)};
     };
     var clazz = (this.props.index == 0) ? "left" : "metric";
     return (<td className={clazz} key={this.props.index} dangerouslySetInnerHTML={getHtml(this.props.td)}></td>);
   }
 });
+
+function formatNum(num) {
+  return (Number.isInteger(num) && num > 999999) ? (num / 1000000).toFixed(2) + "M" : num;
+}

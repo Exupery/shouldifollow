@@ -9,16 +9,6 @@ module ApplicationHelper
 		end
 	end
 
-	def format_num num
-		if num.nil? or !num.is_a? Integer
-			0
-		elsif num > 999999
-			content_tag(:span, (num / 1000000).to_s + "M", title: num)
-		else
-			num
-		end
-	end
-
 	def mins_from_now future_time
 		(Time.at(future_time) - Time.now) / 60
 	end
