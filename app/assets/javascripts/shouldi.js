@@ -22,7 +22,6 @@ var ready = function() {
 		$.cookie("utc-offset", offset, {expires: 30, path: "/"});
 	});
 
-	adjustFontSize();
 	updateHeaders();
 	var offset = ($.cookie("utc-offset")) ? $.cookie("utc-offset") : getUtcOffset();
 	updateTimes(offset);
@@ -31,13 +30,6 @@ var ready = function() {
 /* Needed so jQuery's ready plays well with Rails turbolinks */
 $(document).ready(ready);
 $(document).on('page:load', ready);
-
-function adjustFontSize() {
-	var fontSize = parseInt($(".auto-size").css("font-size"));
-	while ($(".metrics-table").width() > $("#stats").width() && fontSize > 10) {
-		$(".auto-size").css("font-size", --fontSize + "px");
-	}
-}
 
 function updateHeaders() {
 	$(".time-header").each(function() {
@@ -54,7 +46,7 @@ function updateHeaders() {
 		} else {
 			$(this).attr("title", h + "AM");
 		}
-	}); 
+	});
 }
 
 function getUtcOffset() {

@@ -100,7 +100,7 @@ a:hover {
 
 .content-top #submit {
   font-size: 2.25em;
-  min-height: 1.25em;  
+  min-height: 1.25em;
   max-width: 32px;
   max-height: 38px;
 }
@@ -163,6 +163,10 @@ ul,
   text-align: right;
   font-size: 1.17em;
   font-weight: bold;
+}
+
+.hashtag-font {
+  font-size: 0.75em;
 }
 
 .metrics-table th {

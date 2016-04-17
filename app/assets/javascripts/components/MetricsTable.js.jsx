@@ -37,9 +37,12 @@ var TableRow = React.createClass({
     var cols = [];
     this.props.tds.forEach(function(td, i, tds) {
       var value = (i > 0 && tds[0].indexOf("per day") != -1) ? td.toFixed(1) : td;
+      if (i > 0 && tds[0].indexOf("most used hashtag") != -1) {
+        value = (value) ? <HashtagLink hashtag={td} /> : "-";
+      }
       cols.push(<TableCell td={value} index={i} key={i} />);
     });
-    return (<tr>{cols}</tr>);
+    return <tr>{cols}</tr>;
   }
 });
 
@@ -47,17 +50,29 @@ var TableCell = React.createClass({
   propTypes: {
     td: React.PropTypes.oneOfType([
       React.PropTypes.string,
-      React.PropTypes.number
+      React.PropTypes.number,
+      React.PropTypes.element,
     ]),
     index: React.PropTypes.number
   },
 
   render: function() {
-    function getHtml(td) {
-        return {__html: formatNum(td)};
-    };
     var clazz = (this.props.index == 0) ? "left" : "metric";
-    return (<td className={clazz} key={this.props.index} dangerouslySetInnerHTML={getHtml(this.props.td)}></td>);
+    return (<td className={clazz} key={this.props.index}>{formatNum(this.props.td)}</td>);
+  }
+});
+
+var HashtagLink = React.createClass({
+  propTypes: {
+    hashtag: React.PropTypes.string
+  },
+
+  render: function() {
+    var hashtag = this.props.hashtag;
+    var url = "https://twitter.com/hashtag/"+hashtag+"?src=hash";
+    var linkText = (hashtag.length > 12) ? hashtag.substring(0, 10) + "..." : hashtag;
+
+    return <a href={url} target="_blank" className="metric-link hashtag-font" title={hashtag}>#{linkText}</a>;
   }
 });
 

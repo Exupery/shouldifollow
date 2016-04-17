@@ -1,14 +1,4 @@
 module ApplicationHelper
-	def hashtag_link hashtag
-		if hashtag.nil?
-			"-"
-		else
-			url = "https://twitter.com/hashtag/#{hashtag}?src=hash"
-			ht_text = hashtag.length > 20 ? hashtag.slice(0, 17) + "..." : hashtag
-			link_to("##{ht_text}", url, :class => "metric-link auto-size", :target => "_blank", :title => "##{hashtag}")
-		end
-	end
-
 	def mins_from_now future_time
 		(Time.at(future_time) - Time.now) / 60
 	end
