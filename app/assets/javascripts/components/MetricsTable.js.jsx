@@ -3,6 +3,9 @@ var MetricsTable = React.createClass({
     headings: React.PropTypes.array,
     rows: React.PropTypes.array
   },
+  componentDidMount: function() {
+    adjustFontSize();
+  },
 
   render: function() {
     var tableHeadings = [];
@@ -70,12 +73,19 @@ var HashtagLink = React.createClass({
   render: function() {
     var hashtag = this.props.hashtag;
     var url = "https://twitter.com/hashtag/"+hashtag+"?src=hash";
-    var linkText = (hashtag.length > 12) ? hashtag.substring(0, 10) + "..." : hashtag;
+    var linkText = (hashtag.length > 18) ? hashtag.substring(0, 15) + "..." : hashtag;
 
-    return <a href={url} target="_blank" className="metric-link hashtag-font" title={hashtag}>#{linkText}</a>;
+    return <a href={url} target="_blank" className="metric-link hashtag-font auto-size" title={hashtag}>#{linkText}</a>;
   }
 });
 
 function formatNum(num) {
   return (Number.isInteger(num) && num > 999999) ? (num / 1000000).toFixed(2) + "M" : num;
+}
+
+function adjustFontSize() {
+  var fontSize = parseInt($(".auto-size").css("font-size"));
+  while ($(".metrics-table").width() > $("#stats").width() && fontSize > 10) {
+    $(".auto-size").css("font-size", --fontSize + "px");
+  }
 }
