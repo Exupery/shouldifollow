@@ -1,5 +1,5 @@
 require "test_helper"
- 
+
 class TwittererTest < ActiveSupport::TestCase
 
   @@tw = Twitterer.new("nasa")
@@ -50,7 +50,7 @@ class TwittererTest < ActiveSupport::TestCase
   end
 
   test "user is protected" do
-  	shy_user = Twitterer.new("protected")
+    shy_user = Twitterer.new("support_example")
   	assert shy_user.is_protected?
   end
 end
