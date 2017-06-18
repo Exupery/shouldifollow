@@ -1,8 +1,7 @@
 <% if tw.nil? %>
-	<a href="https://twitter.com/share" id="tweet" class="twitter-share-button" data-lang="en" data-url="https://www.shouldifollow.com/" data-counturl="http://www.shouldifollow.com/" data-text="Average tweet per day metrics for anyone!" data-related="Should_I_Follow,frostmatthew">Tweet</a>
+	<a href="https://twitter.com/share" id="tweet" class="twitter-share-button" data-lang="en" data-url="https://www.shouldifollow.com/" data-text="Average tweet per day metrics for anyone!" data-related="Should_I_Follow,frostmatthew">Tweet</a>
 <% else %>
 	<% tweet_text = "Since joining Twitter on #{tw.joined} @#{tw.uname} has averaged #{tw.all_per_day} tweets per day" %>
-	<% query = {:lang=>"en", :url=>"https://www.shouldifollow.com/#{tw.uname}", :counturl=>"https://www.shouldifollow.com/",:size=>"large", :count=>"none", :text=>tweet_text }.to_query %>
-	<%= link_to "Tweet this number", "https://twitter.com/share?#{query}", :id=>"tweet-avg", :class=>"twitter-share-button" %>
+  <a href="https://twitter.com/share" id="tweet-avg" class="twitter-share-button" data-via="Should_I_Follow" data-related="frostmatthew" data-lang="en" data-url="https://www.shouldifollow.com/<%= tw.uname %>" data-size="large" data-text="<%= tweet_text %>">Tweet this number</a>
 <% end %>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
