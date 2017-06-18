@@ -8,7 +8,7 @@
       <%= submit_tag("?", "id"=>"submit") %>
     <% end %>
   </div>
-  
+
   <% uname = params[:uname] %>
   <% if uname %>
     <div id="stats">
@@ -29,10 +29,10 @@
           <div id="fail-image" class="auto-lr-margin center-text">
             <h2 class="red">LOLZ, that account is protected.</h2>
             <h3 class="red">Perhaps look up someone not trying to fail at Twitter</h3>
-            <a href="http://xkcd.com/336/"><img src="http://imgs.xkcd.com/comics/priorities.png" /></a>
+            <a href="https://xkcd.com/336/"><img src="https://imgs.xkcd.com/comics/priorities.png" /></a>
           </div>
         <% else %>
-          <%= render 'layouts/metrics', :tw => tw %>            
+          <%= render 'layouts/metrics', :tw => tw %>
         <% end %>
       <% end %>
     </div>
