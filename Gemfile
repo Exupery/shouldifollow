@@ -1,7 +1,7 @@
 source "https://rubygems.org"
-ruby "2.2.3"
+ruby "2.4.1"
 
-gem "rails", "4.2.6"
+gem "rails", "5.1.1"
 
 gem "oauth"
 gem "pg"
@@ -9,7 +9,7 @@ gem "puma"
 gem "twitter"
 gem "timezone"
 gem "dalli"
-gem 'react-rails', '~> 1.6.0'
+gem 'react-rails', '~> 2.2.0'
 
 gem "sass-rails"
 gem "coffee-rails"
