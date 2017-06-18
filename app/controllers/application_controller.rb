@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
   def search
     uname = clean params[:uname]
-  	redirect_to "/#{uname}", turbolinks: true
+  	redirect_to "/#{uname}"
   end
 
   def clean input

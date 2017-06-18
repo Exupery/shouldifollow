@@ -1,12 +1,11 @@
-var ready = function() {
-	$("#search-form").submit(function(e) {
+$(function() {
+/*	$("#search-form").submit(function(e) {
 		e.preventDefault();
 		// Prevent page width from changing once content is hidden
 		$("#page").css("width", $("#page").css("width"));
 		$("#stats").slideUp(900);
 		$("#loading").slideDown();
-		Turbolinks.visit("/" + $("#username").val());
-	});
+	});*/
 
 	$("#username").focus(function(event) {
 		$(this).attr("placeholder", "");
@@ -26,10 +25,7 @@ var ready = function() {
 	var offset = ($.cookie("utc-offset")) ? $.cookie("utc-offset") : getUtcOffset();
 	updateTimes(offset);
 	$("#timezones-offsets").val(offset);
-};
-/* Needed so jQuery's ready plays well with Rails turbolinks */
-$(document).ready(ready);
-$(document).on('page:load', ready);
+});
 
 function updateHeaders() {
 	$(".time-header").each(function() {
