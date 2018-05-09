@@ -49,8 +49,4 @@ class TwittererTest < ActiveSupport::TestCase
   	assert no_user.is_user_not_found?
   end
 
-  test "user is protected" do
-    shy_user = Twitterer.new("support_example")
-  	assert shy_user.is_protected?
-  end
 end
