@@ -16,7 +16,7 @@ Shouldifollow::Application.configure do
   # Compress JavaScripts and CSS
   config.assets.compress = true
 
-  config.assets.compile = true
+  config.assets.compile = false
 
   # Generate digests for assets URLs
   config.assets.digest = true
