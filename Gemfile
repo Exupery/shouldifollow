@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 ruby "2.4.1"
 
-gem "rails", "5.2.2"
+gem "rails", "5.2.2.1"
 
 gem "oauth"
 gem "pg"
