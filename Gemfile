@@ -16,6 +16,8 @@ gem "uglifier", "~> 2.3.0"
 gem "rails_12factor"
 gem "jquery-rails"
 
+gem 'therubyracer', platforms: :ruby
+
 # Access an IRB console on exception pages or by using <%= console %> in views
 gem 'web-console', '~> 2.0', group: :development
 
