@@ -8,7 +8,7 @@ gem "pg"
 gem "puma"
 gem "twitter"
 gem "timezone"
-gem "dalli"
+gem 'dalli', '< 3.0'
 gem 'react-rails', '~> 2.2.0'
 
 gem "coffee-rails"
