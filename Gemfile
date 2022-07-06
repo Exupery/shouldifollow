@@ -1,7 +1,7 @@
 source "https://rubygems.org"
-ruby "2.7.2"
+ruby "3.1.2"
 
-gem "rails", "5.2.8"
+gem "rails", "7.0.3"
 
 gem "oauth"
 gem "pg"
@@ -15,8 +15,8 @@ gem "coffee-rails"
 gem "uglifier", "~> 2.3.0"
 gem "rails_12factor"
 gem "jquery-rails"
-
-gem 'therubyracer', platforms: :ruby
+gem "sprockets-rails"
+gem "execjs"
 
 # Access an IRB console on exception pages or by using <%= console %> in views
 gem 'web-console', '~> 2.0', group: :development
